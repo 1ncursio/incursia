@@ -3,7 +3,7 @@ import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
-import { Col } from 'antd';
+import { Col, Row } from 'antd';
 import { useSelector } from 'react-redux';
 import wrapper from '../../store/configureStore';
 import AppLayout from '../../components/AppLayout';
@@ -66,13 +66,15 @@ const Illustration = ({ post: initialPost }) => {
         <meta name="og:image" content={postData.Images[0] ? postData.Images[0].src : 'https://nodebird.com/favicon.ico'} />
         <meta name="og:url" content={`https://nodebird.com/post/${id}`} />
       </Head>
-      <Col span={12}>
-        <IllustCard postData={postData} />
-        <CommentForm />
-      </Col>
-      <Col span={4}>
-        <UserProfile postData={postData} />
-      </Col>
+      <Row justify="center" gutter={16}>
+        <Col span={12}>
+          <IllustCard postData={postData} />
+          <CommentForm />
+        </Col>
+        <Col span={4}>
+          <UserProfile postData={postData} />
+        </Col>
+      </Row>
     </AppLayout>
   );
 };

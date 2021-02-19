@@ -9,14 +9,14 @@ const AvatarWrapper = styled(Avatar)`
 
 const { Text, Title } = Typography;
 
-const UserAvatar = ({ userData, marginRight, size, type, level }) => {
+const UserAvatar = ({ userData, marginRight, size, type, level, visibleNickname }) => {
   return (
     <>
       <AvatarWrapper src={userData.profile && `http://localhost:3100/${userData.profile}`} marginRight={marginRight} size={size}>
         {!userData.profile && userData.nickname[0]}
       </AvatarWrapper>
-      {type === 'text' && <Text>{userData.nickname}</Text>}
-      {type === 'title' && (
+      {type === 'text' && visibleNickname && <Text>{userData.nickname}</Text>}
+      {type === 'title' && visibleNickname && (
         <Title level={level} style={{ display: 'inline-block' }}>
           {userData.nickname}
         </Title>
@@ -26,9 +26,11 @@ const UserAvatar = ({ userData, marginRight, size, type, level }) => {
 };
 
 UserAvatar.defaultProps = {
+  marginRight: 0,
   size: 'default',
   type: 'text',
   level: 3,
+  visibleNickname: true,
 };
 
 UserAvatar.propTypes = {
@@ -36,10 +38,11 @@ UserAvatar.propTypes = {
     profile: PropTypes.string,
     nickname: PropTypes.string,
   }).isRequired,
-  marginRight: PropTypes.number.isRequired,
+  marginRight: PropTypes.number,
   size: PropTypes.oneOfType([PropTypes.number, PropTypes.string]),
   type: PropTypes.string,
   level: PropTypes.number,
+  visibleNickname: PropTypes.bool,
 };
 
 export default UserAvatar;

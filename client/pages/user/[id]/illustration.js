@@ -27,20 +27,22 @@ const UserIllustration = ({ user: initialUser, posts: initialPosts }) => {
 
   return (
     <AppLayout>
-      <Col span={18}>
-        <UserPageProfile userData={userData} />
-        <UserPageMenu current="illustration" userId={parseInt(id, 10)} />
-        <MenuHeaderWrapper>
-          <MenuHeader>{`${postsData.length}개의 일러스트`}</MenuHeader>
-        </MenuHeaderWrapper>
-        <Row gutter={[8, 8]}>
-          {postsData?.map((post) => (
-            <Col xs={24} md={4} key={post.id}>
-              <PostCard key={post.id} post={post} avatarVisible={false} />
-            </Col>
-          ))}
-        </Row>
-      </Col>
+      <Row justify="center" gutter={16}>
+        <Col span={18}>
+          <UserPageProfile userData={userData} />
+          <UserPageMenu current="illustration" userId={parseInt(id, 10)} />
+          <MenuHeaderWrapper>
+            <MenuHeader>{`${postsData.length}개의 일러스트`}</MenuHeader>
+          </MenuHeaderWrapper>
+          <Row gutter={[8, 8]}>
+            {postsData?.map((post) => (
+              <Col xs={24} md={4} key={post.id}>
+                <PostCard key={post.id} post={post} avatarVisible={false} />
+              </Col>
+            ))}
+          </Row>
+        </Col>
+      </Row>
     </AppLayout>
   );
 };

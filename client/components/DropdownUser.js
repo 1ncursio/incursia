@@ -6,6 +6,7 @@ import Link from 'next/link';
 import useSWR from 'swr';
 import { logoutRequestAction } from '../reducers/user';
 import fetcher from '../util/fetcher';
+import UserAvatar from './UserAvatar';
 
 const { Text } = Typography;
 
@@ -88,12 +89,13 @@ const DropdownUser = () => {
   );
 
   return (
-    <Dropdown overlay={menu} placement="bottomCenter" trigger={['click']} overlayStyle={{ width: 180 }}>
+    <Dropdown overlay={menu} placement="bottomCenter" overlayStyle={{ width: 180 }}>
       <a>
-        <Avatar src={userData?.profile && `http://localhost:3100/${userData?.profile}`} size="large">
+        {/* <Avatar src={userData?.profile && `http://localhost:3100/${userData?.profile}`} size="large">
           {!userData?.profile && userData?.nickname[0]}
-        </Avatar>
-        <DownOutlined style={{ fontSize: '8px' }} />
+        </Avatar> */}
+        <UserAvatar userData={userData} size="large" marginRight={4} visibleNickname={false} />
+        <DownOutlined style={{ fontSize: 10, color: '#ff8634' }} />
       </a>
     </Dropdown>
   );

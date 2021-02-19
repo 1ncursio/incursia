@@ -1,4 +1,4 @@
-const DataTypes = require("sequelize");
+const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
 module.exports = class User extends Model {
@@ -25,12 +25,19 @@ module.exports = class User extends Model {
           type: DataTypes.STRING(100),
           allowNull: false, // 필수
         },
+        role: {
+          // admin 2
+          // manager 1
+          // normal 0
+          type: DataTypes.INTEGER,
+          defaultValue: 0,
+        },
       },
       {
-        modelName: "User",
-        tableName: "users",
-        charset: "utf8",
-        collate: "utf8_general_ci", // 한글 저장
+        modelName: 'User',
+        tableName: 'users',
+        charset: 'utf8',
+        collate: 'utf8_general_ci', // 한글 저장
         sequelize,
       }
     );
@@ -38,16 +45,16 @@ module.exports = class User extends Model {
   static associate(db) {
     db.User.hasMany(db.Post);
     db.User.hasMany(db.Comment);
-    db.User.belongsToMany(db.Post, { through: "Like", as: "Liked" });
+    db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
     db.User.belongsToMany(db.User, {
-      through: "Follow",
-      as: "Followers",
-      foreignKey: "FollowingId",
+      through: 'Follow',
+      as: 'Followers',
+      foreignKey: 'FollowingId',
     });
     db.User.belongsToMany(db.User, {
-      through: "Follow",
-      as: "Followings",
-      foreignKey: "FollowerId",
+      through: 'Follow',
+      as: 'Followings',
+      foreignKey: 'FollowerId',
     });
   }
 };

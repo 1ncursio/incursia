@@ -1,4 +1,4 @@
-const DataTypes = require("sequelize");
+const DataTypes = require('sequelize');
 const { Model } = DataTypes;
 
 module.exports = class Image extends Model {
@@ -12,10 +12,10 @@ module.exports = class Image extends Model {
         },
       },
       {
-        modelName: "Image",
-        tableName: "images",
-        charset: "utf8",
-        collate: "utf8_general_ci",
+        modelName: 'Image',
+        tableName: 'images',
+        charset: 'utf8',
+        collate: 'utf8_general_ci',
         sequelize,
       }
     );

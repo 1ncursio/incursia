@@ -25,12 +25,15 @@ const { Title, Text } = Typography;
 const login = () => {
   const router = useRouter(null);
 
-  const { data: userData } = useSWR('/api/user', fetcher);
+  const { data: userData, revalidate } = useSWR('/api/user', fetcher);
 
   const { logInDone } = useSelector((state) => state.user);
 
   useEffect(() => {
-    if (logInDone || userData) router.back();
+    if (logInDone || userData) {
+      revalidate();
+      router.back();
+    }
   }, [logInDone, userData]);
 
   return (

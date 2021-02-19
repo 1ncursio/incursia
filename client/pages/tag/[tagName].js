@@ -19,16 +19,18 @@ const TagPage = ({ posts: initialPosts }) => {
 
   return (
     <AppLayout>
-      <Col span={18}>
-        <Row gutter={[8, 8]}>
-          <Divider orientation="left">{`${tagName} - 태그 검색 결과`}</Divider>
-          {postsData?.map((post) => (
-            <Col span={4} key={post.id}>
-              <PostCard key={post.id} post={post} />
-            </Col>
-          ))}
-        </Row>
-      </Col>
+      <Row justify="center" gutter={16}>
+        <Col span={18}>
+          <Row gutter={[8, 8]}>
+            <Divider orientation="left">{`${tagName} - 태그 검색 결과`}</Divider>
+            {postsData?.map((post) => (
+              <Col span={4} key={post.id}>
+                <PostCard key={post.id} post={post} />
+              </Col>
+            ))}
+          </Row>
+        </Col>
+      </Row>
     </AppLayout>
   );
 };

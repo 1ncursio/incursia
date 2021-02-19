@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Col, Form, Input, Button, Typography, Upload, message, Modal, Select } from 'antd';
+import { Col, Form, Input, Button, Typography, Upload, message, Modal, Select, Row } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { PlusOutlined } from '@ant-design/icons';
@@ -129,40 +129,41 @@ const upload = () => {
 
   return (
     <AppLayout>
-      <Col span={12}>
-        <Form onFinish={onFinish}>
-          <Form.Item>
-            <Paragraph>JPG JPEG GIF PNG</Paragraph>
-            <Paragraph>1장당 10MB 이내, 최대 20장 업로드</Paragraph>
-            <Paragraph>{`${fileList.length}장 ${fileSize}MB`}</Paragraph>
-            <Upload
-              name="image"
-              accept=".jpg,.jpeg,.png,.gif"
-              multiple
-              maxCount={20}
-              beforeUpload={beforeUpload}
-              onPreview={onPreview}
-              onChange={onChangeFileList}
-              listType="picture-card"
-              fileList={fileList}
-              onRemove={onRemoveFile}
-            >
-              {fileList.length >= 20 ? null : uploadButton}
-            </Upload>
-            <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={onCancel}>
-              <img alt="example" style={{ width: '100%' }} src={previewImage} />
-            </Modal>
-          </Form.Item>
-          <Form.Item>
-            <Input type="text" value={title} onChange={onChangeTitle} placeholder="타이틀" />
-          </Form.Item>
-          <Form.Item>
-            <TextArea rows="5" placeholder="캡션" value={caption} onChange={onChangeCaption} />
-          </Form.Item>
-          <Form.Item>
-            <TagForm tags={tags} setTags={setTags} />
-          </Form.Item>
-          {/* <Form.Item>
+      <Row justify="center" gutter={16}>
+        <Col span={12}>
+          <Form onFinish={onFinish}>
+            <Form.Item>
+              <Paragraph>JPG JPEG GIF PNG</Paragraph>
+              <Paragraph>1장당 10MB 이내, 최대 20장 업로드</Paragraph>
+              <Paragraph>{`${fileList.length}장 ${fileSize}MB`}</Paragraph>
+              <Upload
+                name="image"
+                accept=".jpg,.jpeg,.png,.gif"
+                multiple
+                maxCount={20}
+                beforeUpload={beforeUpload}
+                onPreview={onPreview}
+                onChange={onChangeFileList}
+                listType="picture-card"
+                fileList={fileList}
+                onRemove={onRemoveFile}
+              >
+                {fileList.length >= 20 ? null : uploadButton}
+              </Upload>
+              <Modal visible={previewVisible} title={previewTitle} footer={null} onCancel={onCancel}>
+                <img alt="example" style={{ width: '100%' }} src={previewImage} />
+              </Modal>
+            </Form.Item>
+            <Form.Item>
+              <Input type="text" value={title} onChange={onChangeTitle} placeholder="타이틀" />
+            </Form.Item>
+            <Form.Item>
+              <TextArea rows="5" placeholder="캡션" value={caption} onChange={onChangeCaption} />
+            </Form.Item>
+            <Form.Item>
+              <TagForm tags={tags} setTags={setTags} />
+            </Form.Item>
+            {/* <Form.Item>
           <Select defaultValue="public" value>
             <Option value="public">전체 공개</Option>
             <Option value="my" disabled>
@@ -171,23 +172,23 @@ const upload = () => {
             <Option value="private">비공개</Option>
           </Select>
         </Form.Item> */}
-          <Form.Item>
-            <Paragraph>아래에 해당하는 작품의 업로드를 금지합니다. 업로드하시기 전에 확인해주세요.</Paragraph>
-            <Paragraph>
-              타인이 제작한 작품, 시판되는 상품의 이미지, 제삼자가 권리를 소유한 이미지, 게임 및 영상 작품의 캡처, 스크린숏 이미지가 포함된
-              작품.
-            </Paragraph>
-            <Paragraph>위와 같은 이미지를 유용하여, 처음부터 모든 것을 본인이 직접 그리지 않은 작품.</Paragraph>
-            <Paragraph>작품 이외의 피사체를 찍은 사진 이미지.</Paragraph>
-            <Paragraph>이용약관에 위반하는 작품의 투고 유저는 투고 작품 공개 정지, 계정 정지의 대상이 됩니다.</Paragraph>
-          </Form.Item>
-          <Form.Item>
-            <Button type="primary" htmlType="submit">
-              업로드하기
-            </Button>
-          </Form.Item>
-        </Form>
-      </Col>
+            <Form.Item>
+              <Paragraph>아래에 해당하는 작품의 업로드를 금지합니다. 업로드하시기 전에 확인해주세요.</Paragraph>
+              <Paragraph>
+                타인이 제작한 작품, 시판되는 상품의 이미지, 제삼자가 권리를 소유한 이미지, 게임 및 영상 작품의 캡처, 스크린숏 이미지가 포함된 작품.
+              </Paragraph>
+              <Paragraph>위와 같은 이미지를 유용하여, 처음부터 모든 것을 본인이 직접 그리지 않은 작품.</Paragraph>
+              <Paragraph>작품 이외의 피사체를 찍은 사진 이미지.</Paragraph>
+              <Paragraph>이용약관에 위반하는 작품의 투고 유저는 투고 작품 공개 정지, 계정 정지의 대상이 됩니다.</Paragraph>
+            </Form.Item>
+            <Form.Item>
+              <Button type="primary" htmlType="submit">
+                업로드하기
+              </Button>
+            </Form.Item>
+          </Form>
+        </Col>
+      </Row>
     </AppLayout>
   );
 };

@@ -28,34 +28,36 @@ const UserFollowings = ({ user: initialUser, followings: initialFollowings }) =>
 
   return (
     <AppLayout>
-      <Col span={18}>
-        <UserPageProfile userData={userData} />
-        <UserPageMenu current="followings" userId={parseInt(id, 10)} />
-        <MenuHeaderWrapper>
-          <MenuHeader>{`${followingsData.length}명 팔로우 중`}</MenuHeader>
-        </MenuHeaderWrapper>
-        <Row gutter={8}>
-          <List
-            dataSource={followingsData}
-            renderItem={(item) => (
-              <List.Item>
-                <Space size="large">
-                  <Link href={`/user/${item.id}/illustration`}>
-                    <a>
-                      <UserAvatar userData={item} marginRight={8} size="large" />
-                    </a>
-                  </Link>
-                  {item.introduction.length >= 50 ? (
-                    <Text type="secondary">{`${item.introduction.slice(0, 50)}...`}</Text>
-                  ) : (
-                    <Text type="secondary">{item.introduction}</Text>
-                  )}
-                </Space>
-              </List.Item>
-            )}
-          />
-        </Row>
-      </Col>
+      <Row justify="center" gutter={16}>
+        <Col span={18}>
+          <UserPageProfile userData={userData} />
+          <UserPageMenu current="followings" userId={parseInt(id, 10)} />
+          <MenuHeaderWrapper>
+            <MenuHeader>{`${followingsData.length}명 팔로우 중`}</MenuHeader>
+          </MenuHeaderWrapper>
+          <Row gutter={8}>
+            <List
+              dataSource={followingsData}
+              renderItem={(item) => (
+                <List.Item>
+                  <Space size="large">
+                    <Link href={`/user/${item.id}/illustration`}>
+                      <a>
+                        <UserAvatar userData={item} marginRight={8} size="large" />
+                      </a>
+                    </Link>
+                    {item.introduction.length >= 50 ? (
+                      <Text type="secondary">{`${item.introduction.slice(0, 50)}...`}</Text>
+                    ) : (
+                      <Text type="secondary">{item.introduction}</Text>
+                    )}
+                  </Space>
+                </List.Item>
+              )}
+            />
+          </Row>
+        </Col>
+      </Row>
     </AppLayout>
   );
 };

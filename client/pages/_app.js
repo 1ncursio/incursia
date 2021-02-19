@@ -1,13 +1,15 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-import 'antd/dist/antd.css';
+// import 'antd/dist/antd.css';
+import '../style/my_custom.css';
 import { createGlobalStyle } from 'styled-components';
 import wrapper from '../store/configureStore';
 
 const Global = createGlobalStyle`
     body {
       font-family: 'Noto Sans KR';
+      background-color: #f8f9fa;
     }
 
     .ant-row {

@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import Link from 'next/link';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,6 +23,7 @@ const CommentForm = () => {
 
   const { addCommentDone, addCommentLoading, addedCommentId, removeCommentDone, removedCommentId } = useSelector((state) => state.post);
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
+  const [replyId, setReplyId] = useState(-1);
 
   useEffect(() => {
     if (addCommentDone) {
@@ -60,6 +61,18 @@ const CommentForm = () => {
       );
     }
   }, [removeCommentDone]);
+
+  const toggleReplyForm = useCallback(
+    (id) => {
+      console.log('toggleReplyForm called');
+      if (id !== replyId) {
+        setReplyId(id);
+      } else {
+        setReplyId(-1);
+      }
+    },
+    [replyId]
+  );
 
   const onSubmitComment = useCallback(() => {
     if (!commentText || !commentText.trim()) {
@@ -106,7 +119,7 @@ const CommentForm = () => {
           </Button>
         </Form.Item>
       </Form>
-      {postData && (
+      {postData?.Comments && (
         <List
           header={`${postData.Comments.length}개의 댓글`}
           itemLayout="horizontal"
@@ -114,6 +127,12 @@ const CommentForm = () => {
           renderItem={(item) => (
             <li>
               <Comment
+                actions={[
+                  <span key="comment-nested-reply-to" onClick={() => toggleReplyForm(item.id)}>
+                    답글
+                  </span>,
+                  <Tooltip title="삭제">{item.User.id === userData?.id && <DeleteOutlined onClick={() => onDeleteComment(item.id)} />}</Tooltip>,
+                ]}
                 author={
                   <Link href={`/user/${item.User.id}/illustration`}>
                     <a>{item.User.nickname}</a>
@@ -133,13 +152,10 @@ const CommentForm = () => {
                     <span>{moment(item.createdAt).fromNow()}</span>
                   </Tooltip>
                 }
-                actions={[
-                  <Tooltip title="삭제">
-                    {item.User.id === userData?.id && <DeleteOutlined onClick={() => onDeleteComment(item.id)} />}
-                  </Tooltip>,
-                ]}
-                content={item.content}
-              />
+                content={<p>{item.content}</p>}
+              >
+                {replyId === item.id && <div>답글있음</div>}
+              </Comment>
             </li>
           )}
         />

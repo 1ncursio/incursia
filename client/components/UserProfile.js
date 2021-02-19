@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback } from 'react';
-import { Avatar, Button, Typography, Row, Col, Badge } from 'antd';
+import { Avatar, Button, Typography, Row, Col, Badge, Space } from 'antd';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
@@ -27,7 +27,7 @@ const UserProfile = ({ postData }) => {
   const prevAndCurrentAndNextPost = postData.User.Posts.filter((v, i) => Math.abs(i - currentPostIndex) <= 1);
 
   return (
-    <>
+    <Space direction="vertical">
       <Link href={`/user/${postData.User.id}/illustration`}>
         <a>
           <Avatar size={48} src={postData.User.profile && `http://localhost:3100/${postData.User.profile}`} style={{ marginRight: 8 }}>
@@ -66,7 +66,7 @@ const UserProfile = ({ postData }) => {
           </Col>
         ))}
       </Row>
-    </>
+    </Space>
   );
 };
 
