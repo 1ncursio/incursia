@@ -19,6 +19,9 @@ import {
   ADD_COMMENT_REQUEST,
   ADD_COMMENT_SUCCESS,
   ADD_COMMENT_FAILURE,
+  ADD_REPLY_REQUEST,
+  ADD_REPLY_SUCCESS,
+  ADD_REPLY_FAILURE,
   REMOVE_COMMENT_REQUEST,
   REMOVE_COMMENT_SUCCESS,
   REMOVE_COMMENT_FAILURE,
@@ -142,6 +145,26 @@ function* addComment(action) {
   }
 }
 
+function addReplyAPI(data) {
+  return axios.post(`/api/post/${data.postId}/reply`, data);
+}
+
+function* addReply(action) {
+  try {
+    const result = yield call(addReplyAPI, action.data);
+    yield put({
+      type: ADD_REPLY_SUCCESS,
+      data: result.data,
+    });
+  } catch (err) {
+    console.error(err);
+    yield put({
+      type: ADD_REPLY_FAILURE,
+      error: err.response.data,
+    });
+  }
+}
+
 function removeCommentAPI(data) {
   return axios.delete(`/api/post/comment/${data}`);
 }
@@ -186,6 +209,10 @@ function* watchAddComment() {
   yield takeLatest(ADD_COMMENT_REQUEST, addComment);
 }
 
+function* watchAddReply() {
+  yield takeLatest(ADD_REPLY_REQUEST, addReply);
+}
+
 function* watchRemoveComment() {
   yield takeLatest(REMOVE_COMMENT_REQUEST, removeComment);
 }
@@ -198,6 +225,7 @@ export default function* postSaga() {
     fork(watchAddPost),
     fork(watchRemovePost),
     fork(watchAddComment),
+    fork(watchAddReply),
     fork(watchRemoveComment),
   ]);
 }

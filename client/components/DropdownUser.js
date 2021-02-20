@@ -89,15 +89,17 @@ const DropdownUser = () => {
   );
 
   return (
-    <Dropdown overlay={menu} placement="bottomCenter" overlayStyle={{ width: 180 }}>
-      <a>
-        {/* <Avatar src={userData?.profile && `http://localhost:3100/${userData?.profile}`} size="large">
+    userData && (
+      <Dropdown overlay={menu} placement="bottomCenter" overlayStyle={{ width: 180 }}>
+        <a>
+          {/* <Avatar src={userData?.profile && `http://localhost:3100/${userData?.profile}`} size="large">
           {!userData?.profile && userData?.nickname[0]}
         </Avatar> */}
-        <UserAvatar userData={userData} size="large" marginRight={4} visibleNickname={false} />
-        <DownOutlined style={{ fontSize: 10, color: '#ff8634' }} />
-      </a>
-    </Dropdown>
+          <UserAvatar userData={userData} size="large" marginRight={4} visibleNickname={false} />
+          <DownOutlined style={{ fontSize: 10, color: '#ff8634' }} />
+        </a>
+      </Dropdown>
+    )
   );
 };
 

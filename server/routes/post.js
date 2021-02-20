@@ -103,6 +103,11 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
       PostId: parseInt(req.params.postId, 10),
       UserId: req.user.id,
     });
+
+    await comment.update({
+      replyId: comment.id,
+    });
+
     const fullComment = await Comment.findOne({
       where: { id: comment.id },
       include: [
@@ -113,6 +118,52 @@ router.post('/:postId/comment', isLoggedIn, async (req, res, next) => {
       ],
     });
     res.status(201).json(fullComment);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// POST /post/1/comment
+router.post('/:postId/reply', isLoggedIn, async (req, res, next) => {
+  try {
+    const post = await Post.findOne({
+      where: {
+        id: req.params.postId,
+      },
+    });
+    if (!post) {
+      return res.status(403).send('존재하지 않는 게시글입니다.');
+    }
+    const comment = await Comment.findOne({ where: { id: req.body.replyId } });
+    if (!comment) {
+      return res.status(403).send('존재하지 않는 댓글입니다.');
+    }
+    const reply = await Comment.create({
+      content: req.body.content,
+      PostId: parseInt(req.params.postId, 10),
+      UserId: req.user.id,
+    });
+
+    const replyTarget = await Comment.findOne({ where: { id: req.body.replyId } });
+    const replyTargetJSON = replyTarget.toJSON();
+
+    if (replyTargetJSON.id !== replyTargetJSON.replyId) {
+      await reply.update({ replyId: replyTargetJSON.replyId });
+    } else {
+      await reply.update({ replyId: replyTargetJSON.id });
+    }
+
+    const fullReply = await Comment.findOne({
+      where: { id: reply.id },
+      include: [
+        {
+          model: User,
+          attributes: ['id', 'nickname'],
+        },
+      ],
+    });
+    res.status(201).json(fullReply);
   } catch (error) {
     console.error(error);
     next(error);
@@ -133,6 +184,10 @@ router.get('/:postId', async (req, res, next) => {
 
     const fullPost = await Post.findOne({
       where: { id: post.id },
+      order: [
+        [Comment, 'replyId', 'ASC'],
+        [Comment, 'id', 'ASC'],
+      ],
       include: [
         {
           model: User, // 좋아요 누른 사람
@@ -145,7 +200,7 @@ router.get('/:postId', async (req, res, next) => {
           include: [
             {
               model: Post,
-              order: [['createdAt', 'DESC']],
+              // order: [['createdAt', 'DESC']],
               include: [
                 {
                   model: Image,
@@ -160,6 +215,7 @@ router.get('/:postId', async (req, res, next) => {
         },
         {
           model: Comment,
+          orders: [['createdAt', 'DESC']],
           include: [
             {
               model: User,
@@ -173,6 +229,13 @@ router.get('/:postId', async (req, res, next) => {
         },
       ],
     });
+    // const fullPostJSON = fullPost.toJSON();
+    // const comments = fullPostJSON.Comments.filter((v) => !v.Reply);
+    // const replies = fullPostJSON.Comments.filter((v) => v.Reply);
+    // id === replies.ReplyId
+    // comments.map((v) => {
+    //   v.
+    // });
     res.status(200).json(fullPost);
   } catch (error) {
     console.error(error);

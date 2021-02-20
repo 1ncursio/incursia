@@ -10,6 +10,10 @@ module.exports = class Comment extends Model {
           type: DataTypes.TEXT,
           allowNull: false,
         },
+        replyId: {
+          type: DataTypes.INTEGER,
+          allowNull: true,
+        },
         // UserId: 1
         // PostId: 3
       },
@@ -26,5 +30,6 @@ module.exports = class Comment extends Model {
   static associate(db) {
     db.Comment.belongsTo(db.User);
     db.Comment.belongsTo(db.Post);
+    // db.Comment.belongsTo(db.Comment, { as: 'Reply' }); // post.addReply
   }
 };

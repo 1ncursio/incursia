@@ -10,7 +10,7 @@ import AppLayout from '../../components/AppLayout';
 import IllustCard from '../../components/IllustCard';
 import fetcher from '../../util/fetcher';
 import UserProfile from '../../components/UserProfile';
-import CommentForm from '../../components/CommentForm';
+import CommentSection from '../../components/CommentSection';
 
 const Illustration = ({ post: initialPost }) => {
   const router = useRouter();
@@ -69,7 +69,7 @@ const Illustration = ({ post: initialPost }) => {
       <Row justify="center" gutter={16}>
         <Col span={12}>
           <IllustCard postData={postData} />
-          <CommentForm />
+          <CommentSection />
         </Col>
         <Col span={4}>
           <UserProfile postData={postData} />

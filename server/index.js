@@ -20,7 +20,7 @@ const db = require('./models');
 dotenv.config();
 
 db.sequelize
-  .sync()
+  .sync({ alter: true })
   .then(() => {
     console.log('MySQL 연결 성공');
   })

@@ -53,6 +53,10 @@ export const ADD_COMMENT_REQUEST = 'ADD_COMMENT_REQUEST';
 export const ADD_COMMENT_SUCCESS = 'ADD_COMMENT_SUCCESS';
 export const ADD_COMMENT_FAILURE = 'ADD_COMMENT_FAILURE';
 
+export const ADD_REPLY_REQUEST = 'ADD_REPLY_REQUEST';
+export const ADD_REPLY_SUCCESS = 'ADD_REPLY_SUCCESS';
+export const ADD_REPLY_FAILURE = 'ADD_REPLY_FAILURE';
+
 export const REMOVE_COMMENT_REQUEST = 'REMOVE_COMMENT_REQUEST';
 export const REMOVE_COMMENT_SUCCESS = 'REMOVE_COMMENT_SUCCESS';
 export const REMOVE_COMMENT_FAILURE = 'REMOVE_COMMENT_FAILURE';
@@ -163,18 +167,22 @@ const reducer = (state = initialState, action) => {
         break;
 
       case ADD_COMMENT_REQUEST:
+      case ADD_REPLY_REQUEST:
         draft.addCommentLoading = true;
         draft.addCommentError = null;
         draft.addCommentDone = false;
         break;
 
-      case ADD_COMMENT_SUCCESS: {
+      case ADD_COMMENT_SUCCESS:
+      case ADD_REPLY_SUCCESS: {
         draft.addedCommentId = action.data.id;
         draft.addCommentLoading = false;
         draft.addCommentDone = true;
         break;
       }
+
       case ADD_COMMENT_FAILURE:
+      case ADD_REPLY_FAILURE:
         draft.addCommentLoading = false;
         draft.addCommentError = action.error;
         break;

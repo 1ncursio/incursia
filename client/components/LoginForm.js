@@ -3,11 +3,8 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { Form, Input, Button, Typography, Modal } from 'antd';
 import styled from 'styled-components';
-import useSWR from 'swr';
 import useInput from './hooks/useInput';
 import { loginRequestAction } from '../reducers/user';
-import fetcher from '../util/fetcher';
-import { useRouter } from 'next/router';
 
 const { Text } = Typography;
 
@@ -15,7 +12,7 @@ const ButtonWrapper = styled.div`
   margin-top: 10px;
 `;
 
-const FormItemWrapper = styled(Form.Item)`
+const FormItem = styled(Form.Item)`
   margin-bottom: 5px;
 `;
 
@@ -46,20 +43,20 @@ const LoginForm = () => {
 
   return (
     <Form onFinish={onFinish} layout="vertical">
-      <FormItemWrapper>
+      <FormItem>
         <Input type="email" value={email} onChange={onChangeEmail} placeholder="이메일" size="large" />
-      </FormItemWrapper>
-      <FormItemWrapper>
+      </FormItem>
+      <FormItem>
         <Input type="password" value={password} onChange={onChangePassword} placeholder="비밀번호" size="large" />
-      </FormItemWrapper>
-      <FormItemWrapper>
+      </FormItem>
+      <FormItem>
         <ButtonWrapper>
           <Button type="primary" htmlType="submit" loading={logInLoading} size="large" shape="round" block>
             로그인
           </Button>
         </ButtonWrapper>
-      </FormItemWrapper>
-      <FormItemWrapper>
+      </FormItem>
+      <FormItem>
         <Link href="/signup">
           <a>
             <Button htmlType="submit" size="large" shape="round" block>
@@ -67,12 +64,12 @@ const LoginForm = () => {
             </Button>
           </a>
         </Link>
-      </FormItemWrapper>
-      <FormItemWrapper>
+      </FormItem>
+      <FormItem>
         <Text type="secondary" style={{ float: 'right' }}>
           비밀번호를 모르겠어요
         </Text>
-      </FormItemWrapper>
+      </FormItem>
     </Form>
   );
 };
