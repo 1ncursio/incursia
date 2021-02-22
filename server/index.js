@@ -14,13 +14,14 @@ const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
 const authRouter = require('./routes/auth');
+const emoticonRouter = require('./routes/emoticon');
 
 const db = require('./models');
 
 dotenv.config();
 
 db.sequelize
-  .sync({ alter: true })
+  .sync()
   .then(() => {
     console.log('MySQL 연결 성공');
   })
@@ -56,6 +57,7 @@ app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
 app.use('/api/posts', postsRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/emoticon', emoticonRouter);
 
 const PORT = 3100;
 

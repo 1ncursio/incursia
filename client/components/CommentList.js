@@ -1,13 +1,14 @@
-import { Comment, Tooltip, Avatar, List } from 'antd';
-import Link from 'next/link';
-import React from 'react';
-import PropTypes from 'prop-types';
-import moment from 'moment';
 import { DeleteOutlined } from '@ant-design/icons';
-import useSWR from 'swr';
+import { Avatar, Comment, Tooltip } from 'antd';
+import moment from 'moment';
+import Link from 'next/link';
 import { useRouter } from 'next/router';
+import PropTypes from 'prop-types';
+import React from 'react';
 import styled, { css } from 'styled-components';
+import useSWR from 'swr';
 import fetcher from '../util/fetcher';
+import CommentContent from './CommentContent/index';
 import CommentForm from './CommentForm';
 
 moment.locale('ko');
@@ -52,7 +53,12 @@ const CommentList = ({ item, toggleReplyForm, onDeleteComment, replyId }) => {
             <span>{moment(item.createdAt).fromNow()}</span>
           </Tooltip>
         }
-        content={<p>{item.content}</p>}
+        content={
+          <CommentContent
+            content={item.content}
+            // emoticons={item.content.match(/:[^:\s]*(?:::[^:\s]*)*:/)}
+          />
+        }
       >
         {replyId === item.id && <CommentForm placeholder="답글 달기" replyId={replyId} type="reply" />}
       </CommentWrapper>

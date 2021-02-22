@@ -1,12 +1,12 @@
-import React, { useCallback, useState } from 'react';
-import { useRouter } from 'next/router';
-import { useDispatch } from 'react-redux';
 import { List, Modal } from 'antd';
+import { useRouter } from 'next/router';
+import React, { useCallback, useState } from 'react';
+import { useDispatch } from 'react-redux';
 import useSWR from 'swr';
 import { REMOVE_COMMENT_REQUEST } from '../reducers/post';
 import fetcher from '../util/fetcher';
-import CommentList from './CommentList';
 import CommentForm from './CommentForm';
+import CommentList from './CommentList';
 
 const CommentSection = () => {
   const router = useRouter();

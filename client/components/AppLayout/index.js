@@ -1,18 +1,15 @@
-import React, { useCallback } from 'react';
-import { useSelector } from 'react-redux';
-import PropTypes from 'prop-types';
+import { BellOutlined } from '@ant-design/icons';
+import { Typography } from 'antd';
 import Link from 'next/link';
-import { Input, Row, Button, Typography } from 'antd';
-import { BellOutlined, DownOutlined } from '@ant-design/icons';
-import styled from 'styled-components';
 import Router from 'next/router';
+import PropTypes from 'prop-types';
+import React, { useCallback } from 'react';
 import useSWR from 'swr';
-import DropdownUser from '../DropdownUser';
-
-import useInput from '../hooks/useInput';
 import fetcher from '../../util/fetcher';
-import { LeftMenu, CenterMenu, RightMenu, MenuItem, CenterMenuItem, Nav, UploadButton, SearchInput } from './styles';
 import DropdownCommunity from '../DropdownCommunity';
+import DropdownUser from '../DropdownUser';
+import useInput from '../hooks/useInput';
+import { CenterMenu, CenterMenuItem, LeftMenu, MenuItem, Nav, RightMenu, SearchInput, UploadButton } from './styles';
 
 const { Text } = Typography;
 

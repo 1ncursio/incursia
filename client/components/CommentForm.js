@@ -1,12 +1,14 @@
-import React, { useCallback, useEffect } from 'react';
-import { Form, Input, Button, Modal } from 'antd';
-import { useDispatch, useSelector } from 'react-redux';
-import useSWR from 'swr';
+import { SmileOutlined } from '@ant-design/icons';
+import { Button, Form, Input, Modal, Popover } from 'antd';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
+import React, { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import useSWR from 'swr';
+import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../reducers/post';
 import fetcher from '../util/fetcher';
 import useInput from './hooks/useInput';
-import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../reducers/post';
+import PopoverEmoticon from './PopoverEmoticon';
 
 const CommentForm = ({ placeholder, type, replyId }) => {
   const dispatch = useDispatch();
@@ -88,8 +90,13 @@ const CommentForm = ({ placeholder, type, replyId }) => {
   }, [commentText, postData, userData, addedCommentId]);
 
   return (
-    <Form onFinish={onSubmitComment} layout="inline" style={{ display: 'flex', justifyContent: 'flex-end' }}>
-      <Form.Item style={{ width: '90%', background: 'white' }}>
+    <Form onFinish={onSubmitComment} layout="inline" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+      <Form.Item>
+        <Popover trigger="click" content={<PopoverEmoticon />}>
+          <SmileOutlined style={{ fontSize: 22, opacity: 0.7, marginRight: 8 }} />
+        </Popover>
+      </Form.Item>
+      <Form.Item style={{ width: '88%', background: 'white' }}>
         <Input.TextArea
           value={commentText}
           onChange={onChangeCommentText}

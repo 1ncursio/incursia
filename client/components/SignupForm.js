@@ -1,14 +1,13 @@
-import React, { useCallback, useState, useEffect } from 'react';
+import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import Head from 'next/head';
-import { Form, Input, Button, Checkbox, Modal } from 'antd';
-import styled from 'styled-components';
-import { useDispatch, useSelector } from 'react-redux';
-import useSWR from 'swr';
 import Router from 'next/router';
-import AppLayout from './AppLayout';
-import useInput from './hooks/useInput';
+import React, { useCallback, useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import styled from 'styled-components';
+import useSWR from 'swr';
 import { SIGN_UP_REQUEST } from '../reducers/user';
 import fetcher from '../util/fetcher';
+import useInput from './hooks/useInput';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -36,7 +35,6 @@ const SignupForm = () => {
 
   useEffect(() => {
     if (signUpDone) {
-      Router.replace('/');
       Modal.success({
         content: '유토피아에 회원가입 하신 것을 축하합니다!',
         okText: '로그인하기',
