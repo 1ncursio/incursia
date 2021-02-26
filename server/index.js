@@ -13,7 +13,7 @@ const app = express();
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
-const authRouter = require('./routes/auth');
+const validationRouter = require('./routes/validation');
 const emoticonRouter = require('./routes/emoticon');
 
 const db = require('./models');
@@ -49,18 +49,12 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.get('/', (req, res) => {
-  return res.send('TEST');
-});
-
 app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/auth', authRouter);
+app.use('/api/validation', validationRouter);
 app.use('/api/emoticon', emoticonRouter);
 
-const PORT = 3100;
-
-app.listen(PORT, () => {
-  console.log(`server is listening ${PORT} port...`);
+app.listen(process.env.PORT, () => {
+  console.log(`server is listening ${process.env.PORT} port...`);
 });

@@ -6,6 +6,8 @@ const bcrypt = require('bcrypt');
 const passport = require('passport');
 const multer = require('multer');
 const path = require('path');
+const jwt = require('jsonwebtoken');
+const { smtpTransport, emailTemplate } = require('../config/email');
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -44,6 +46,8 @@ router.get('/', async (req, res, next) => {
           },
         ],
       });
+
+      console.log('req.ip', req.ip);
 
       res.status(200).json(user);
     } else {
@@ -123,17 +127,29 @@ router.get('/:userId/followings', async (req, res, next) => {
 // POST /api/user
 router.post('/', isNotLoggedIn, async (req, res, next) => {
   try {
-    console.log(req.body.email, req.body.nickname, req.body.password);
     const exUser = await User.findOne({ where: { email: req.body.email } });
     if (exUser) {
       return res.status(403).json({ success: false, message: '이미 사용 중인 이메일입니다.' });
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 11);
-    await User.create({
+
+    const token = jwt.sign(req.body.email, process.env.PRIVATE_KEY);
+
+    const user = await User.create({
       email: req.body.email,
       nickname: req.body.nickname,
       password: hashedPassword,
+      status: 'pending',
+      token: token,
     });
+
+    const info = await smtpTransport.sendMail({
+      from: 'incursiomail@gmail.com',
+      to: user.email,
+      subject: '[유토피아] 링크를 클릭해 회원가입을 완료해주세요.',
+      html: emailTemplate(token),
+    });
+
     return res.status(201).json({ success: true });
   } catch (error) {
     console.error(error);
@@ -197,6 +213,30 @@ router.patch('/profile', isLoggedIn, upload.single('image'), async (req, res, ne
       }
     );
     res.status(200).json({ success: true, profile: req.file.filename });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// PATCH /api/user/nickname
+router.patch('/validation', async (req, res, next) => {
+  try {
+    console.log(req.body);
+    const user = await User.findOne({ where: { token: req.body.token, status: 'pending' } });
+    if (!user) {
+      return res.status(403).json({ success: false, message: '인증이 완료되었거나, 유효시간이 지났습니다.' });
+    }
+
+    await User.update(
+      {
+        status: 'authenticated',
+      },
+      {
+        where: { token: req.body.token },
+      }
+    );
+    res.status(200).json({ success: true });
   } catch (error) {
     console.error(error);
     next(error);

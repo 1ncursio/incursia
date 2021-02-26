@@ -4,7 +4,7 @@ import { Row, Col, Divider } from 'antd';
 import useSWR from 'swr';
 import AppLayout from '../components/AppLayout';
 import PostCard from '../components/PostCard';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 
 const NoticesPage = () => {
   const { hasMorePosts } = useSelector((state) => state.post);

@@ -9,7 +9,7 @@ const { isLoggedIn } = require('./middlewares');
 //  GET api/posts
 router.get('/', async (req, res, next) => {
   try {
-    const where = {};
+    const where = { board: 'illustration' };
     if (parseInt(req.query.lastId, 10)) {
       // 초기 로딩이 아닐 때
       where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //보다 작은

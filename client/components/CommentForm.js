@@ -1,26 +1,24 @@
 import { SmileOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Popover } from 'antd';
-import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useSWR from 'swr';
 import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../reducers/post';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 import useInput from './hooks/useInput';
 import PopoverEmoticon from './PopoverEmoticon';
 
-const CommentForm = ({ placeholder, type, replyId }) => {
+const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMutate }) => {
   const dispatch = useDispatch();
-  const router = useRouter();
-  const { id } = router.query;
+
+  const [visiblePopover, setVisiblePopover] = useState(false);
 
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
 
   const { addCommentDone, addCommentLoading, addedCommentId, removeCommentDone, removedCommentId } = useSelector((state) => state.post);
 
   const { data: userData } = useSWR('/api/user', fetcher);
-  const { data: postData, mutate: postMutate } = useSWR(`/api/post/${id}`, fetcher);
 
   useEffect(() => {
     if (addCommentDone) {
@@ -32,6 +30,7 @@ const CommentForm = ({ placeholder, type, replyId }) => {
               ...postData.Comments,
               {
                 id: addedCommentId,
+                replyId: addedCommentId,
                 userId: userData.id,
                 content: commentText,
                 User: {
@@ -44,7 +43,7 @@ const CommentForm = ({ placeholder, type, replyId }) => {
           },
           false
         );
-      } else {
+      } else if (type === 'reply') {
         postMutate();
       }
       setCommentText('');
@@ -69,31 +68,40 @@ const CommentForm = ({ placeholder, type, replyId }) => {
         content: '내용을 작성해주세요.',
       });
     }
-    if (userData) {
-      if (type === 'comment') {
-        dispatch({
-          type: ADD_COMMENT_REQUEST,
-          data: { content: commentText, postId: postData.id, userId: userData.id },
-        });
-      } else {
-        dispatch({
-          type: ADD_REPLY_REQUEST,
-          data: { content: commentText, postId: postData.id, userId: userData.id, replyId },
-        });
-      }
-    } else {
-      Modal.error({
+
+    if (!userData) {
+      return Modal.error({
         content: '로그인한 사용자만 접근 가능합니다.',
         okText: '확인',
       });
     }
-  }, [commentText, postData, userData, addedCommentId]);
+
+    if (type === 'comment') {
+      dispatch({
+        type: ADD_COMMENT_REQUEST,
+        data: { content: commentText, postId: postData.id, userId: userData.id, replyId },
+      });
+    } else {
+      dispatch({
+        type: ADD_REPLY_REQUEST,
+        data: { content: commentText, postId: postData.id, userId: userData.id, replyId },
+      });
+    }
+
+    setReplyId(-1);
+  }, [commentText, userData, addedCommentId, replyId, setReplyId]);
 
   return (
     <Form onFinish={onSubmitComment} layout="inline" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
       <Form.Item>
-        <Popover trigger="click" content={<PopoverEmoticon />}>
-          <SmileOutlined style={{ fontSize: 22, opacity: 0.7, marginRight: 8 }} />
+        <Popover
+          trigger="click"
+          placement="bottomRight"
+          title="이모티콘"
+          visible={visiblePopover}
+          content={<PopoverEmoticon setCommentText={setCommentText} setVisiblePopover={setVisiblePopover} />}
+        >
+          <SmileOutlined style={{ fontSize: 22, opacity: 0.7, marginRight: 8 }} onClick={() => setVisiblePopover((prev) => !prev)} />
         </Popover>
       </Form.Item>
       <Form.Item style={{ width: '88%', background: 'white' }}>
@@ -123,6 +131,9 @@ CommentForm.propTypes = {
   placeholder: PropTypes.string,
   type: PropTypes.string.isRequired,
   replyId: PropTypes.number,
+  setReplyId: PropTypes.func.isRequired,
+  postData: PropTypes.object.isRequired,
+  postMutate: PropTypes.func.isRequired,
 };
 
 export default CommentForm;

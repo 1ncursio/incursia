@@ -7,7 +7,7 @@ import { HeartOutlined, ShareAltOutlined, DeleteOutlined, AlertOutlined, HeartFi
 import moment from 'moment';
 import useSWR from 'swr';
 import { LIKE_POST_REQUEST, REMOVE_POST_REQUEST, DISLIKE_POST_REQUEST } from '../reducers/post';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 import styled from 'styled-components';
 
 moment.locale('ko');

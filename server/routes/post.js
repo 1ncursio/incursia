@@ -3,7 +3,7 @@ const multer = require('multer');
 const path = require('path');
 const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
 const router = express.Router();
-const { Post, User, Tag, Image, Comment } = require('../models');
+const { Post, User, Tag, Image, Comment, sequelize } = require('../models');
 
 const upload = multer({
   storage: multer.diskStorage({
@@ -28,6 +28,7 @@ router.post('/', isLoggedIn, async (req, res, next) => {
       title: isTitleEmpty ? 'no title' : req.body.title,
       caption: req.body.caption,
       UserId: req.user.id,
+      board: 'illustration',
     });
     if (tags) {
       const result = await Promise.all(tags.map((tag) => Tag.findOrCreate({ where: { name: tag.toLowerCase() } })));
@@ -182,6 +183,25 @@ router.get('/:postId', async (req, res, next) => {
       return res.status(404).send('존재하지 않는 게시글입니다.');
     }
 
+    const views = req.cookies.views || '';
+    console.log('조회수', views);
+
+    const splitedViews = views.split('_');
+
+    const view = splitedViews.find((v) => v === String(post.id));
+
+    // if (!view) {
+    //   // 안봤을 떄
+    //   const cookieValue = views ? `${views}_${post.id}` : String(post.id);
+    //   res.cookie('views', cookieValue, { maxAge: 1000 * 60 * 30 }); // 30분
+    //   await post.increment('views');
+    //   console.log('조회수 증가!');
+    // } else {
+    //   console.log('이미 봤습니다.');
+    // }
+
+    await post.increment('views');
+
     const fullPost = await Post.findOne({
       where: { id: post.id },
       order: [
@@ -229,13 +249,6 @@ router.get('/:postId', async (req, res, next) => {
         },
       ],
     });
-    // const fullPostJSON = fullPost.toJSON();
-    // const comments = fullPostJSON.Comments.filter((v) => !v.Reply);
-    // const replies = fullPostJSON.Comments.filter((v) => v.Reply);
-    // id === replies.ReplyId
-    // comments.map((v) => {
-    //   v.
-    // });
     res.status(200).json(fullPost);
   } catch (error) {
     console.error(error);

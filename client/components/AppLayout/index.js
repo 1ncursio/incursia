@@ -5,7 +5,7 @@ import Router from 'next/router';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import useSWR from 'swr';
-import fetcher from '../../util/fetcher';
+import { fetcher } from '../../util/fetcher';
 import DropdownCommunity from '../DropdownCommunity';
 import DropdownUser from '../DropdownUser';
 import useInput from '../hooks/useInput';

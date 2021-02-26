@@ -8,7 +8,7 @@ import AppLayout from '../components/AppLayout';
 import TagForm from '../components/TagForm';
 import { UPLOAD_IMAGES_REQUEST, ADD_POST_REQUEST, REMOVE_IMAGE } from '../reducers/post';
 import useInput from '../components/hooks/useInput';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 
 // const { Option } = Select;
 const { Paragraph } = Typography;

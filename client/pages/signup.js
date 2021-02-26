@@ -1,7 +1,12 @@
-import { Card, Col, Row, Space, Typography } from 'antd';
-import React from 'react';
+import { Card, Col, Modal, Row, Space, Typography } from 'antd';
+import React, { useEffect } from 'react';
+import Router from 'next/router';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components';
+import useSWR from 'swr';
 import SignupForm from '../components/SignupForm';
+import { fetcher } from '../util/fetcher';
+import SignUpComplete from '../components/SignUpComplete';
 
 const BackgroundImage = styled.div`
   width: 100%;
@@ -18,21 +23,50 @@ const BackgroundImage = styled.div`
 
 const { Text, Title } = Typography;
 
+const CardWrapper = styled(Card)`
+  height: 500px;
+  opacity: 0.9;
+  border-radius: 5px;
+  text-align: center;
+`;
+
+const TitleWrapper = styled(Title)`
+  margin-bottom: 0;
+`;
+
 const signup = () => {
+  const { signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
+
+  const { data: userData } = useSWR('/api/user', fetcher);
+
+  useEffect(() => {
+    if (userData) {
+      Router.replace('/');
+    }
+  }, [userData]);
+
+  useEffect(() => {
+    if (signUpError) {
+      Modal.error({
+        content: signUpError.message,
+      });
+    }
+  }, [signUpError]);
+
   return (
     <>
       <Row justify="center" align="middle" style={{ height: '100vh' }}>
-        <Col xs={24} md={4}>
-          <Card style={{ height: 430, textAlign: 'center', opacity: 0.9, borderRadius: 5 }}>
+        <Col xs={24} md={6}>
+          <CardWrapper>
             <Space direction="vertical" style={{ width: '90%' }}>
-              <Title level={1} style={{ margin: 0 }}>
-                유토피아
-              </Title>
+              <TitleWrapper level={1}>유토피아</TitleWrapper>
               <Text type="secondary">당신의 그림을 공유해보세요</Text>
               <br />
-              <SignupForm />
+              {/* <SignupForm /> */}
+              {/* {signUpDone ? <SignUpComplete /> : <SignupForm />} */}
+              <SignUpComplete />
             </Space>
-          </Card>
+          </CardWrapper>
         </Col>
       </Row>
       <BackgroundImage />

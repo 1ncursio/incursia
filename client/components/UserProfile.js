@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useSWR from 'swr';
 import FollowButton from './FollowButton';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 
 const CurrentPostCover = styled.div`
   background-color: rgba(255, 255, 255, 0.5);

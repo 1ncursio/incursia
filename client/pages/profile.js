@@ -6,7 +6,7 @@ import useSWR from 'swr';
 
 import AppLayout from '../components/AppLayout';
 import ProfileForm from '../components/ProfileForm';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 
 const Profile = () => {
   const { data: userData, error: userError } = useSWR('/api/user', fetcher);

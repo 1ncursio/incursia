@@ -6,7 +6,7 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import AppLayout from '../../components/AppLayout';
 import PostCard from '../../components/PostCard';
-import fetcher from '../../util/fetcher';
+import { fetcher } from '../../util/fetcher';
 import wrapper from '../../store/configureStore';
 
 const TagPage = ({ posts: initialPosts }) => {

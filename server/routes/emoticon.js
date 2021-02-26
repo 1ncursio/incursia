@@ -4,15 +4,11 @@ const router = express.Router();
 
 const { Emoticon } = require('../models');
 
-//  GET api/emoticon/smile
+//  GET api/emoticon
 router.get('/', async (req, res, next) => {
   try {
     const emoticon = await Emoticon.findAll();
-    if (emoticon) {
-      res.status(200).json({ success: true, emoticon });
-    } else {
-      res.status(404).json({ success: false, message: '해당 이모티콘을 찾을 수 없습니다.' });
-    }
+    res.status(200).json(emoticon);
   } catch (error) {
     console.error(error);
     next(error);
@@ -24,11 +20,7 @@ router.get('/:name', async (req, res, next) => {
   try {
     const { name } = req.params;
     const emoticon = await Emoticon.findOne({ where: { name } });
-    if (emoticon) {
-      res.status(200).json({ success: true, emoticon });
-    } else {
-      res.status(404).json({ success: false, message: '해당 이모티콘을 찾을 수 없습니다.' });
-    }
+    res.status(200).json(emoticon);
   } catch (error) {
     console.error(error);
     next(error);

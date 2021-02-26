@@ -1,12 +1,9 @@
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import Head from 'next/head';
-import Router from 'next/router';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
-import useSWR from 'swr';
 import { SIGN_UP_REQUEST } from '../reducers/user';
-import fetcher from '../util/fetcher';
 import useInput from './hooks/useInput';
 
 const ErrorMessage = styled.div`
@@ -23,35 +20,7 @@ const FormItemWrapper = styled(Form.Item)`
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const { signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
-
-  const { data: userData } = useSWR('/api/user', fetcher);
-
-  useEffect(() => {
-    if (userData) {
-      Router.replace('/');
-    }
-  }, [userData]);
-
-  useEffect(() => {
-    if (signUpDone) {
-      Modal.success({
-        content: '유토피아에 회원가입 하신 것을 축하합니다!',
-        okText: '로그인하기',
-        onOk() {
-          Router.replace('/login');
-        },
-      });
-    }
-  }, [signUpDone]);
-
-  useEffect(() => {
-    if (signUpError) {
-      Modal.error({
-        content: signUpError.message,
-      });
-    }
-  }, [signUpError]);
+  const { signUpLoading } = useSelector((state) => state.user);
 
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
@@ -97,7 +66,7 @@ const SignupForm = () => {
   return (
     <>
       <Head>
-        <title>회원가입 | NodeBird</title>
+        <title>회원가입 | 유토피아</title>
       </Head>
 
       <Form onFinish={onFinish} layout="vertical">

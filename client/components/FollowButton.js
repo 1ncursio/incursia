@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { FOLLOW_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 
 const FollowButton = ({ postData }) => {
   const dispatch = useDispatch();
@@ -69,13 +69,7 @@ const FollowButton = ({ postData }) => {
     return null;
   }
   return (
-    <Button
-      loading={followLoading || unfollowLoading}
-      onClick={onClickButton}
-      type={isFollowing ? 'default' : 'primary'}
-      shape="round"
-      block
-    >
+    <Button loading={followLoading || unfollowLoading} onClick={onClickButton} type={isFollowing ? 'default' : 'primary'} shape="round" block>
       {isFollowing ? '팔로우 중' : '팔로우 하기'}
     </Button>
   );

@@ -5,6 +5,10 @@ module.exports = class Post extends Model {
   static init(sequelize) {
     return super.init(
       {
+        board: {
+          type: DataTypes.STRING(20),
+          allowNull: false,
+        },
         title: {
           type: DataTypes.STRING(50),
         },
@@ -31,6 +35,6 @@ module.exports = class Post extends Model {
     db.Post.belongsToMany(db.Tag, { through: 'PostTag' }); // post.addHashtags
     db.Post.hasMany(db.Comment); // post.addComments, post.getComments
     db.Post.hasMany(db.Image); // post.addImages, post.getImages
-    db.Post.belongsToMany(db.User, { through: 'Like', as: 'Likers' }); // post.addLikers, post.removeLikers
+    db.Post.belongsToMany(db.User, { through: 'PostLike', as: 'Likers' }); // post.addLikers, post.removeLikers
   }
 };

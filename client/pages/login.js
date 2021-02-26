@@ -4,7 +4,8 @@ import useSWR from 'swr';
 import { useSelector } from 'react-redux';
 import { Card, Col, Row, Space, Typography } from 'antd';
 import styled from 'styled-components';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
+
 import LoginForm from '../components/LoginForm';
 
 const BackgroundImage = styled.div`
@@ -39,8 +40,8 @@ const login = () => {
   return (
     <>
       <Row justify="center" align="middle" style={{ height: '100vh' }}>
-        <Col xs={24} md={4}>
-          <Card style={{ height: 430, textAlign: 'center', opacity: 0.9, borderRadius: 5 }}>
+        <Col xs={24} md={6}>
+          <Card style={{ height: 500, textAlign: 'center', opacity: 0.9, borderRadius: 5 }}>
             <Space direction="vertical" style={{ width: '90%' }}>
               <Title level={1} style={{ margin: 0 }}>
                 유토피아

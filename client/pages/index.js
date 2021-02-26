@@ -5,7 +5,7 @@ import useSWR from 'swr';
 import styled from 'styled-components';
 import AppLayout from '../components/AppLayout';
 import PostCard from '../components/PostCard';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 
 const DividerHeader = styled.div`
   height: 80px;
@@ -22,7 +22,7 @@ const Home = () => {
 
   const { data: userData } = useSWR('/api/user', fetcher);
   const { data: postsData } = useSWR('/api/posts?lastId=0', fetcher);
-  const { data: followingsPostsData } = useSWR('/api/posts/followings/?lastId=0', fetcher);
+  const { data: followingsPostsData } = useSWR(userData ? '/api/posts/followings/?lastId=0' : null, fetcher);
 
   return (
     <AppLayout>

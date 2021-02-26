@@ -5,7 +5,7 @@ import ImgCrop from 'antd-img-crop';
 import useSWR from 'swr';
 import useInput from './hooks/useInput';
 import { CHANGE_PROFILE_REQUEST, CHANGE_NICKNAME_REQUEST, CHANGE_INTRO_REQUEST } from '../reducers/user';
-import fetcher from '../util/fetcher';
+import { fetcher } from '../util/fetcher';
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -13,14 +13,9 @@ const { Text } = Typography;
 const ProfileForm = () => {
   const { data: userData, error: userError, mutate: userMutate } = useSWR('/api/user', fetcher);
 
-  const {
-    changeNicknameLoading,
-    changeNicknameDone,
-    changeNicknameError,
-    changeIntroLoading,
-    changeIntroDone,
-    changeIntroError,
-  } = useSelector((state) => state.user);
+  const { changeNicknameLoading, changeNicknameDone, changeNicknameError, changeIntroLoading, changeIntroDone, changeIntroError } = useSelector(
+    (state) => state.user
+  );
 
   const [nickname, onChangeNickname, setNickname] = useInput('');
   const [intro, onChangeIntro, setIntro] = useInput('');
@@ -135,12 +130,7 @@ const ProfileForm = () => {
           <Text type="secondary">{userData?.email}</Text>
         </Form.Item>
         <Form.Item label={<Text strong>닉네임</Text>}>
-          <Input
-            value={nickname}
-            onChange={onChangeNickname}
-            maxLength="20"
-            suffix={<Text type="secondary">{` ${nickname?.length} / 20`}</Text>}
-          />
+          <Input value={nickname} onChange={onChangeNickname} maxLength="20" suffix={<Text type="secondary">{` ${nickname?.length} / 20`}</Text>} />
           <Button
             type="primary"
             onClick={onSubmitNickname}

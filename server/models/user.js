@@ -25,6 +25,14 @@ module.exports = class User extends Model {
           type: DataTypes.STRING(100),
           allowNull: false, // 필수
         },
+        status: {
+          type: DataTypes.STRING(15),
+          defaultValue: 'pending',
+        },
+        token: {
+          type: DataTypes.STRING(100),
+          allowNull: false,
+        },
         role: {
           // admin 2
           // manager 1
@@ -45,7 +53,7 @@ module.exports = class User extends Model {
   static associate(db) {
     db.User.hasMany(db.Post);
     db.User.hasMany(db.Comment);
-    db.User.belongsToMany(db.Post, { through: 'Like', as: 'Liked' });
+    db.User.belongsToMany(db.Post, { through: 'PostLike', as: 'Liked' });
     db.User.belongsToMany(db.User, {
       through: 'Follow',
       as: 'Followers',
