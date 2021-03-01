@@ -30,7 +30,7 @@ module.exports = class User extends Model {
           defaultValue: 'pending',
         },
         token: {
-          type: DataTypes.STRING(100),
+          type: DataTypes.STRING(200),
           allowNull: false,
         },
         role: {

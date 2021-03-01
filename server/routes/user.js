@@ -7,6 +7,7 @@ const passport = require('passport');
 const multer = require('multer');
 const path = require('path');
 const jwt = require('jsonwebtoken');
+const { nanoid } = require('nanoid');
 const { smtpTransport, emailTemplate } = require('../config/email');
 
 const upload = multer({
@@ -133,7 +134,11 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
     }
     const hashedPassword = await bcrypt.hash(req.body.password, 11);
 
-    const token = jwt.sign(req.body.email, process.env.PRIVATE_KEY);
+    const token = jwt.sign(
+      { data: req.body.email },
+      process.env.PRIVATE_KEY
+      // , { expiresIn: 10 * 1000 }
+    );
 
     const user = await User.create({
       email: req.body.email,
@@ -220,27 +225,25 @@ router.patch('/profile', isLoggedIn, upload.single('image'), async (req, res, ne
 });
 
 // PATCH /api/user/nickname
-router.patch('/validation', async (req, res, next) => {
-  try {
-    console.log(req.body);
-    const user = await User.findOne({ where: { token: req.body.token, status: 'pending' } });
-    if (!user) {
-      return res.status(403).json({ success: false, message: '인증이 완료되었거나, 유효시간이 지났습니다.' });
-    }
-
-    await User.update(
-      {
-        status: 'authenticated',
-      },
-      {
-        where: { token: req.body.token },
+router.patch('/validation', (req, res, next) => {
+  jwt.verify(req.body.token, process.env.PRIVATE_KEY, async (err, decoded) => {
+    try {
+      if (err) {
+        console.error(err);
+        return next(err);
       }
-    );
-    res.status(200).json({ success: true });
-  } catch (error) {
-    console.error(error);
-    next(error);
-  }
+      console.log('decoded', decoded);
+      const user = await User.findOne({ where: { email: decoded.data, token: req.body.token, status: 'pending' } });
+      if (!user) {
+        return res.status(403).json({ success: false, message: '인증이 완료되었거나, 유효시간이 지났습니다.' });
+      }
+      await user.update({ status: 'authenticated' });
+      res.status(200).json({ success: true });
+    } catch (error) {
+      console.error(error);
+      next(error);
+    }
+  });
 });
 
 // PATCH /api/user/nickname

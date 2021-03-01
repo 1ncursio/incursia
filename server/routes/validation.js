@@ -3,14 +3,11 @@ const { Op } = require('sequelize');
 
 const router = express.Router();
 
-// const dotenv = require('dotenv');
 const { nanoid } = require('nanoid');
 const jwt = require('jsonwebtoken');
 const { Post, Comment, Image, User, Tag } = require('../models');
 const { isLoggedIn } = require('./middlewares');
 const { smtpTransport, emailTemplate } = require('../config/email');
-
-// dotenv.config();
 
 //  GET api/validation?token=abcd~
 router.get('/', isLoggedIn, async (req, res, next) => {

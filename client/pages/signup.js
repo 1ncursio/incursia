@@ -48,7 +48,7 @@ const signup = () => {
   useEffect(() => {
     if (signUpError) {
       Modal.error({
-        content: signUpError.message,
+        content: signUpError,
       });
     }
   }, [signUpError]);
@@ -63,8 +63,8 @@ const signup = () => {
               <Text type="secondary">당신의 그림을 공유해보세요</Text>
               <br />
               {/* <SignupForm /> */}
-              {/* {signUpDone ? <SignUpComplete /> : <SignupForm />} */}
-              <SignUpComplete />
+              {signUpDone ? <SignUpComplete /> : <SignupForm />}
+              {/* <SignUpComplete /> */}
             </Space>
           </CardWrapper>
         </Col>
