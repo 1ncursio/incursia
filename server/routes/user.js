@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User, Post, Image, Tag, Comment } = require('../models');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn, isNotLoggedIn, testMiddleware } = require('./middlewares');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const multer = require('multer');
@@ -148,8 +148,8 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
       token: token,
     });
 
-    const info = await smtpTransport.sendMail({
-      from: 'incursiomail@gmail.com',
+    await smtpTransport.sendMail({
+      from: process.env.NODEMAILER_USER,
       to: user.email,
       subject: '[유토피아] 링크를 클릭해 회원가입을 완료해주세요.',
       html: emailTemplate(token),
@@ -160,6 +160,22 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
     console.error(error);
     next(error); // status 500
   }
+});
+
+router.post('/mail', isNotLoggedIn, async (req, res, next) => {
+  const user = await User.findOne({ where: { email: req.body.email, status: 'pending' } });
+  if (!user) {
+    return res.status(403).json({ success: false, message: '가입되지 않았거나 이미 인증이 완료된 계정입니다.' });
+  }
+
+  await smtpTransport.sendMail({
+    from: process.env.NODEMAILER_USER,
+    to: user.email,
+    subject: '[유토피아] 링크를 클릭해 회원가입을 완료해주세요.',
+    html: emailTemplate(user.token),
+  });
+
+  res.status(200).json({ success: true, message: '성공' });
 });
 
 // POST /api/user/login
@@ -225,25 +241,37 @@ router.patch('/profile', isLoggedIn, upload.single('image'), async (req, res, ne
 });
 
 // PATCH /api/user/nickname
-router.patch('/validation', (req, res, next) => {
-  jwt.verify(req.body.token, process.env.PRIVATE_KEY, async (err, decoded) => {
-    try {
-      if (err) {
-        console.error(err);
-        return next(err);
-      }
-      console.log('decoded', decoded);
-      const user = await User.findOne({ where: { email: decoded.data, token: req.body.token, status: 'pending' } });
-      if (!user) {
-        return res.status(403).json({ success: false, message: '인증이 완료되었거나, 유효시간이 지났습니다.' });
-      }
-      await user.update({ status: 'authenticated' });
-      res.status(200).json({ success: true });
-    } catch (error) {
-      console.error(error);
-      next(error);
+router.patch('/validation', testMiddleware, async (req, res, next) => {
+  try {
+    const user = await User.findOne({ where: { token: req.body.token, status: 'pending' } });
+    if (!user) {
+      return res.status(403).json({ success: false, message: '인증이 완료되었거나, 유효시간이 지났습니다.' });
     }
-  });
+    await user.update({ status: 'authenticated' });
+    res.status(200).json({ success: true });
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+
+  // jwt.verify(req.body.token, process.env.PRIVATE_KEY, async (err, decoded) => {
+  //   try {
+  //     if (err) {
+  //       console.error(err);
+  //       return next(err);
+  //     }
+  //     console.log('decoded', decoded);
+  //     const user = await User.findOne({ where: { email: decoded.data, token: req.body.token, status: 'pending' } });
+  //     if (!user) {
+  //       return res.status(403).json({ success: false, message: '인증이 완료되었거나, 유효시간이 지났습니다.' });
+  //     }
+  //     await user.update({ status: 'authenticated' });
+  //     res.status(200).json({ success: true });
+  //   } catch (error) {
+  //     console.error(error);
+  //     next(error);
+  //   }
+  // });
 });
 
 // PATCH /api/user/nickname

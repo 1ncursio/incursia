@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const path = require('path');
-const { isLoggedIn, isNotLoggedIn } = require('./middlewares');
+const { isLoggedIn, isNotLoggedIn, isAdmin } = require('./middlewares');
 const router = express.Router();
 const { Post, User, Tag, Image, Comment, sequelize } = require('../models');
 
@@ -72,6 +72,60 @@ router.post('/', isLoggedIn, async (req, res, next) => {
         {
           model: Tag,
           attributes: ['name'],
+        },
+      ],
+    });
+    res.status(201).json(fullPost);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// POST /api/post/notice
+router.post('/notice', isLoggedIn, isAdmin, async (req, res, next) => {
+  try {
+    const isTitleEmpty = req.body.title.length === 0;
+    const post = await Post.create({
+      title: isTitleEmpty ? 'no title' : req.body.title,
+      caption: req.body.caption,
+      UserId: req.user.id,
+      board: 'notice',
+    });
+    if (req.body.imagePaths) {
+      if (Array.isArray(req.body.imagePaths)) {
+        const images = await Promise.all(req.body.imagePaths.map((image) => Image.create({ src: image })));
+        await post.addImages(images);
+      } else {
+        const image = await Image.create({ src: req.body.imagePaths });
+        await post.addImages(image);
+      }
+    }
+    const fullPost = await Post.findOne({
+      where: {
+        id: post.id,
+      },
+      include: [
+        {
+          model: Image,
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User, // 댓글 작성자
+              attributes: ['id', 'nickname'],
+            },
+          ],
+        },
+        {
+          model: User, // 게시글 작성자
+          attributes: ['id', 'nickname'],
+        },
+        {
+          model: User, // 좋아요 누른 사람
+          as: 'Likers',
+          attributes: ['id'],
         },
       ],
     });

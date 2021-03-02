@@ -57,6 +57,57 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+//  GET api/posts/notices
+router.get('/notices', async (req, res, next) => {
+  try {
+    const where = { board: 'notice' };
+    if (parseInt(req.query.lastId, 10)) {
+      // 초기 로딩이 아닐 때
+      where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //보다 작은
+    }
+    const posts = await Post.findAll({
+      where,
+      limit: 12,
+      order: [
+        ['createdAt', 'DESC'],
+        [Comment, 'createdAt', 'DESC'],
+      ],
+      include: [
+        {
+          model: User, // 포스트 작성자
+          attributes: ['id', 'nickname', 'profile'],
+        },
+        {
+          model: Image,
+          attributes: ['src'],
+        },
+        {
+          model: Comment,
+          include: [
+            {
+              model: User, // 댓글 작성자
+              attributes: ['id', 'nickname', 'profile'],
+            },
+          ],
+        },
+        {
+          model: User, // 좋아요 누른 사람
+          as: 'Likers',
+          attributes: ['id'],
+        },
+        {
+          model: Tag,
+          attributes: ['name'],
+        },
+      ],
+    });
+    res.status(200).json(posts);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
 //  GET api/posts/followings
 router.get('/followings', isLoggedIn, async (req, res, next) => {
   try {
