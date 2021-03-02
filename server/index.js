@@ -13,7 +13,6 @@ const app = express();
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
 const postsRouter = require('./routes/posts');
-const validationRouter = require('./routes/validation');
 const emoticonRouter = require('./routes/emoticon');
 
 const db = require('./models');
@@ -52,7 +51,6 @@ app.use(passport.session());
 app.use('/api/user', userRouter);
 app.use('/api/post', postRouter);
 app.use('/api/posts', postsRouter);
-app.use('/api/validation', validationRouter);
 app.use('/api/emoticon', emoticonRouter);
 
 app.listen(process.env.PORT, () => {

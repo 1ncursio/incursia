@@ -1,10 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
-// import 'antd/dist/antd.css';
-import '../style/my_custom.css';
+import 'antd/dist/antd.css';
+// import '../style/my_custom.css';
 import { createGlobalStyle } from 'styled-components';
-import { CookiesProvider } from 'react-cookie';
 import wrapper from '../store/configureStore';
 
 const Global = createGlobalStyle`
@@ -36,15 +35,14 @@ const Utopia = ({ Component, pageProps }) => {
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
       <Global />
-      <CookiesProvider>
-        <Component {...pageProps} />
-      </CookiesProvider>
+      <Component {...pageProps} />
     </>
   );
 };
 
 Utopia.propTypes = {
   Component: PropTypes.elementType.isRequired,
+  pageProps: PropTypes.object.isRequired,
 };
 
 export default wrapper.withRedux(Utopia);
