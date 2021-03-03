@@ -237,12 +237,12 @@ router.get('/:postId', async (req, res, next) => {
       return res.status(404).send('존재하지 않는 게시글입니다.');
     }
 
-    const views = req.cookies.views || '';
-    console.log('조회수', views);
+    // const views = req.cookies.views || '';
+    // console.log('조회수', views);
 
-    const splitedViews = views.split('_');
+    // const splitedViews = views.split('_');
 
-    const view = splitedViews.find((v) => v === String(post.id));
+    // const view = splitedViews.find((v) => v === String(post.id));
 
     // if (!view) {
     //   // 안봤을 떄
@@ -257,7 +257,7 @@ router.get('/:postId', async (req, res, next) => {
     await post.increment('views');
 
     const fullPost = await Post.findOne({
-      where: { id: post.id },
+      where: { id: post.id, board: 'illustration' },
       order: [
         [Comment, 'replyId', 'ASC'],
         [Comment, 'id', 'ASC'],
@@ -300,6 +300,77 @@ router.get('/:postId', async (req, res, next) => {
         {
           model: Tag,
           attributes: ['name'],
+        },
+      ],
+    });
+    res.status(200).json(fullPost);
+  } catch (error) {
+    console.error(error);
+    next(error);
+  }
+});
+
+// GET /api/post/notice/1
+router.get('/notice/:postId', async (req, res, next) => {
+  try {
+    const post = await Post.findOne({
+      where: {
+        id: req.params.postId,
+        board: 'notice',
+      },
+    });
+    if (!post) {
+      return res.status(404).send('존재하지 않는 게시글입니다.');
+    }
+
+    // const views = req.cookies.views || '';
+    // console.log('조회수', views);
+
+    // const splitedViews = views.split('_');
+
+    // const view = splitedViews.find((v) => v === String(post.id));
+
+    await post.increment('views');
+
+    const fullPost = await Post.findOne({
+      where: { id: post.id },
+      order: [
+        [Comment, 'replyId', 'ASC'],
+        [Comment, 'id', 'ASC'],
+      ],
+      include: [
+        {
+          model: User, // 좋아요 누른 사람
+          as: 'Likers',
+          attributes: ['id', 'nickname', 'profile'],
+        },
+        {
+          model: User,
+          attributes: ['id', 'nickname', 'profile'],
+          include: [
+            {
+              model: Post,
+              include: [
+                {
+                  model: Image,
+                },
+              ],
+            },
+          ],
+        },
+        {
+          model: Image,
+          attributes: ['src'],
+        },
+        {
+          model: Comment,
+          orders: [['createdAt', 'DESC']],
+          include: [
+            {
+              model: User,
+              attributes: ['id', 'nickname', 'profile'],
+            },
+          ],
         },
       ],
     });

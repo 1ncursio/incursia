@@ -19,7 +19,7 @@ const NoticesPage = () => {
           <Divider orientation="left">공지사항</Divider>
           <List>
             {noticesData?.map((notice) => (
-              <List.Item>
+              <List.Item key={notice.id}>
                 <NoticeCard key={notice.id} notice={notice} />
               </List.Item>
             ))}

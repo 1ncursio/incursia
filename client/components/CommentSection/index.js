@@ -1,6 +1,6 @@
 import { Avatar, List, Modal, Tooltip } from 'antd';
 import moment from 'moment';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
@@ -60,7 +60,7 @@ const CommentSection = ({ postData, postMutate }) => {
           renderItem={(item) => (
             <li>
               <CommentWrapper
-                nested={item.id !== item.replyId}
+                nested={+(item.id !== item.replyId)}
                 actions={[
                   <span onClick={() => toggleReplyForm(item.id)}>답글</span>,
                   <Tooltip title="삭제">{item.User.id === userData?.id && <DeleteOutlined onClick={() => onDeleteComment(item.id)} />}</Tooltip>,
