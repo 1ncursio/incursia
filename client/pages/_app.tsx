@@ -1,9 +1,10 @@
-import React from 'react';
+import React, { ElementType } from 'react';
 import PropTypes from 'prop-types';
 import Head from 'next/head';
 import 'antd/dist/antd.css';
 // import '../style/my_custom.css';
 import { createGlobalStyle } from 'styled-components';
+// @ts-ignore
 import wrapper from '../store/configureStore';
 
 const Global = createGlobalStyle`
@@ -26,7 +27,12 @@ const Global = createGlobalStyle`
     }
 `;
 
-const Utopia = ({ Component, pageProps }) => {
+type Props = {
+  Component: ElementType;
+  pageProps: any;
+};
+
+const Utopia = ({ Component, pageProps }: Props) => {
   return (
     <>
       <Head>
