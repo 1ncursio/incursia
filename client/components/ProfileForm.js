@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { Row, Col, Button, Form, Input, Typography, Modal, Avatar, Upload, message } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import useSWR from 'swr';
-import useInput from './hooks/useInput';
+import useInput from '../hooks/useInput.ts';
 import { CHANGE_PROFILE_REQUEST, CHANGE_NICKNAME_REQUEST, CHANGE_INTRO_REQUEST } from '../reducers/user';
 import { fetcher } from '../util/fetcher';
 

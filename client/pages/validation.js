@@ -2,7 +2,7 @@ import { Button, Input, Form, Modal } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
-import useInput from '../components/hooks/useInput';
+import useInput from '../hooks/useInput.ts';
 import { fetcherPatch } from '../util/fetcher';
 
 const validation = () => {

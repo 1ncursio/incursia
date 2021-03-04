@@ -8,7 +8,7 @@ import useSWR from 'swr';
 import { fetcher } from '../../util/fetcher';
 import DropdownCommunity from '../DropdownCommunity';
 import DropdownUser from '../DropdownUser';
-import useInput from '../hooks/useInput';
+import useInput from '../../hooks/useInput.ts';
 import { CenterMenu, CenterMenuItem, LeftMenu, MenuItem, Nav, RightMenu, SearchInput, UploadButton } from './styles';
 
 const { Text } = Typography;

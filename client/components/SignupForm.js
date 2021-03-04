@@ -4,7 +4,7 @@ import React, { useCallback, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
 import { SIGN_UP_REQUEST } from '../reducers/user';
-import useInput from './hooks/useInput';
+import useInput from '../hooks/useInput.ts';
 
 const ErrorMessage = styled.div`
   color: red;

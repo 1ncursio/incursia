@@ -1,5 +1,5 @@
 import React, { useEffect, useCallback, useState } from 'react';
-import { Col, Form, Input, Button, Typography, Upload, message, Modal, Select, Row } from 'antd';
+import { Col, Form, Input, Button, Typography, Upload, message, Modal, Row } from 'antd';
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { PlusOutlined } from '@ant-design/icons';
@@ -7,7 +7,7 @@ import useSWR from 'swr';
 import AppLayout from '../components/AppLayout';
 import TagForm from '../components/TagForm';
 import { UPLOAD_IMAGES_REQUEST, ADD_POST_REQUEST, REMOVE_IMAGE } from '../reducers/post';
-import useInput from '../components/hooks/useInput';
+import useInput from '../hooks/useInput.ts';
 import { fetcher } from '../util/fetcher';
 
 // const { Option } = Select;

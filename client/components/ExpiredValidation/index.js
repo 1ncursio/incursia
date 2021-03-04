@@ -2,7 +2,7 @@ import React, { useCallback, useState } from 'react';
 import { Row, Col, Form, Input, Button, Typography, Modal } from 'antd';
 import axios from 'axios';
 import { useRouter } from 'next/router';
-import useInput from '../hooks/useInput';
+import useInput from '../../hooks/useInput.ts';
 
 const { Paragraph } = Typography;
 

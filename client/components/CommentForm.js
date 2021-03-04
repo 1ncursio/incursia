@@ -6,7 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import useSWR from 'swr';
 import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../reducers/post';
 import { fetcher } from '../util/fetcher';
-import useInput from './hooks/useInput';
+import useInput from '../hooks/useInput.ts';
 import PopoverEmoticon from './PopoverEmoticon';
 
 const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMutate }) => {

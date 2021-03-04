@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { Form, Input, Button, Typography, Modal } from 'antd';
 import styled from 'styled-components';
-import useInput from './hooks/useInput';
+import useInput from '../hooks/useInput.ts';
 import { loginRequestAction } from '../reducers/user';
 
 const { Text } = Typography;

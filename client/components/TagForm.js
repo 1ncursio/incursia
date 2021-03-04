@@ -2,7 +2,7 @@ import React, { useState, useCallback } from 'react';
 import { Input, Tag, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
 import PropTypes from 'prop-types';
-import useInput from './hooks/useInput';
+import useInput from '../hooks/useInput.ts';
 
 const TagForm = ({ tags, setTags }) => {
   const [inputVisible, setInputVisible] = useState(false);
