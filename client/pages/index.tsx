@@ -1,8 +1,10 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+// @ts-ignore
 import { useSelector } from 'react-redux';
 import { Row, Col } from 'antd';
 import useSWR from 'swr';
 import styled from 'styled-components';
+import { IPost, IUser } from '@typings/db';
 import AppLayout from '../components/AppLayout';
 import PostCard from '../components/PostCard';
 import { fetcher } from '../util/fetcher';
@@ -19,9 +21,9 @@ const DividerHeader = styled.div`
 `;
 
 const Home = () => {
-  const { hasMorePosts } = useSelector((state) => state.post);
+  const { hasMorePosts } = useSelector((state: any) => state.post);
 
-  const { data: userData } = useSWR('/api/user', fetcher);
+  const { data: userData } = useSWR<IUser>('/api/user', fetcher);
   const { data: postsData } = useSWR('/api/posts?lastId=0', fetcher);
   const { data: followingsPostsData } = useSWR(userData ? '/api/posts/followings/?lastId=0' : null, fetcher);
 
@@ -71,17 +73,5 @@ const Home = () => {
     </AppLayout>
   );
 };
-
-// Home.propTypes = {
-//   user: PropTypes.shape({
-//     id: PropTypes.number,
-//     nickname: PropTypes.string,
-//     email: PropTypes.string,
-//     introduction: PropTypes.string,
-//     profile: PropTypes.string,
-//     Followers: PropTypes.arrayOf(PropTypes.object),
-//     Followings: PropTypes.arrayOf(PropTypes.object),
-//   }).isRequired,
-// };
 
 export default Home;
