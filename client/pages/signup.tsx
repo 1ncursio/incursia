@@ -5,9 +5,9 @@ import Router from 'next/router';
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useSWR from 'swr';
-import SignupForm from '../components/SignupForm';
-import { fetcher } from '../util/fetcher';
-import SignUpComplete from '../components/SignUpComplete';
+import SignupForm from '@components/SignupForm';
+import { fetcher } from '@utils/fetcher';
+import SignUpComplete from '@components/SignUpComplete';
 
 const BackgroundImage = styled.div`
   width: 100%;

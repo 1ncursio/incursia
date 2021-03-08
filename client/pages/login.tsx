@@ -5,8 +5,8 @@ import useSWR from 'swr';
 import { useSelector } from 'react-redux';
 import { Card, Col, Row, Space, Typography } from 'antd';
 import styled from 'styled-components';
-import { fetcher } from '../util/fetcher';
-import LoginForm from '../components/LoginForm';
+import { fetcher } from '@utils/fetcher';
+import LoginForm from '@components/LoginForm';
 
 const BackgroundImage = styled.div`
   width: 100%;

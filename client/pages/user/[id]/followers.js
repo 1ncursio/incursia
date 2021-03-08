@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import Link from 'next/link';
 import AppLayout from '../../../components/AppLayout';
-import { fetcher } from '../../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 import UserPageMenu from '../../../components/UserPageMenu';
 import wrapper from '../../../store/configureStore';
 import UserPageProfile from '../../../components/UserPageProfile';

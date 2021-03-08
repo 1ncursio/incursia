@@ -5,7 +5,7 @@ import { Button } from 'antd';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { FOLLOW_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
-import { fetcher } from '../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 
 const FollowButton = ({ postData }) => {
   const dispatch = useDispatch();

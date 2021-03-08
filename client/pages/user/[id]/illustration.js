@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import styled from 'styled-components';
 import AppLayout from '../../../components/AppLayout';
-import { fetcher } from '../../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 import wrapper from '../../../store/configureStore';
 import PostCard from '../../../components/PostCard';
 import UserPageMenu from '../../../components/UserPageMenu';

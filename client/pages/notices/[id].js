@@ -7,7 +7,7 @@ import useSWR from 'swr';
 import AppLayout from '../../components/AppLayout';
 import CommentSection from '../../components/CommentSection';
 import NoticeSection from '../../components/NoticeSection';
-import { fetcher } from '../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 
 const NoticePage = () => {
   const router = useRouter();

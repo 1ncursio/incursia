@@ -4,9 +4,9 @@ import Head from 'next/head';
 import Router from 'next/router';
 import useSWR from 'swr';
 
-import AppLayout from '../components/AppLayout';
-import ProfileForm from '../components/ProfileForm';
-import { fetcher } from '../util/fetcher';
+import AppLayout from '@components/AppLayout';
+import ProfileForm from '@components/ProfileForm';
+import { fetcher } from '@utils/fetcher';
 
 const Profile = () => {
   const { data: userData } = useSWR('/api/user', fetcher);

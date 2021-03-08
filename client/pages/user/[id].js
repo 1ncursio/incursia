@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { Row, Col, Avatar } from 'antd';
 import useSWR from 'swr';
 import PropTypes from 'prop-types';
-import { fetcher } from '../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 import AppLayout from '../../components/AppLayout';
 import wrapper from '../../store/configureStore';
 

@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import useSWR from 'swr';
 import { logoutRequestAction } from '../reducers/user';
-import { fetcher } from '../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 import UserAvatar from './UserAvatar';
 
 const { Text } = Typography;

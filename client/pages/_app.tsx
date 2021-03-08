@@ -1,5 +1,5 @@
-import React, { ElementType } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
+import { AppProps } from 'next/app';
 import Head from 'next/head';
 import 'antd/dist/antd.css';
 // import '../style/my_custom.css';
@@ -27,12 +27,7 @@ const Global = createGlobalStyle`
     }
 `;
 
-type Props = {
-  Component: ElementType;
-  pageProps: any;
-};
-
-const Utopia = ({ Component, pageProps }: Props) => {
+const Utopia = ({ Component, pageProps }: AppProps) => {
   return (
     <>
       <Head>
@@ -44,11 +39,6 @@ const Utopia = ({ Component, pageProps }: Props) => {
       <Component {...pageProps} />
     </>
   );
-};
-
-Utopia.propTypes = {
-  Component: PropTypes.elementType.isRequired,
-  pageProps: PropTypes.object.isRequired,
 };
 
 export default wrapper.withRedux(Utopia);

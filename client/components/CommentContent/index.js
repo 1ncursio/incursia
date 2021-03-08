@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import useSWR from 'swr';
-import { fetcher } from '../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 
 const CommentContent = ({ content }) => {
   const emoticons = content.match(/:[^:\s]*(?:::[^:\s]*)*:/);

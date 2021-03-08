@@ -4,11 +4,11 @@ import { useSelector } from 'react-redux';
 import { Row, Col } from 'antd';
 import useSWR from 'swr';
 import styled from 'styled-components';
-import { IPost, IUser } from '@typings/db';
-import AppLayout from '../components/AppLayout';
-import PostCard from '../components/PostCard';
-import { fetcher } from '../util/fetcher';
-import ExpiredValidation from '../components/ExpiredValidation';
+import { IUser } from '@typings/db';
+import AppLayout from '@components/AppLayout';
+import PostCard from '@components/PostCard';
+import { fetcher } from '@utils/fetcher';
+import ExpiredValidation from '@components/ExpiredValidation';
 
 const DividerHeader = styled.div`
   height: 80px;

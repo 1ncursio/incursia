@@ -5,12 +5,10 @@ import useSWR from 'swr';
 import PropTypes from 'prop-types';
 import { Col, Row } from 'antd';
 import { useSelector } from 'react-redux';
-// import { useCookies } from 'react-cookie';
 import wrapper from '../../store/configureStore';
 import AppLayout from '../../components/AppLayout';
 import IllustCard from '../../components/IllustCard';
-import { fetcher } from '../../util/fetcher';
-// import parseCookies from '../../util/parseCookies';
+import { fetcher } from '@utils/fetcher';
 import UserProfile from '../../components/UserProfile';
 import CommentSection from '../../components/CommentSection';
 

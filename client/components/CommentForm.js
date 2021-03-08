@@ -5,7 +5,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import useSWR from 'swr';
 import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../reducers/post';
-import { fetcher } from '../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 import useInput from '../hooks/useInput.ts';
 import PopoverEmoticon from './PopoverEmoticon';
 

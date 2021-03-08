@@ -1,17 +1,19 @@
 // const withPlugins = require('next-compose-plugins');
+// const path = require('path');
+
 const withBundleAnalyzer = require('@next/bundle-analyzer')({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const isDevelopment = process.env.NODE_ENV !== 'production';
+
 module.exports = withBundleAnalyzer({
   compress: true,
   webpack(config, { webpack }) {
-    const prod = process.env.NODE_ENV === 'production';
-
     return {
       ...config,
-      mode: prod ? 'production' : 'development',
-      devtool: prod ? 'hidden-source-map' : 'eval',
+      mode: isDevelopment ? 'development' : 'production',
+      devtool: !isDevelopment ? 'hidden-source-map' : 'inline-source-map',
       plugins: [...config.plugins, new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /^\.\/ko$/)],
     };
   },

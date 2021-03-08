@@ -4,7 +4,7 @@ import { useRouter } from 'next/router';
 import { Space, Tooltip, Typography } from 'antd';
 import moment from 'moment';
 import { AlertOutlined, DeleteOutlined, HeartFilled, HeartOutlined, ShareAltOutlined } from '@ant-design/icons';
-import { fetcher } from '../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 
 const { Title, Text, Paragraph } = Typography;
 

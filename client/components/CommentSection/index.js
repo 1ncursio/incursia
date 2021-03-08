@@ -8,7 +8,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
 import { REMOVE_COMMENT_REQUEST } from '../../reducers/post';
 import CommentForm from '../CommentForm';
-import { fetcher } from '../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 import CommentWrapper from './styles';
 import CommentContent from '../CommentContent';
 

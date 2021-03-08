@@ -5,7 +5,7 @@ import ImgCrop from 'antd-img-crop';
 import useSWR from 'swr';
 import useInput from '../hooks/useInput.ts';
 import { CHANGE_PROFILE_REQUEST, CHANGE_NICKNAME_REQUEST, CHANGE_INTRO_REQUEST } from '../reducers/user';
-import { fetcher } from '../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 
 const { TextArea } = Input;
 const { Text } = Typography;

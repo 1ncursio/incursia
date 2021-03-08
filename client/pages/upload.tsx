@@ -5,11 +5,11 @@ import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { PlusOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
-import AppLayout from '../components/AppLayout';
-import TagForm from '../components/TagForm';
+import useInput from '@hooks/useInput';
+import AppLayout from '@components/AppLayout';
+import TagForm from '@components/TagForm';
+import { fetcher } from '@utils/fetcher';
 import { UPLOAD_IMAGES_REQUEST, ADD_POST_REQUEST, REMOVE_IMAGE } from '../reducers/post';
-import useInput from '../hooks/useInput.ts';
-import { fetcher } from '../util/fetcher';
 
 // const { Option } = Select;
 const { Paragraph } = Typography;

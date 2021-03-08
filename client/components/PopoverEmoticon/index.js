@@ -2,7 +2,7 @@ import { Col, Row } from 'antd';
 import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import useSWR from 'swr';
-import { fetcher } from '../../util/fetcher';
+import { fetcher } from '@utils/fetcher';
 
 const PopoverEmoticon = ({ setCommentText, setVisiblePopover }) => {
   const { data: emoticonData } = useSWR('/api/emoticon', fetcher);
