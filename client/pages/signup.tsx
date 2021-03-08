@@ -1,6 +1,7 @@
 import { Card, Col, Modal, Row, Space, Typography } from 'antd';
 import React, { useEffect } from 'react';
 import Router from 'next/router';
+// @ts-ignore
 import { useSelector } from 'react-redux';
 import styled from 'styled-components';
 import useSWR from 'swr';
@@ -35,7 +36,7 @@ const TitleWrapper = styled(Title)`
 `;
 
 const signup = () => {
-  const { signUpLoading, signUpDone, signUpError } = useSelector((state) => state.user);
+  const { signUpLoading, signUpDone, signUpError } = useSelector((state: any) => state.user);
 
   const { data: userData } = useSWR('/api/user', fetcher);
 

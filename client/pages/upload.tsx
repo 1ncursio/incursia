@@ -1,5 +1,6 @@
 import React, { useEffect, useCallback, useState } from 'react';
 import { Col, Form, Input, Button, Typography, Upload, message, Modal, Row } from 'antd';
+// @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
 import Router from 'next/router';
 import { PlusOutlined } from '@ant-design/icons';

@@ -1,4 +1,5 @@
-import React, { useEffect } from 'react';
+import React from 'react';
+// @ts-ignore
 import { useSelector } from 'react-redux';
 import { Row, Col, Divider, List } from 'antd';
 import useSWR from 'swr';
@@ -7,7 +8,7 @@ import { fetcher } from '../util/fetcher';
 import NoticeCard from '../components/NoticeCard';
 
 const NoticesPage = () => {
-  const { hasMorePosts } = useSelector((state) => state.post);
+  const { hasMorePosts } = useSelector((state: any) => state.post);
 
   const { data: userData } = useSWR('/api/user', fetcher);
   const { data: noticesData } = useSWR('/api/posts/notices?lastId=0', fetcher);

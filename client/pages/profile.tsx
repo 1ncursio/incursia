@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Row } from 'antd';
 import Head from 'next/head';
 import Router from 'next/router';
@@ -9,7 +9,7 @@ import ProfileForm from '../components/ProfileForm';
 import { fetcher } from '../util/fetcher';
 
 const Profile = () => {
-  const { data: userData, error: userError } = useSWR('/api/user', fetcher);
+  const { data: userData } = useSWR('/api/user', fetcher);
   useEffect(() => {
     if (!userData) {
       Router.push('/');

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useRouter } from 'next/router';
 import useSWR from 'swr';
+// @ts-ignore
 import { useSelector } from 'react-redux';
 import { Card, Col, Row, Space, Typography } from 'antd';
 import styled from 'styled-components';
 import { fetcher } from '../util/fetcher';
-
 import LoginForm from '../components/LoginForm';
 
 const BackgroundImage = styled.div`
@@ -24,11 +24,11 @@ const BackgroundImage = styled.div`
 const { Title, Text } = Typography;
 
 const login = () => {
-  const router = useRouter(null);
+  const router = useRouter();
 
   const { data: userData, revalidate } = useSWR('/api/user', fetcher);
 
-  const { logInDone } = useSelector((state) => state.user);
+  const { logInDone } = useSelector((state: any) => state.user);
 
   useEffect(() => {
     if (logInDone || userData) {
