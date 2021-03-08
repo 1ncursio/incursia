@@ -1,20 +1,27 @@
 import { Avatar, List, Modal, Tooltip } from 'antd';
 import moment from 'moment';
 import React, { useCallback, useState } from 'react';
+// @ts-ignore
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
 import PropTypes from 'prop-types';
 import { DeleteOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
+import { fetcher } from '@utils/fetcher';
+import CommentContent from '@components/CommentContent';
+import { IPost } from '@typings/db';
 import { REMOVE_COMMENT_REQUEST } from '../../reducers/post';
 import CommentForm from '../CommentForm';
-import { fetcher } from '@utils/fetcher';
 import CommentWrapper from './styles';
-import CommentContent from '../CommentContent';
 
 moment.locale('ko');
 
-const CommentSection = ({ postData, postMutate }) => {
+interface Props {
+  postData: IPost;
+  postMutate: any;
+}
+
+const CommentSection = ({ postData, postMutate }: Props) => {
   const dispatch = useDispatch();
 
   const [replyId, setReplyId] = useState(-1);
@@ -47,7 +54,7 @@ const CommentSection = ({ postData, postMutate }) => {
         });
       },
     });
-  });
+  }, []);
 
   return (
     <>

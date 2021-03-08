@@ -7,9 +7,18 @@ export interface IUser {
   profile: string;
 }
 
+export interface IComment {
+  id: number;
+  replyId: number;
+  content: string;
+  User: IUser;
+  createdAt: string;
+}
+
 export interface IPost {
   id: number;
   title: string;
   caption: string;
   createdAt: string;
+  Comments: IComment[];
 }

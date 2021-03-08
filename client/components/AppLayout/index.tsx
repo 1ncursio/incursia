@@ -2,18 +2,21 @@ import { BellOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import Link from 'next/link';
 import Router from 'next/router';
-import PropTypes from 'prop-types';
 import React, { useCallback } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
-import DropdownCommunity from '../DropdownCommunity';
-import DropdownUser from '../DropdownUser';
-import useInput from '../../hooks/useInput.ts';
-import { CenterMenu, CenterMenuItem, LeftMenu, MenuItem, Nav, RightMenu, SearchInput, UploadButton } from './styles';
+import DropdownCommunity from '@components/DropdownCommunity';
+import DropdownUser from '@components/DropdownUser';
+import useInput from '@hooks/useInput';
+import { CenterMenu, CenterMenuItem, LeftMenu, MenuItem, Nav, RightMenu, SearchInput, UploadButton } from '@components/AppLayout/styles';
 
 const { Text } = Typography;
 
-const AppLayout = ({ children }) => {
+interface Props {
+  children: React.ReactNode;
+}
+
+const AppLayout = ({ children }: Props) => {
   const [searchInput, onChangeSearchInput] = useInput('');
 
   const { data: userData } = useSWR('/api/user', fetcher);
@@ -77,10 +80,6 @@ const AppLayout = ({ children }) => {
       {children}
     </>
   );
-};
-
-AppLayout.propTypes = {
-  children: PropTypes.node.isRequired,
 };
 
 export default AppLayout;
