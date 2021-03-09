@@ -2,13 +2,22 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { Image, Typography, Tag, Modal, Tooltip, Space } from 'antd';
 import Link from 'next/link';
 import Router, { useRouter } from 'next/router';
+// @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
-import { HeartOutlined, ShareAltOutlined, DeleteOutlined, AlertOutlined, HeartFilled, EyeFilled } from '@ant-design/icons';
+import {
+  HeartOutlined,
+  ShareAltOutlined,
+  DeleteOutlined,
+  AlertOutlined,
+  HeartFilled,
+  EyeFilled,
+} from '@ant-design/icons';
 import moment from 'moment';
 import useSWR from 'swr';
 import { LIKE_POST_REQUEST, REMOVE_POST_REQUEST, DISLIKE_POST_REQUEST } from '../reducers/post';
 import { fetcher } from '@utils/fetcher';
 import styled from 'styled-components';
+import { IPost } from '@typings/db';
 
 moment.locale('ko');
 
@@ -18,13 +27,17 @@ const PostContent = styled.div`
   margin: 32px 0 48px 0;
 `;
 
-const IllustCard = ({ postData }) => {
+interface Props {
+  postData: IPost;
+}
+
+const IllustCard = ({ postData }: Props) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
 
   const { data: userData, error: userError } = useSWR('/api/user', fetcher);
 
-  const { removePostDone } = useSelector((state) => state.post);
+  const { removePostDone } = useSelector((state: any) => state.post);
 
   useEffect(() => {
     if (userData) setLiked(postData.Likers.find((v) => v.id === userData?.id));

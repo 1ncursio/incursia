@@ -7,6 +7,12 @@ export interface IUser {
   profile: string;
 }
 
+export interface IImage {
+  id: number;
+  src: string;
+  createdAt: string;
+}
+
 export interface IComment {
   id: number;
   replyId: number;
@@ -15,12 +21,23 @@ export interface IComment {
   createdAt: string;
 }
 
+export interface ITag {
+  id: number;
+  name: string;
+  createdAt: string;
+}
+
 export interface IPost {
   id: number;
   title: string;
   caption: string;
+  views: number;
   createdAt: string;
+  User: IUser;
+  Images: IImage[];
   Comments: IComment[];
+  Likers: IUser[];
+  Tags: ITag[];
 }
 
 export interface IEmoticon {

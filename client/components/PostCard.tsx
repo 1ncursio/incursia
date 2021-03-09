@@ -1,9 +1,9 @@
 import React from 'react';
-import PropTypes from 'prop-types';
 import { Typography } from 'antd';
 import Link from 'next/link';
 import moment from 'moment';
 import styled from 'styled-components';
+import { IPost } from '@typings/db';
 import UserAvatar from './UserAvatar';
 
 const TitleWrapper = styled.div`
@@ -24,9 +24,14 @@ const CoverImage = styled.img`
 
 moment.locale('ko');
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
-const PostCard = ({ post, avatarVisible }) => {
+interface Props {
+  post: IPost;
+  avatarVisible: boolean;
+}
+
+const PostCard = ({ post, avatarVisible = true }: Props) => {
   return (
     <>
       <Link href={`/illustration/${post.id}`}>
@@ -50,25 +55,6 @@ const PostCard = ({ post, avatarVisible }) => {
       )}
     </>
   );
-};
-
-PostCard.defaultProps = {
-  avatarVisible: true,
-};
-
-PostCard.propTypes = {
-  post: PropTypes.shape({
-    id: PropTypes.number,
-    User: PropTypes.object,
-    title: PropTypes.string,
-    caption: PropTypes.string,
-    createdAt: PropTypes.string,
-    Comments: PropTypes.arrayOf(PropTypes.object),
-    Images: PropTypes.arrayOf(PropTypes.object),
-    Likers: PropTypes.arrayOf(PropTypes.object),
-    Tags: PropTypes.arrayOf(PropTypes.object),
-  }).isRequired,
-  avatarVisible: PropTypes.bool,
 };
 
 export default PostCard;

@@ -1,21 +1,27 @@
 import React, { useEffect, useMemo, useCallback } from 'react';
+// @ts-ignore
 import { useSelector, useDispatch } from 'react-redux';
-import { Row, Col, Button, Form, Input, Typography, Modal, Avatar, Upload, message } from 'antd';
+import { Col, Button, Form, Input, Typography, Modal, Avatar, Upload, message } from 'antd';
 import ImgCrop from 'antd-img-crop';
 import useSWR from 'swr';
-import useInput from '../hooks/useInput.ts';
-import { CHANGE_PROFILE_REQUEST, CHANGE_NICKNAME_REQUEST, CHANGE_INTRO_REQUEST } from '../reducers/user';
 import { fetcher } from '@utils/fetcher';
+import useInput from '@hooks/useInput';
+import { CHANGE_PROFILE_REQUEST, CHANGE_NICKNAME_REQUEST, CHANGE_INTRO_REQUEST } from '../reducers/user';
 
 const { TextArea } = Input;
 const { Text } = Typography;
 
 const ProfileForm = () => {
-  const { data: userData, error: userError, mutate: userMutate } = useSWR('/api/user', fetcher);
+  const { data: userData, mutate: userMutate } = useSWR('/api/user', fetcher);
 
-  const { changeNicknameLoading, changeNicknameDone, changeNicknameError, changeIntroLoading, changeIntroDone, changeIntroError } = useSelector(
-    (state) => state.user
-  );
+  const {
+    changeNicknameLoading,
+    changeNicknameDone,
+    changeNicknameError,
+    changeIntroLoading,
+    changeIntroDone,
+    changeIntroError,
+  } = useSelector((state: any) => state.user);
 
   const [nickname, onChangeNickname, setNickname] = useInput('');
   const [intro, onChangeIntro, setIntro] = useInput('');
@@ -77,7 +83,7 @@ const ProfileForm = () => {
       data: imageFormData,
     });
     return true;
-  });
+  }, []);
 
   const onSubmitNickname = useCallback(() => {
     dispatch({
@@ -89,7 +95,7 @@ const ProfileForm = () => {
         ...userData,
         nickname,
       },
-      false
+      false,
     );
   }, [nickname]);
 
@@ -103,13 +109,13 @@ const ProfileForm = () => {
         ...userData,
         introduction: intro,
       },
-      false
+      false,
     );
   }, [intro]);
 
   const onUpload = useCallback(() => {
     userMutate();
-  });
+  }, []);
 
   const style = useMemo(() => ({ marginBottom: '20px', border: '1px solid #d9d9d9', padding: '20px' }), []);
   return (
@@ -130,7 +136,12 @@ const ProfileForm = () => {
           <Text type="secondary">{userData?.email}</Text>
         </Form.Item>
         <Form.Item label={<Text strong>닉네임</Text>}>
-          <Input value={nickname} onChange={onChangeNickname} maxLength="20" suffix={<Text type="secondary">{` ${nickname?.length} / 20`}</Text>} />
+          <Input
+            value={nickname}
+            onChange={onChangeNickname}
+            maxLength={20}
+            suffix={<Text type="secondary">{` ${nickname?.length} / 20`}</Text>}
+          />
           <Button
             type="primary"
             onClick={onSubmitNickname}
@@ -145,11 +156,11 @@ const ProfileForm = () => {
             placeholder="당신을 멋지게 소개해보세요!"
             value={intro}
             onChange={onChangeIntro}
-            rows="5"
+            rows={5}
             spellCheck={false}
             style={{ resize: 'none' }}
             showCount
-            maxLength="500"
+            maxLength={500}
           />
         </Form.Item>
         <Form.Item style={{ textAlign: 'center' }}>

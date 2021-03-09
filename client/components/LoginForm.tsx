@@ -1,9 +1,10 @@
 import React, { useCallback, useEffect } from 'react';
+// @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import { Form, Input, Button, Typography, Modal } from 'antd';
 import styled from 'styled-components';
-import useInput from '../hooks/useInput.ts';
+import useInput from '@hooks/useInput';
 import { loginRequestAction } from '../reducers/user';
 
 const { Text } = Typography;
@@ -18,7 +19,7 @@ const FormItem = styled(Form.Item)`
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { logInLoading, logInError } = useSelector((state) => state.user);
+  const { logInLoading, logInError } = useSelector((state: any) => state.user);
   const [email, onChangeEmail] = useInput('');
   const [password, onChangePassword] = useInput('');
 
@@ -38,7 +39,7 @@ const LoginForm = () => {
       });
     }
     console.log({ email, password });
-    dispatch(loginRequestAction({ email, password }));
+    return dispatch(loginRequestAction({ email, password }));
   }, [email, password]);
 
   return (

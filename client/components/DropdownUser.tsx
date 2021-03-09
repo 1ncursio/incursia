@@ -1,11 +1,12 @@
 import React, { useCallback, useEffect } from 'react';
 import { Dropdown, Avatar, Menu, Typography } from 'antd';
 import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
+// @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import useSWR from 'swr';
-import { logoutRequestAction } from '../reducers/user';
 import { fetcher } from '@utils/fetcher';
+import { logoutRequestAction } from '../reducers/user';
 import UserAvatar from './UserAvatar';
 
 const { Text } = Typography;
@@ -13,7 +14,7 @@ const { Text } = Typography;
 const DropdownUser = () => {
   const dispatch = useDispatch();
 
-  const { logOutDone, logInDone } = useSelector((state) => state.user);
+  const { logOutDone, logInDone } = useSelector((state: any) => state.user);
 
   const { data: userData, mutate } = useSWR('/api/user', fetcher);
 

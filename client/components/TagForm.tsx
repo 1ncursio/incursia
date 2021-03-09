@@ -1,10 +1,14 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, Dispatch, SetStateAction } from 'react';
 import { Input, Tag, Tooltip } from 'antd';
 import { PlusOutlined } from '@ant-design/icons';
-import PropTypes from 'prop-types';
-import useInput from '../hooks/useInput.ts';
+import useInput from '@hooks/useInput';
 
-const TagForm = ({ tags, setTags }) => {
+interface Props {
+  tags: Array<string>;
+  setTags: Dispatch<SetStateAction<string>>;
+}
+
+const TagForm = ({ tags, setTags }: Props) => {
   const [inputVisible, setInputVisible] = useState(false);
   const [editInputIndex, setEditInputIndex] = useState(-1);
   const [inputValue, onChangeInputValue, setInputValue] = useInput('');
@@ -14,7 +18,7 @@ const TagForm = ({ tags, setTags }) => {
     (removedTag) => {
       setTags(tags.filter((tag) => tag !== removedTag));
     },
-    [tags]
+    [tags],
   );
 
   const onBlurEditInput = useCallback(() => {
@@ -98,11 +102,6 @@ const TagForm = ({ tags, setTags }) => {
       )}
     </>
   );
-};
-
-TagForm.propTypes = {
-  tags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  setTags: PropTypes.func.isRequired,
 };
 
 export default TagForm;

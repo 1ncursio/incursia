@@ -1,13 +1,18 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+// @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
 import { Button } from 'antd';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
-import { FOLLOW_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
 import { fetcher } from '@utils/fetcher';
+import { IPost, IUser } from '@typings/db';
+import { FOLLOW_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
 
-const FollowButton = ({ postData }) => {
+interface Props {
+  postData: IPost;
+}
+
+const FollowButton = ({ postData }: Props) => {
   const dispatch = useDispatch();
   const router = useRouter();
 
@@ -15,11 +20,11 @@ const FollowButton = ({ postData }) => {
 
   const { data: userData, mutate: userMutate } = useSWR('/api/user', fetcher);
 
-  const { followLoading, unfollowLoading, followDone, unfollowDone } = useSelector((state) => state.user);
+  const { followLoading, unfollowLoading, followDone, unfollowDone } = useSelector((state: any) => state.user);
 
   useEffect(() => {
     if (userData) {
-      setIsFollowing(userData.Followings.find((v) => v.id === postData.User.id));
+      setIsFollowing(userData.Followings.find((v: IUser) => v.id === postData.User.id));
       console.log('isFollowing', isFollowing);
     }
   }, [userData]);
@@ -42,7 +47,7 @@ const FollowButton = ({ postData }) => {
     if (unfollowDone) {
       userMutate({
         ...userData,
-        Followings: userData.Followings.filter((v) => v.id !== postData.User.id),
+        Followings: userData.Followings.filter((v: IUser) => v.id !== postData.User.id),
       });
     }
   }, [unfollowDone]);
@@ -69,14 +74,16 @@ const FollowButton = ({ postData }) => {
     return null;
   }
   return (
-    <Button loading={followLoading || unfollowLoading} onClick={onClickButton} type={isFollowing ? 'default' : 'primary'} shape="round" block>
+    <Button
+      loading={followLoading || unfollowLoading}
+      onClick={onClickButton}
+      type={isFollowing ? 'default' : 'primary'}
+      shape="round"
+      block
+    >
       {isFollowing ? '팔로우 중' : '팔로우 하기'}
     </Button>
   );
-};
-
-FollowButton.propTypes = {
-  postData: PropTypes.object.isRequired,
 };
 
 export default FollowButton;

@@ -12,15 +12,15 @@ import { IPost } from '@typings/db';
 import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../../reducers/post';
 
 interface Props {
-  placeholder: string;
+  placeholder?: string;
+  replyId?: number;
   type: string;
-  replyId: number;
   setReplyId: Dispatch<SetStateAction<Number>>;
   postData: IPost;
   postMutate: any;
 }
 
-const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMutate }: Props) => {
+const CommentForm = ({ placeholder = '', replyId = -1, type, setReplyId, postData, postMutate }: Props) => {
   const dispatch = useDispatch();
 
   const [visiblePopover, setVisiblePopover] = useState(false);
@@ -28,7 +28,7 @@ const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMut
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
 
   const { addCommentDone, addCommentLoading, addedCommentId, removeCommentDone, removedCommentId } = useSelector(
-    (state) => state.post,
+    (state: any) => state.post,
   );
 
   const { data: userData } = useSWR('/api/user', fetcher);
@@ -151,15 +151,6 @@ const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMut
 CommentForm.defaultProps = {
   placeholder: '',
   replyId: -1,
-};
-
-CommentForm.propTypes = {
-  placeholder: PropTypes.string,
-  type: PropTypes.string.isRequired,
-  replyId: PropTypes.number,
-  setReplyId: PropTypes.func.isRequired,
-  postData: PropTypes.object.isRequired,
-  postMutate: PropTypes.func.isRequired,
 };
 
 export default CommentForm;

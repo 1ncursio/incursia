@@ -1,10 +1,11 @@
 import { Button, Checkbox, Form, Input, Modal } from 'antd';
 import Head from 'next/head';
 import React, { useCallback, useState } from 'react';
+// @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
 import styled from 'styled-components';
+import useInput from '@hooks/useInput';
 import { SIGN_UP_REQUEST } from '../reducers/user';
-import useInput from '../hooks/useInput.ts';
 
 const ErrorMessage = styled.div`
   color: red;
@@ -20,7 +21,7 @@ const FormItemWrapper = styled(Form.Item)`
 
 const SignupForm = () => {
   const dispatch = useDispatch();
-  const { signUpLoading } = useSelector((state) => state.user);
+  const { signUpLoading } = useSelector((state: any) => state.user);
 
   const [email, onChangeEmail] = useInput('');
   const [nickname, onChangeNickname] = useInput('');
@@ -35,7 +36,7 @@ const SignupForm = () => {
       setConfirmpassword(e.target.value);
       setpasswordError(e.target.value !== password);
     },
-    [password]
+    [password],
   );
 
   const onChangeTerm = useCallback((e) => {
@@ -57,7 +58,7 @@ const SignupForm = () => {
       return setTermError(true);
     }
     console.log(email, nickname, password);
-    dispatch({
+    return dispatch({
       type: SIGN_UP_REQUEST,
       data: { email, password, nickname },
     });
@@ -77,10 +78,22 @@ const SignupForm = () => {
           <Input type="text" value={nickname} onChange={onChangeNickname} placeholder="닉네임" size="large" />
         </FormItemWrapper>
         <FormItemWrapper>
-          <Input type="password" value={password} onChange={onChangePassword} placeholder="비밀번호 (최소 8자)" size="large" />
+          <Input
+            type="password"
+            value={password}
+            onChange={onChangePassword}
+            placeholder="비밀번호 (최소 8자)"
+            size="large"
+          />
         </FormItemWrapper>
         <FormItemWrapper>
-          <Input type="password" value={Confirmpassword} onChange={onChangeConfirmpassword} placeholder="비밀번호 확인" size="large" />
+          <Input
+            type="password"
+            value={Confirmpassword}
+            onChange={onChangeConfirmpassword}
+            placeholder="비밀번호 확인"
+            size="large"
+          />
           {passwordError && <ErrorMessage>비밀번호가 일치하지 않습니다.</ErrorMessage>}
         </FormItemWrapper>
         <FormItemWrapper>
