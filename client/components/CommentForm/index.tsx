@@ -1,22 +1,35 @@
 import { SmileOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Popover } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
+// @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
 import useSWR from 'swr';
-import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../reducers/post';
 import { fetcher } from '@utils/fetcher';
-import useInput from '../hooks/useInput.ts';
-import PopoverEmoticon from './PopoverEmoticon';
+import PopoverEmoticon from '@components/PopoverEmoticon';
+import useInput from '@hooks/useInput';
+import { IPost } from '@typings/db';
+import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../../reducers/post';
 
-const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMutate }) => {
+interface Props {
+  placeholder: string;
+  type: string;
+  replyId: number;
+  setReplyId: Dispatch<SetStateAction<Number>>;
+  postData: IPost;
+  postMutate: any;
+}
+
+const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMutate }: Props) => {
   const dispatch = useDispatch();
 
   const [visiblePopover, setVisiblePopover] = useState(false);
 
   const [commentText, onChangeCommentText, setCommentText] = useInput('');
 
-  const { addCommentDone, addCommentLoading, addedCommentId, removeCommentDone, removedCommentId } = useSelector((state) => state.post);
+  const { addCommentDone, addCommentLoading, addedCommentId, removeCommentDone, removedCommentId } = useSelector(
+    (state) => state.post,
+  );
 
   const { data: userData } = useSWR('/api/user', fetcher);
 
@@ -41,7 +54,7 @@ const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMut
               },
             ],
           },
-          false
+          false,
         );
       } else if (type === 'reply') {
         postMutate();
@@ -57,7 +70,7 @@ const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMut
           ...postData,
           Comments: postData.Comments.filter((v) => v.id !== removedCommentId),
         },
-        false
+        false,
       );
     }
   }, [removeCommentDone]);
@@ -92,7 +105,11 @@ const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMut
   }, [commentText, userData, addedCommentId, replyId, setReplyId]);
 
   return (
-    <Form onFinish={onSubmitComment} layout="inline" style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}>
+    <Form
+      onFinish={onSubmitComment}
+      layout="inline"
+      style={{ display: 'flex', justifyContent: 'flex-end', alignItems: 'center' }}
+    >
       <Form.Item>
         <Popover
           trigger="click"
@@ -101,7 +118,10 @@ const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMut
           visible={visiblePopover}
           content={<PopoverEmoticon setCommentText={setCommentText} setVisiblePopover={setVisiblePopover} />}
         >
-          <SmileOutlined style={{ fontSize: 22, opacity: 0.7, marginRight: 8 }} onClick={() => setVisiblePopover((prev) => !prev)} />
+          <SmileOutlined
+            style={{ fontSize: 22, opacity: 0.7, marginRight: 8 }}
+            onClick={() => setVisiblePopover((prev) => !prev)}
+          />
         </Popover>
       </Form.Item>
       <Form.Item style={{ width: '88%', background: 'white' }}>
@@ -114,7 +134,13 @@ const CommentForm = ({ placeholder, type, replyId, setReplyId, postData, postMut
         />
       </Form.Item>
       <Form.Item>
-        <Button type="primary" htmlType="submit" loading={addCommentLoading} style={{ float: 'right', height: 55 }} block>
+        <Button
+          type="primary"
+          htmlType="submit"
+          loading={addCommentLoading}
+          style={{ float: 'right', height: 55 }}
+          block
+        >
           작성
         </Button>
       </Form.Item>

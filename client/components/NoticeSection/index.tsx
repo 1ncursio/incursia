@@ -6,7 +6,7 @@ import moment from 'moment';
 import { AlertOutlined, DeleteOutlined, HeartFilled, HeartOutlined, ShareAltOutlined } from '@ant-design/icons';
 import { fetcher } from '@utils/fetcher';
 
-const { Title, Text, Paragraph } = Typography;
+const { Title, Paragraph } = Typography;
 
 const NoticeSection = () => {
   const router = useRouter();
@@ -22,7 +22,7 @@ const NoticeSection = () => {
       return alert('로그인이 필요합니다.');
     }
     // dispatch({ type: LIKE_POST_REQUEST, data: noticeData.id });
-    setLiked((prev) => !prev);
+    return setLiked((prev) => !prev);
   }, [userData, noticeData?.id]);
 
   const onDislike = useCallback(() => {
@@ -30,7 +30,7 @@ const NoticeSection = () => {
       return alert('로그인이 필요합니다.');
     }
     // dispatch({ type: DISLIKE_POST_REQUEST, data: noticeData.id });
-    setLiked((prev) => !prev);
+    return setLiked((prev) => !prev);
   }, [userData, noticeData?.id]);
 
   const onClickDelete = useCallback(() => {}, []);
@@ -57,11 +57,11 @@ const NoticeSection = () => {
           <AlertOutlined style={{ fontSize: 24, opacity: 0.9 }} />
         </Tooltip>
 
-        {userData?.id === noticeData?.User.id ? (
+        {userData?.id === noticeData?.User.id && (
           <Tooltip title="삭제하기">
             <DeleteOutlined style={{ fontSize: 24 }} onClick={onClickDelete} />
           </Tooltip>
-        ) : null}
+        )}
       </Space>
     </>
   );

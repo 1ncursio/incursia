@@ -10,9 +10,9 @@ import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import CommentContent from '@components/CommentContent';
 import { IPost } from '@typings/db';
+import CommentForm from '@components/CommentForm';
+import CommentWrapper from '@components/CommentSection/styles';
 import { REMOVE_COMMENT_REQUEST } from '../../reducers/post';
-import CommentForm from '../CommentForm';
-import CommentWrapper from './styles';
 
 moment.locale('ko');
 
@@ -39,7 +39,7 @@ const CommentSection = ({ postData, postMutate }: Props) => {
         console.log(`${id} === ${replyId}`);
       }
     },
-    [replyId]
+    [replyId],
   );
 
   const onDeleteComment = useCallback((commentId) => {
@@ -58,7 +58,13 @@ const CommentSection = ({ postData, postMutate }: Props) => {
 
   return (
     <>
-      <CommentForm placeholder="댓글 달기" type="comment" setReplyId={setReplyId} postData={postData} postMutate={postMutate} />
+      <CommentForm
+        placeholder="댓글 달기"
+        type="comment"
+        setReplyId={setReplyId}
+        postData={postData}
+        postMutate={postMutate}
+      />
       {postData?.Comments && (
         <List
           header={`${postData.Comments.length}개의 댓글`}
@@ -70,7 +76,9 @@ const CommentSection = ({ postData, postMutate }: Props) => {
                 nested={+(item.id !== item.replyId)}
                 actions={[
                   <span onClick={() => toggleReplyForm(item.id)}>답글</span>,
-                  <Tooltip title="삭제">{item.User.id === userData?.id && <DeleteOutlined onClick={() => onDeleteComment(item.id)} />}</Tooltip>,
+                  <Tooltip title="삭제">
+                    {item.User.id === userData?.id && <DeleteOutlined onClick={() => onDeleteComment(item.id)} />}
+                  </Tooltip>,
                 ]}
                 author={
                   <Link href={`/user/${item.User.id}/illustration`}>

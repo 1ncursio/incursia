@@ -3,12 +3,17 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import { Typography, Tooltip } from 'antd';
 import Link from 'next/link';
+import { IPost } from '@typings/db';
 
 moment.locale('ko');
 
 const { Title } = Typography;
 
-const NoticeCard = ({ notice }) => {
+interface Props {
+  notice: IPost;
+}
+
+const NoticeCard = ({ notice }: Props) => {
   return (
     <>
       <Link href={`/notices/${notice.id}`}>

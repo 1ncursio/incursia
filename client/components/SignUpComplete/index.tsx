@@ -1,6 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
-import { TitleWrapper } from './styles';
+import { TitleWrapper } from '@components/SignUpComplete/styles';
 
 const { Title, Paragraph } = Typography;
 

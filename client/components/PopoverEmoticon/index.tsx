@@ -1,22 +1,28 @@
 import { Col, Row } from 'antd';
 import PropTypes from 'prop-types';
-import React, { useCallback } from 'react';
+import React, { useCallback, Dispatch, SetStateAction } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
+import { IEmoticon } from '@typings/db';
 
-const PopoverEmoticon = ({ setCommentText, setVisiblePopover }) => {
-  const { data: emoticonData } = useSWR('/api/emoticon', fetcher);
+interface Props {
+  setCommentText: Dispatch<SetStateAction<String>>;
+  setVisiblePopover: Dispatch<SetStateAction<Boolean>>;
+}
+
+const PopoverEmoticon = ({ setCommentText, setVisiblePopover }: Props) => {
+  const { data: emoticonData } = useSWR<IEmoticon[]>('/api/emoticon', fetcher);
 
   const onClickEmoticon = useCallback(
     (emoticon) => {
       setCommentText(`:${emoticon.name}:`);
       setVisiblePopover(false);
     },
-    [emoticonData]
+    [emoticonData],
   );
 
   return (
-    <Row gutter={['16', '16']} style={{ width: 500 }}>
+    <Row gutter={[16, 16]} style={{ width: 500 }}>
       {emoticonData?.map((emoticon) => (
         <Col span={6}>
           <a onClick={() => onClickEmoticon(emoticon)}>
@@ -26,11 +32,6 @@ const PopoverEmoticon = ({ setCommentText, setVisiblePopover }) => {
       ))}
     </Row>
   );
-};
-
-PopoverEmoticon.propTypes = {
-  setCommentText: PropTypes.func.isRequired,
-  setVisiblePopover: PropTypes.func.isRequired,
 };
 
 export default PopoverEmoticon;

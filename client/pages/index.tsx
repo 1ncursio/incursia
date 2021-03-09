@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { Row, Col } from 'antd';
 import useSWR from 'swr';
 import styled from 'styled-components';
-import { IUser } from '@typings/db';
+import { IPost, IUser } from '@typings/db';
 import AppLayout from '@components/AppLayout';
 import PostCard from '@components/PostCard';
 import { fetcher } from '@utils/fetcher';
@@ -24,8 +24,8 @@ const Home = () => {
   const { hasMorePosts } = useSelector((state: any) => state.post);
 
   const { data: userData } = useSWR<IUser>('/api/user', fetcher);
-  const { data: postsData } = useSWR('/api/posts?lastId=0', fetcher);
-  const { data: followingsPostsData } = useSWR(userData ? '/api/posts/followings/?lastId=0' : null, fetcher);
+  const { data: postsData } = useSWR<IPost[]>('/api/posts?lastId=0', fetcher);
+  const { data: followingsPostsData } = useSWR<IPost[]>(userData ? '/api/posts/followings/?lastId=0' : null, fetcher);
 
   if (userData?.status === 'pending') {
     return <ExpiredValidation />;
