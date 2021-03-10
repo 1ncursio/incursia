@@ -1,12 +1,11 @@
 import { Col, Row } from 'antd';
-import axios from 'axios';
 import Head from 'next/head';
 import { useRouter } from 'next/router';
 import React, { useEffect } from 'react';
 import useSWR from 'swr';
-import AppLayout from '../../components/AppLayout';
-import CommentSection from '../../components/CommentSection';
-import NoticeSection from '../../components/NoticeSection';
+import AppLayout from '@components/AppLayout';
+import CommentSection from '@components/CommentSection';
+import NoticeSection from '@components/NoticeSection';
 import { fetcher } from '@utils/fetcher';
 
 const NoticePage = () => {

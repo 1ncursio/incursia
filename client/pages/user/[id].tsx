@@ -1,12 +1,16 @@
 import React, { useEffect } from 'react';
 import { Row, Col, Avatar } from 'antd';
 import useSWR from 'swr';
-import PropTypes from 'prop-types';
 import { fetcher } from '@utils/fetcher';
-import AppLayout from '../../components/AppLayout';
+import AppLayout from '@components/AppLayout';
+import { IUser } from '@typings/IUser';
 import wrapper from '../../store/configureStore';
 
-const UserPage = ({ user: initialUserData }) => {
+interface Props {
+  user: IUser;
+}
+
+const UserPage = ({ user: initialUserData }: Props) => {
   const { data: userData } = useSWR('/api/user', fetcher, { initialData: initialUserData });
 
   useEffect(() => {
@@ -26,12 +30,8 @@ const UserPage = ({ user: initialUserData }) => {
   );
 };
 
-UserPage.propTypes = {
-  user: PropTypes.object.isRequired,
-};
-
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const user = await fetcher(`/api/user/${context.params.id}`);
+  const user = await fetcher(`/api/user/${context.params?.id}`);
   return { props: { user } };
 });
 

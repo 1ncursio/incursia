@@ -1,44 +1,49 @@
 import React, { useEffect } from 'react';
-import { Col, Row, List, Avatar, Typography, Space } from 'antd';
+import { Col, Row, List, Typography, Space } from 'antd';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import Link from 'next/link';
-import AppLayout from '../../../components/AppLayout';
+import AppLayout from '@components/AppLayout';
 import { fetcher } from '@utils/fetcher';
-import UserPageMenu from '../../../components/UserPageMenu';
+import UserPageMenu from '@components/UserPageMenu';
+import UserPageProfile from '@components/UserPageProfile';
+import UserAvatar from '@components/UserAvatar';
+import { IUser } from '@typings/IUser';
+import { MenuHeader, MenuHeaderWrapper } from './style';
 import wrapper from '../../../store/configureStore';
-import UserPageProfile from '../../../components/UserPageProfile';
-import UserAvatar from '../../../components/UserAvatar';
-import { MenuHeaderWrapper, MenuHeader } from './style';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
-const UserFollowings = ({ user: initialUser, followings: initialFollowings }) => {
+interface Props {
+  user: IUser;
+  followings: IUser[];
+}
+
+const UserFollowers = ({ user: initialUser, followings: initialFollowers }: Props) => {
   const router = useRouter();
 
   const { id } = router.query;
 
   const { data: userData } = useSWR(`/api/user/${id}`, fetcher, { initialData: initialUser });
-  const { data: followingsData } = useSWR(`/api/user/${id}/followings`, fetcher, { initialData: initialFollowings });
+  const { data: followersData } = useSWR(`/api/user/${id}/followers`, fetcher, { initialData: initialFollowers });
 
   useEffect(() => {
-    if (followingsData) console.log(followingsData);
-  }, [followingsData]);
+    if (followersData) console.log(followersData);
+  }, [followersData]);
 
   return (
     <AppLayout>
       <Row justify="center" gutter={16}>
         <Col span={18}>
           <UserPageProfile userData={userData} />
-          <UserPageMenu current="followings" userId={parseInt(id, 10)} />
+          <UserPageMenu current="followers" userId={parseInt(id, 10)} />
           <MenuHeaderWrapper>
-            <MenuHeader>{`${followingsData.length}명 팔로우 중`}</MenuHeader>
+            <MenuHeader>{`${followersData.length}명의 팔로워`}</MenuHeader>
           </MenuHeaderWrapper>
           <Row gutter={8}>
             <List
-              dataSource={followingsData}
-              renderItem={(item) => (
+              dataSource={followersData}
+              renderItem={(item: IUser) => (
                 <List.Item>
                   <Space size="large">
                     <Link href={`/user/${item.id}/illustration`}>
@@ -62,15 +67,10 @@ const UserFollowings = ({ user: initialUser, followings: initialFollowings }) =>
   );
 };
 
-UserFollowings.propTypes = {
-  user: PropTypes.object.isRequired,
-  followings: PropTypes.arrayOf(PropTypes.object).isRequired,
-};
-
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const user = await fetcher(`/api/user/${context.params.id}`);
-  const followings = await fetcher(`/api/user/${context.params.id}/followings`);
+  const user = await fetcher(`/api/user/${context.params?.id}`);
+  const followings = await fetcher(`/api/user/${context.params?.id}/followers`);
   return { props: { user, followings } };
 });
 
-export default UserFollowings;
+export default UserFollowers;

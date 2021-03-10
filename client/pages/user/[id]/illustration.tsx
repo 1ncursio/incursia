@@ -1,18 +1,25 @@
-import React, { useEffect } from 'react';
-import { Col, Row, Typography } from 'antd';
+import React from 'react';
+import { Col, Row } from 'antd';
 import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import styled from 'styled-components';
-import AppLayout from '../../../components/AppLayout';
+import AppLayout from '@components/AppLayout';
 import { fetcher } from '@utils/fetcher';
-import wrapper from '../../../store/configureStore';
-import PostCard from '../../../components/PostCard';
-import UserPageMenu from '../../../components/UserPageMenu';
-import UserPageProfile from '../../../components/UserPageProfile';
+import PostCard from '@components/PostCard';
+import UserPageMenu from '@components/UserPageMenu';
+import UserPageProfile from '@components/UserPageProfile';
+import { IUser } from '@typings/IUser';
+import { IPost } from '@typings/IPost';
 import { MenuHeaderWrapper, MenuHeader } from './style';
+import wrapper from '../../../store/configureStore';
 
-const UserIllustration = ({ user: initialUser, posts: initialPosts }) => {
+interface Props {
+  user: IUser;
+  posts: IPost[];
+}
+
+const UserIllustration = ({ user: initialUser, posts: initialPosts }: Props) => {
   const router = useRouter();
 
   const { id } = router.query;
@@ -35,7 +42,7 @@ const UserIllustration = ({ user: initialUser, posts: initialPosts }) => {
             <MenuHeader>{`${postsData.length}개의 일러스트`}</MenuHeader>
           </MenuHeaderWrapper>
           <Row gutter={[8, 8]}>
-            {postsData?.map((post) => (
+            {postsData?.map((post: IPost) => (
               <Col xs={24} md={4} key={post.id}>
                 <PostCard key={post.id} post={post} avatarVisible={false} />
               </Col>
@@ -53,8 +60,8 @@ UserIllustration.propTypes = {
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const user = await fetcher(`/api/user/${context.params.id}?lastId=0`);
-  const posts = await fetcher(`/api/user/${context.params.id}/posts`);
+  const user = await fetcher(`/api/user/${context.params?.id}?lastId=0`);
+  const posts = await fetcher(`/api/user/${context.params?.id}/posts`);
   return { props: { user, posts } };
 });
 

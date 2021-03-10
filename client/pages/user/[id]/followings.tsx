@@ -9,36 +9,42 @@ import { fetcher } from '@utils/fetcher';
 import UserPageMenu from '@components/UserPageMenu';
 import UserPageProfile from '@components/UserPageProfile';
 import UserAvatar from '@components/UserAvatar';
-import { MenuHeader, MenuHeaderWrapper } from './style';
+import { IUser } from '@typings/IUser';
+import { MenuHeaderWrapper, MenuHeader } from './style';
 import wrapper from '../../../store/configureStore';
 
 const { Text } = Typography;
 
-const UserFollowers = ({ user: initialUser, followings: initialFollowers }) => {
+interface Props {
+  user: IUser;
+  followings: IUser[];
+}
+
+const UserFollowings = ({ user: initialUser, followings: initialFollowings }: Props) => {
   const router = useRouter();
 
   const { id } = router.query;
 
   const { data: userData } = useSWR(`/api/user/${id}`, fetcher, { initialData: initialUser });
-  const { data: followersData } = useSWR(`/api/user/${id}/followers`, fetcher, { initialData: initialFollowers });
+  const { data: followingsData } = useSWR(`/api/user/${id}/followings`, fetcher, { initialData: initialFollowings });
 
   useEffect(() => {
-    if (followersData) console.log(followersData);
-  }, [followersData]);
+    if (followingsData) console.log(followingsData);
+  }, [followingsData]);
 
   return (
     <AppLayout>
       <Row justify="center" gutter={16}>
         <Col span={18}>
           <UserPageProfile userData={userData} />
-          <UserPageMenu current="followers" userId={parseInt(id, 10)} />
+          <UserPageMenu current="followings" userId={parseInt(id, 10)} />
           <MenuHeaderWrapper>
-            <MenuHeader>{`${followersData.length}명의 팔로워`}</MenuHeader>
+            <MenuHeader>{`${followingsData.length}명 팔로우 중`}</MenuHeader>
           </MenuHeaderWrapper>
           <Row gutter={8}>
             <List
-              dataSource={followersData}
-              renderItem={(item) => (
+              dataSource={followingsData}
+              renderItem={(item: IUser) => (
                 <List.Item>
                   <Space size="large">
                     <Link href={`/user/${item.id}/illustration`}>
@@ -62,15 +68,15 @@ const UserFollowers = ({ user: initialUser, followings: initialFollowers }) => {
   );
 };
 
-UserFollowers.propTypes = {
+UserFollowings.propTypes = {
   user: PropTypes.object.isRequired,
   followings: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {
-  const user = await fetcher(`/api/user/${context.params.id}`);
-  const followings = await fetcher(`/api/user/${context.params.id}/followers`);
+  const user = await fetcher(`/api/user/${context.params?.id}`);
+  const followings = await fetcher(`/api/user/${context.params?.id}/followings`);
   return { props: { user, followings } };
 });
 
-export default UserFollowers;
+export default UserFollowings;
