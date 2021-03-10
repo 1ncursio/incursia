@@ -5,7 +5,7 @@ import useInput from '@hooks/useInput';
 
 interface Props {
   tags: Array<string>;
-  setTags: Dispatch<SetStateAction<string>>;
+  setTags: Dispatch<SetStateAction<string[]>>;
 }
 
 const TagForm = ({ tags, setTags }: Props) => {

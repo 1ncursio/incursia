@@ -1,6 +1,5 @@
 import { SmileOutlined } from '@ant-design/icons';
 import { Button, Form, Input, Modal, Popover } from 'antd';
-import PropTypes from 'prop-types';
 import React, { Dispatch, SetStateAction, useCallback, useEffect, useState } from 'react';
 // @ts-ignore
 import { useDispatch, useSelector } from 'react-redux';
@@ -8,14 +7,14 @@ import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import PopoverEmoticon from '@components/PopoverEmoticon';
 import useInput from '@hooks/useInput';
-import { IPost } from '@typings/db';
+import { IPost } from '@typings/IPost';
 import { ADD_COMMENT_REQUEST, ADD_REPLY_REQUEST } from '../../reducers/post';
 
 interface Props {
   placeholder?: string;
   replyId?: number;
   type: string;
-  setReplyId: Dispatch<SetStateAction<Number>>;
+  setReplyId: Dispatch<SetStateAction<number>>;
   postData: IPost;
   postMutate: any;
 }
@@ -101,7 +100,7 @@ const CommentForm = ({ placeholder = '', replyId = -1, type, setReplyId, postDat
       });
     }
 
-    setReplyId(-1);
+    return setReplyId(-1);
   }, [commentText, userData, addedCommentId, replyId, setReplyId]);
 
   return (
@@ -146,11 +145,6 @@ const CommentForm = ({ placeholder = '', replyId = -1, type, setReplyId, postDat
       </Form.Item>
     </Form>
   );
-};
-
-CommentForm.defaultProps = {
-  placeholder: '',
-  replyId: -1,
 };
 
 export default CommentForm;

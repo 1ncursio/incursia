@@ -9,7 +9,7 @@ import { DeleteOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import CommentContent from '@components/CommentContent';
-import { IPost } from '@typings/db';
+import { IPost } from '@typings/IPost';
 import CommentForm from '@components/CommentForm';
 import CommentWrapper from '@components/CommentSection/styles';
 import { REMOVE_COMMENT_REQUEST } from '../../reducers/post';

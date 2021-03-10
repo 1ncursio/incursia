@@ -3,11 +3,11 @@ import PropTypes from 'prop-types';
 import React, { useCallback, Dispatch, SetStateAction } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
-import { IEmoticon } from '@typings/db';
+import { IEmoticon } from '@typings/IEmoticon';
 
 interface Props {
-  setCommentText: Dispatch<SetStateAction<String>>;
-  setVisiblePopover: Dispatch<SetStateAction<Boolean>>;
+  setCommentText: Dispatch<SetStateAction<string>>;
+  setVisiblePopover: Dispatch<SetStateAction<boolean>>;
 }
 
 const PopoverEmoticon = ({ setCommentText, setVisiblePopover }: Props) => {

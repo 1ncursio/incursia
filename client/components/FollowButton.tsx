@@ -5,7 +5,8 @@ import { Button } from 'antd';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { fetcher } from '@utils/fetcher';
-import { IPost, IUser } from '@typings/db';
+import { IPost } from '@typings/IPost';
+import { IUser } from '@typings/IUser';
 import { FOLLOW_REQUEST, UNFOLLOW_REQUEST } from '../reducers/user';
 
 interface Props {

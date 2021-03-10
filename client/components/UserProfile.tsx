@@ -1,11 +1,11 @@
-import React, { useEffect, useCallback } from 'react';
+import React, { useEffect } from 'react';
 import { Avatar, Button, Typography, Row, Col, Badge, Space } from 'antd';
 import Link from 'next/link';
-import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import useSWR from 'swr';
-import FollowButton from './FollowButton';
 import { fetcher } from '@utils/fetcher';
+import FollowButton from '@components/FollowButton';
+import { IPost } from '@typings/IPost';
 
 const CurrentPostCover = styled.div`
   background-color: rgba(255, 255, 255, 0.5);
@@ -17,7 +17,11 @@ const CurrentPostCover = styled.div`
 
 const { Text } = Typography;
 
-const UserProfile = ({ postData }) => {
+interface Props {
+  postData: IPost;
+}
+
+const UserProfile = ({ postData }: Props) => {
   const { data: userData } = useSWR('/api/user', fetcher);
 
   useEffect(() => {
@@ -30,7 +34,11 @@ const UserProfile = ({ postData }) => {
     <Space direction="vertical">
       <Link href={`/user/${postData.User.id}/illustration`}>
         <a>
-          <Avatar size={48} src={postData.User.profile && `http://localhost:3100/${postData.User.profile}`} style={{ marginRight: 8 }}>
+          <Avatar
+            size={48}
+            src={postData.User.profile && `http://localhost:3100/${postData.User.profile}`}
+            style={{ marginRight: 8 }}
+          >
             {!postData.User.profile && postData.User.nickname[0]}
           </Avatar>
           <Text>{postData.User.nickname}</Text>
@@ -58,7 +66,13 @@ const UserProfile = ({ postData }) => {
                   />
                   <Badge
                     count={post.Images.length}
-                    style={{ backgroundColor: 'rgba(0, 0, 0, 0.5)', position: 'absolute', right: '5px', bottom: '25px', boxShadow: 'none' }}
+                    style={{
+                      backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                      position: 'absolute',
+                      right: '5px',
+                      bottom: '25px',
+                      boxShadow: 'none',
+                    }}
                   />
                 </div>
               </a>
@@ -68,10 +82,6 @@ const UserProfile = ({ postData }) => {
       </Row>
     </Space>
   );
-};
-
-UserProfile.propTypes = {
-  postData: PropTypes.object.isRequired,
 };
 
 export default UserProfile;

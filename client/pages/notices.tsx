@@ -6,12 +6,11 @@ import useSWR from 'swr';
 import AppLayout from '@components/AppLayout';
 import { fetcher } from '@utils/fetcher';
 import NoticeCard from '@components/NoticeCard';
-import { IPost } from '@typings/db';
+import { IPost } from '@typings/IPost';
 
 const NoticesPage = () => {
   const { hasMorePosts } = useSelector((state: any) => state.post);
 
-  const { data: userData } = useSWR('/api/user', fetcher);
   const { data: noticesData } = useSWR<IPost[]>('/api/posts/notices?lastId=0', fetcher);
 
   return (

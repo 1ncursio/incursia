@@ -4,15 +4,15 @@ import { useRouter } from 'next/router';
 import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import Link from 'next/link';
-import AppLayout from '../../../components/AppLayout';
+import AppLayout from '@components/AppLayout';
 import { fetcher } from '@utils/fetcher';
-import UserPageMenu from '../../../components/UserPageMenu';
-import wrapper from '../../../store/configureStore';
-import UserPageProfile from '../../../components/UserPageProfile';
-import UserAvatar from '../../../components/UserAvatar';
+import UserPageMenu from '@components/UserPageMenu';
+import UserPageProfile from '@components/UserPageProfile';
+import UserAvatar from '@components/UserAvatar';
 import { MenuHeader, MenuHeaderWrapper } from './style';
+import wrapper from '../../../store/configureStore';
 
-const { Text, Title } = Typography;
+const { Text } = Typography;
 
 const UserFollowers = ({ user: initialUser, followings: initialFollowers }) => {
   const router = useRouter();

@@ -1,9 +1,13 @@
 import React from 'react';
 import { Menu } from 'antd';
-import PropTypes from 'prop-types';
 import Link from 'next/link';
 
-const UserPageMenu = ({ current, userId }) => {
+interface Props {
+  current: string;
+  userId: number;
+}
+
+const UserPageMenu = ({ current, userId }: Props) => {
   return (
     <Menu mode="horizontal" selectedKeys={[current]}>
       <Menu.Item key="illustration">
@@ -23,11 +27,6 @@ const UserPageMenu = ({ current, userId }) => {
       </Menu.Item>
     </Menu>
   );
-};
-
-UserPageMenu.propTypes = {
-  current: PropTypes.string.isRequired,
-  userId: PropTypes.number.isRequired,
 };
 
 export default UserPageMenu;

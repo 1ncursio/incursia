@@ -17,7 +17,7 @@ import useSWR from 'swr';
 import { LIKE_POST_REQUEST, REMOVE_POST_REQUEST, DISLIKE_POST_REQUEST } from '../reducers/post';
 import { fetcher } from '@utils/fetcher';
 import styled from 'styled-components';
-import { IPost } from '@typings/db';
+import { IPost } from '@typings/IPost';
 
 moment.locale('ko');
 

@@ -3,8 +3,8 @@ import { Typography } from 'antd';
 import Link from 'next/link';
 import moment from 'moment';
 import styled from 'styled-components';
-import { IPost } from '@typings/db';
-import UserAvatar from './UserAvatar';
+import { IPost } from '@typings/IPost';
+import UserAvatar from '@components/UserAvatar';
 
 const TitleWrapper = styled.div`
   margin-bottom: 5px;
@@ -28,7 +28,7 @@ const { Text } = Typography;
 
 interface Props {
   post: IPost;
-  avatarVisible: boolean;
+  avatarVisible?: boolean;
 }
 
 const PostCard = ({ post, avatarVisible = true }: Props) => {
