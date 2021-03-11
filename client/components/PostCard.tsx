@@ -1,7 +1,6 @@
 import React from 'react';
 import { Typography } from 'antd';
 import Link from 'next/link';
-import moment from 'moment';
 import styled from 'styled-components';
 import { IPost } from '@typings/IPost';
 import UserAvatar from '@components/UserAvatar';
@@ -21,8 +20,6 @@ const CoverImage = styled.img`
     opacity: 0.8;
   }
 `;
-
-moment.locale('ko');
 
 const { Text } = Typography;
 

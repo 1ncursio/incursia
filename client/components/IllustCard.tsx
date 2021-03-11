@@ -12,14 +12,15 @@ import {
   HeartFilled,
   EyeFilled,
 } from '@ant-design/icons';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
 import useSWR from 'swr';
 import { LIKE_POST_REQUEST, REMOVE_POST_REQUEST, DISLIKE_POST_REQUEST } from '../reducers/post';
 import { fetcher } from '@utils/fetcher';
 import styled from 'styled-components';
 import { IPost } from '@typings/IPost';
 
-moment.locale('ko');
+dayjs.locale('ko');
 
 const { Title, Paragraph, Text } = Typography;
 
@@ -137,7 +138,7 @@ const IllustCard = ({ postData }: Props) => {
           </span>
         </Space>
         <div>
-          <Text type="secondary">{moment(postData?.createdAt).format('YYYY년 MM월 DD일 HH:mm')}</Text>
+          <Text type="secondary">{dayjs(postData?.createdAt).format('YYYY년 MM월 DD일 HH:mm')}</Text>
         </div>
       </PostContent>
     </>

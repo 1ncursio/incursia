@@ -1,10 +1,11 @@
 import { Avatar, List, Modal, Tooltip } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import 'dayjs/locale/ko';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import React, { useCallback, useState } from 'react';
 // @ts-ignore
 import { useDispatch } from 'react-redux';
 import Link from 'next/link';
-import PropTypes from 'prop-types';
 import { DeleteOutlined } from '@ant-design/icons';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
@@ -14,7 +15,8 @@ import CommentForm from '@components/CommentForm';
 import CommentWrapper from '@components/CommentSection/styles';
 import { REMOVE_COMMENT_REQUEST } from '../../reducers/post';
 
-moment.locale('ko');
+dayjs.locale('ko');
+dayjs.extend(relativeTime);
 
 interface Props {
   postData: IPost;
@@ -95,8 +97,8 @@ const CommentSection = ({ postData, postMutate }: Props) => {
                   </Link>
                 }
                 datetime={
-                  <Tooltip title={moment(item.createdAt).format('YYYY년 MM월 DD일 HH:mm')}>
-                    <span>{moment(item.createdAt).fromNow()}</span>
+                  <Tooltip title={dayjs(item.createdAt).format('YYYY년 MM월 DD일 HH:mm')}>
+                    <span>{dayjs(item.createdAt).fromNow()}</span>
                   </Tooltip>
                 }
                 content={<CommentContent content={item.content} />}
@@ -118,11 +120,6 @@ const CommentSection = ({ postData, postMutate }: Props) => {
       )}
     </>
   );
-};
-
-CommentSection.propTypes = {
-  postData: PropTypes.object.isRequired,
-  postMutate: PropTypes.func.isRequired,
 };
 
 export default CommentSection;

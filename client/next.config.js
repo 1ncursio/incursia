@@ -14,7 +14,7 @@ module.exports = withBundleAnalyzer({
       ...config,
       mode: isDevelopment ? 'development' : 'production',
       devtool: !isDevelopment ? 'hidden-source-map' : 'inline-source-map',
-      plugins: [...config.plugins, new webpack.ContextReplacementPlugin(/moment[/\\]locale$/, /^\.\/ko$/)],
+      plugins: [...config.plugins],
     };
   },
 });

@@ -2,9 +2,12 @@ import React, { useCallback, useState } from 'react';
 import useSWR from 'swr';
 import { useRouter } from 'next/router';
 import { Space, Tooltip, Typography } from 'antd';
-import moment from 'moment';
+import dayjs from 'dayjs';
+import relativeTime from 'dayjs/plugin/relativeTime';
 import { AlertOutlined, DeleteOutlined, HeartFilled, HeartOutlined, ShareAltOutlined } from '@ant-design/icons';
 import { fetcher } from '@utils/fetcher';
+
+dayjs.extend(relativeTime);
 
 const { Title, Paragraph } = Typography;
 
@@ -39,8 +42,8 @@ const NoticeSection = () => {
     <>
       <Title level={3}>{noticeData?.title}</Title>
       <Paragraph>{noticeData?.caption}</Paragraph>
-      <Tooltip title={moment(noticeData?.createdAt).format('YYYY년 MM월 DD일 HH:mm')}>
-        <span>{moment(noticeData?.createdAt).fromNow()}</span>
+      <Tooltip title={dayjs(noticeData?.createdAt).format('YYYY년 MM월 DD일 HH:mm')}>
+        <span>{dayjs(noticeData?.createdAt).fromNow()}</span>
       </Tooltip>
       <Space style={{ float: 'right' }}>
         <Tooltip title="좋아요!">
