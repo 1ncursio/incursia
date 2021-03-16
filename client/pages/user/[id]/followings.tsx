@@ -1,7 +1,6 @@
 import React, { useEffect } from 'react';
 import { Col, Row, List, Typography, Space } from 'antd';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
 import useSWR from 'swr';
 import Link from 'next/link';
 import AppLayout from '@components/AppLayout';
@@ -10,7 +9,8 @@ import UserPageMenu from '@components/UserPageMenu';
 import UserPageProfile from '@components/UserPageProfile';
 import UserAvatar from '@components/UserAvatar';
 import { IUser } from '@typings/IUser';
-import { MenuHeaderWrapper, MenuHeader } from './style';
+import ExpiredValidation from '@components/ExpiredValidation';
+import { MenuHeaderWrapper, MenuHeader } from '@pages/user/[id]/style';
 import wrapper from '../../../store/configureStore';
 
 const { Text } = Typography;
@@ -31,6 +31,10 @@ const UserFollowings = ({ user: initialUser, followings: initialFollowings }: Pr
   useEffect(() => {
     if (followingsData) console.log(followingsData);
   }, [followingsData]);
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <AppLayout>
@@ -66,11 +70,6 @@ const UserFollowings = ({ user: initialUser, followings: initialFollowings }: Pr
       </Row>
     </AppLayout>
   );
-};
-
-UserFollowings.propTypes = {
-  user: PropTypes.object.isRequired,
-  followings: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {

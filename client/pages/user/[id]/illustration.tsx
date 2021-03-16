@@ -1,17 +1,16 @@
 import React from 'react';
 import { Col, Row } from 'antd';
 import { useRouter } from 'next/router';
-import PropTypes from 'prop-types';
-import useSWR from 'swr';
-import styled from 'styled-components';
 import AppLayout from '@components/AppLayout';
+import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import PostCard from '@components/PostCard';
 import UserPageMenu from '@components/UserPageMenu';
 import UserPageProfile from '@components/UserPageProfile';
 import { IUser } from '@typings/IUser';
 import { IPost } from '@typings/IPost';
-import { MenuHeaderWrapper, MenuHeader } from './style';
+import ExpiredValidation from '@components/ExpiredValidation';
+import { MenuHeaderWrapper, MenuHeader } from '@pages/user/[id]/style';
 import wrapper from '../../../store/configureStore';
 
 interface Props {
@@ -28,9 +27,9 @@ const UserIllustration = ({ user: initialUser, posts: initialPosts }: Props) => 
 
   const { data: postsData } = useSWR(`/api/user/${id}/posts`, fetcher, { initialData: initialPosts });
 
-  // useEffect(() => {
-  // console.log(userData);
-  // }, []);
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <AppLayout>
@@ -52,11 +51,6 @@ const UserIllustration = ({ user: initialUser, posts: initialPosts }: Props) => 
       </Row>
     </AppLayout>
   );
-};
-
-UserIllustration.propTypes = {
-  user: PropTypes.object.isRequired,
-  posts: PropTypes.arrayOf(PropTypes.object).isRequired,
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {

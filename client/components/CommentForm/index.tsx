@@ -35,28 +35,31 @@ const CommentForm = ({ placeholder = '', replyId = -1, type, setReplyId, postDat
   useEffect(() => {
     if (addCommentDone) {
       if (type === 'comment') {
-        postMutate(
-          {
-            ...postData,
-            Comments: [
-              ...postData.Comments,
-              {
-                id: addedCommentId,
-                replyId: addedCommentId,
-                userId: userData.id,
-                content: commentText,
-                User: {
-                  id: userData.id,
-                  nickname: userData.nickname,
-                  profile: userData.profile,
-                },
-              },
-            ],
-          },
-          false,
-        );
+        // postMutate(
+        //   {
+        //     ...postData,
+        //     Comments: [
+        //       ...postData.Comments,
+        //       {
+        //         id: addedCommentId,
+        //         replyId: addedCommentId,
+        //         userId: userData.id,
+        //         content: commentText,
+        //         User: {
+        //           id: userData.id,
+        //           nickname: userData.nickname,
+        //           profile: userData.profile,
+        //         },
+        //       },
+        //     ],
+        //   },
+        //   false,
+        // );
+        postMutate();
+        console.log('코멘트 작성');
       } else if (type === 'reply') {
         postMutate();
+        console.log('답글 작성');
       }
       setCommentText('');
     }

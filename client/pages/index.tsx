@@ -1,6 +1,6 @@
 import React from 'react';
 // @ts-ignore
-import { useSelector } from 'react-redux';
+// import { useSelector } from 'react-redux';
 import { Row, Col } from 'antd';
 import useSWR from 'swr';
 import styled from 'styled-components';
@@ -22,7 +22,7 @@ const DividerHeader = styled.div`
 `;
 
 const Home = () => {
-  const { hasMorePosts } = useSelector((state: any) => state.post);
+  // const { hasMorePosts } = useSelector((state: any) => state.post);
 
   const { data: userData } = useSWR<IUser>('/api/user', fetcher);
   const { data: postsData } = useSWR<IPost[]>('/api/posts?lastId=0', fetcher);

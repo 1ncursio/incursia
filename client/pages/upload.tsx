@@ -9,13 +9,15 @@ import useInput from '@hooks/useInput';
 import AppLayout from '@components/AppLayout';
 import TagForm from '@components/TagForm';
 import { fetcher } from '@utils/fetcher';
+import ExpiredValidation from '@components/ExpiredValidation';
+import { UploadFile } from 'antd/lib/upload/interface';
 import { UPLOAD_IMAGES_REQUEST, ADD_POST_REQUEST, REMOVE_IMAGE } from '../reducers/post';
 
 // const { Option } = Select;
 const { Paragraph } = Typography;
 const { TextArea } = Input;
 
-function getBase64(file) {
+function getBase64(file: UploadFile<any>) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -76,14 +78,13 @@ const upload = () => {
   const onRemoveFile = useCallback(
     (file) => {
       const fileIndex = fileList.findIndex((v) => v === file);
-      fileList.forEach((v) => console.log(v.name));
       console.log(fileIndex);
       dispatch({
         type: REMOVE_IMAGE,
         data: fileIndex,
       });
     },
-    [fileList]
+    [fileList],
   );
 
   const beforeUpload = useCallback((file) => {
@@ -104,7 +105,7 @@ const upload = () => {
     });
 
     return true;
-  });
+  }, []);
 
   const onFinish = useCallback(() => {
     console.log({ title, caption, tags, imagePaths });
@@ -119,7 +120,7 @@ const upload = () => {
       },
     });
     // Router.replace(`/illustration/${addedPostId}`)
-  });
+  }, [title, caption, tags, imagePaths]);
 
   const uploadButton = (
     <div>
@@ -127,6 +128,10 @@ const upload = () => {
       <div style={{ marginTop: 8 }}>업로드</div>
     </div>
   );
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <AppLayout>
@@ -159,7 +164,7 @@ const upload = () => {
               <Input type="text" value={title} onChange={onChangeTitle} placeholder="타이틀" />
             </Form.Item>
             <Form.Item>
-              <TextArea rows="5" placeholder="캡션" value={caption} onChange={onChangeCaption} />
+              <TextArea rows={5} placeholder="캡션" value={caption} onChange={onChangeCaption} />
             </Form.Item>
             <Form.Item>
               <TagForm tags={tags} setTags={setTags} />
@@ -176,11 +181,14 @@ const upload = () => {
             <Form.Item>
               <Paragraph>아래에 해당하는 작품의 업로드를 금지합니다. 업로드하시기 전에 확인해주세요.</Paragraph>
               <Paragraph>
-                타인이 제작한 작품, 시판되는 상품의 이미지, 제삼자가 권리를 소유한 이미지, 게임 및 영상 작품의 캡처, 스크린숏 이미지가 포함된 작품.
+                타인이 제작한 작품, 시판되는 상품의 이미지, 제삼자가 권리를 소유한 이미지, 게임 및 영상 작품의 캡처,
+                스크린숏 이미지가 포함된 작품.
               </Paragraph>
               <Paragraph>위와 같은 이미지를 유용하여, 처음부터 모든 것을 본인이 직접 그리지 않은 작품.</Paragraph>
               <Paragraph>작품 이외의 피사체를 찍은 사진 이미지.</Paragraph>
-              <Paragraph>이용약관에 위반하는 작품의 투고 유저는 투고 작품 공개 정지, 계정 정지의 대상이 됩니다.</Paragraph>
+              <Paragraph>
+                이용약관에 위반하는 작품의 투고 유저는 투고 작품 공개 정지, 계정 정지의 대상이 됩니다.
+              </Paragraph>
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit">

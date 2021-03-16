@@ -48,7 +48,13 @@ const ExpiredValidation = () => {
         {visibleInput ? (
           <Form onFinish={onFinish} layout="vertical">
             <Form.Item>
-              <Input type="email" onChange={onChangeEmail} value={email} size="large" />
+              <Input
+                type="email"
+                onChange={onChangeEmail}
+                value={email}
+                size="large"
+                placeholder="가입된 이메일을 정확히 입력해 주세요."
+              />
             </Form.Item>
             <Form.Item>
               <Button type="primary" htmlType="submit" loading={isLoading} size="large" block>

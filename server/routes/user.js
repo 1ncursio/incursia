@@ -162,7 +162,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
   }
 });
 
-router.post('/mail', isNotLoggedIn, async (req, res, next) => {
+router.post('/mail', async (req, res, next) => {
   const user = await User.findOne({ where: { email: req.body.email, status: 'pending' } });
   if (!user) {
     return res.status(403).json({ success: false, message: '가입되지 않았거나 이미 인증이 완료된 계정입니다.' });

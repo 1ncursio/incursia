@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { Row, Col, Avatar } from 'antd';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
+import ExpiredValidation from '@components/ExpiredValidation';
 import AppLayout from '@components/AppLayout';
 import { IUser } from '@typings/IUser';
 import wrapper from '../../store/configureStore';
@@ -16,6 +17,10 @@ const UserPage = ({ user: initialUserData }: Props) => {
   useEffect(() => {
     console.log(userData);
   }, []);
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <AppLayout>

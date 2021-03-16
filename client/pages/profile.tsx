@@ -7,6 +7,7 @@ import useSWR from 'swr';
 import AppLayout from '@components/AppLayout';
 import ProfileForm from '@components/ProfileForm';
 import { fetcher } from '@utils/fetcher';
+import ExpiredValidation from '@components/ExpiredValidation';
 
 const Profile = () => {
   const { data: userData } = useSWR('/api/user', fetcher);
@@ -15,6 +16,10 @@ const Profile = () => {
       Router.push('/');
     }
   }, [userData]);
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <>

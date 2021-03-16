@@ -9,7 +9,8 @@ import UserPageMenu from '@components/UserPageMenu';
 import UserPageProfile from '@components/UserPageProfile';
 import UserAvatar from '@components/UserAvatar';
 import { IUser } from '@typings/IUser';
-import { MenuHeader, MenuHeaderWrapper } from './style';
+import { MenuHeader, MenuHeaderWrapper } from '@pages/user/[id]/style';
+import ExpiredValidation from '@components/ExpiredValidation';
 import wrapper from '../../../store/configureStore';
 
 const { Text } = Typography;
@@ -30,6 +31,10 @@ const UserFollowers = ({ user: initialUser, followings: initialFollowers }: Prop
   useEffect(() => {
     if (followersData) console.log(followersData);
   }, [followersData]);
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <AppLayout>

@@ -8,6 +8,7 @@ import useSWR from 'swr';
 import SignupForm from '@components/SignupForm';
 import { fetcher } from '@utils/fetcher';
 import SignUpComplete from '@components/SignUpComplete';
+import ExpiredValidation from '@components/ExpiredValidation';
 
 const BackgroundImage = styled.div`
   width: 100%;
@@ -53,6 +54,10 @@ const signup = () => {
       });
     }
   }, [signUpError]);
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <>

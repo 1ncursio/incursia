@@ -2,7 +2,6 @@ import React, { useEffect } from 'react';
 import Router, { useRouter } from 'next/router';
 import Head from 'next/head';
 import useSWR from 'swr';
-import PropTypes from 'prop-types';
 import { Col, Row } from 'antd';
 // @ts-ignore
 import { useSelector } from 'react-redux';
@@ -13,6 +12,7 @@ import UserProfile from '@components/UserProfile';
 import CommentSection from '@components/CommentSection';
 import { IPost } from '@typings/IPost';
 import { IUser } from '@typings/IUser';
+import ExpiredValidation from '@components/ExpiredValidation';
 import wrapper from '../../store/configureStore';
 
 interface Props {
@@ -23,22 +23,10 @@ const Illustration = ({ post: initialPost }: Props) => {
   const router = useRouter();
   const { id } = router.query;
 
-  // const [, setCookie] = useCookies(['views']);
-
   const { data: postData, mutate: postMutate } = useSWR(`/api/post/${id}`, fetcher, { initialData: initialPost });
-  const { data: userData } = useSWR('/api/user', fetcher);
+  const { data: userData } = useSWR<IUser>('/api/user', fetcher);
 
   const { removePostDone, likePostDone, dislikePostDone } = useSelector((state: any) => state.post);
-
-  // useEffect(() => {
-  //   if (cookieData) {
-  //     console.log(cookieData);
-  //     setCookie('views', cookieData.views, {
-  //       path: cookieData['Path'],
-  //       maxAge: cookieData['Max-Age'],
-  //     });
-  //   }
-  // }, []);
 
   useEffect(() => {
     if (removePostDone) {
@@ -54,7 +42,7 @@ const Illustration = ({ post: initialPost }: Props) => {
           Likers: [
             ...postData.Likers,
             {
-              id: userData.id,
+              id: userData?.id,
             },
           ],
         },
@@ -68,12 +56,16 @@ const Illustration = ({ post: initialPost }: Props) => {
       postMutate(
         {
           ...postData,
-          Likers: postData.Likers.filter((v: IUser) => v.id !== userData.id),
+          Likers: postData.Likers.filter((v: IUser) => v.id !== userData?.id),
         },
         false,
       );
     }
   }, [dislikePostDone]);
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <AppLayout>
@@ -99,11 +91,6 @@ const Illustration = ({ post: initialPost }: Props) => {
       </Row>
     </AppLayout>
   );
-};
-
-Illustration.propTypes = {
-  post: PropTypes.object.isRequired,
-  // cookie: PropTypes.oneOfType([PropTypes.number, PropTypes.string]).isRequired,
 };
 
 export const getServerSideProps = wrapper.getServerSideProps(async (context) => {

@@ -4,6 +4,7 @@ import { useRouter } from 'next/router';
 import React, { useCallback, useEffect, useState } from 'react';
 import useInput from '@hooks/useInput';
 import { fetcherPatch } from '@utils/fetcher';
+import Link from 'next/link';
 
 const validation = () => {
   const router = useRouter();
@@ -60,7 +61,12 @@ const validation = () => {
         <div>인증을 다시 시도하려면, 인증메일을 요청해 주세요!</div>
         {visibleInput ? (
           <Form onFinish={onFinish} layout="vertical">
-            <Input type="email" onChange={onChangeEmail} value={email} />
+            <Input
+              type="email"
+              onChange={onChangeEmail}
+              value={email}
+              placeholder="가입된 이메일을 정확히 입력해 주세요."
+            />
             <Button type="primary" htmlType="submit" loading={isLoading}>
               인증메일 보내기
             </Button>
@@ -74,7 +80,14 @@ const validation = () => {
     );
   }
 
-  return <div>인증됨!</div>;
+  return (
+    <>
+      <div>인증됨!</div>
+      <Link href="/">
+        <a>홈으로</a>
+      </Link>
+    </>
+  );
 };
 
 export default validation;

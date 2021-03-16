@@ -7,11 +7,17 @@ import AppLayout from '@components/AppLayout';
 import { fetcher } from '@utils/fetcher';
 import NoticeCard from '@components/NoticeCard';
 import { IPost } from '@typings/IPost';
+import ExpiredValidation from '@components/ExpiredValidation';
 
 const NoticesPage = () => {
   const { hasMorePosts } = useSelector((state: any) => state.post);
 
+  const { data: userData } = useSWR('/api/user', fetcher);
   const { data: noticesData } = useSWR<IPost[]>('/api/posts/notices?lastId=0', fetcher);
+
+  if (userData?.status === 'pending') {
+    return <ExpiredValidation />;
+  }
 
   return (
     <AppLayout>
