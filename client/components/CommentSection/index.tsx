@@ -75,7 +75,7 @@ const CommentSection = ({ postData, postMutate }: Props) => {
           renderItem={(item) => (
             <li>
               <CommentWrapper
-                nested={+(item.id !== item.replyId)}
+                nested={item.id !== item.replyId}
                 actions={[
                   <span onClick={() => toggleReplyForm(item.id)}>답글</span>,
                   <Tooltip title="삭제">
