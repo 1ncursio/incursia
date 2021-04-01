@@ -1,6 +1,6 @@
 const Sequelize = require('sequelize');
 const comment = require('./comment');
-const Tag = require('./Tag');
+const Tag = require('./tag');
 const image = require('./image');
 const emoticon = require('./emoticon');
 const post = require('./post');
