@@ -3,7 +3,6 @@ import { Avatar, Typography } from 'antd';
 import styled from '@emotion/styled';
 import { IUser } from '@typings/IUser';
 import { AvatarSize } from 'antd/lib/avatar/SizeContext';
-import { AvatarProps } from 'antd/lib/skeleton/Avatar';
 
 // interface AvatarWrapperProps {
 //   src: string;

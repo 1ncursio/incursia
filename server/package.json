@@ -4,7 +4,8 @@
   "description": "a gallery web writen in js",
   "main": "index.js",
   "scripts": {
-    "dev": "nodemon index"
+    "dev": "nodemon index",
+    "start": "node index.js"
   },
   "author": "Incursio",
   "license": "ISC",
