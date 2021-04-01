@@ -47,7 +47,7 @@ const UserProfile = ({ postData }: Props) => {
       {userData?.id !== postData.User.id ? (
         <FollowButton postData={postData} />
       ) : (
-        <Button type="primary" shape="round" block onClick>
+        <Button type="primary" shape="round" block>
           작품 편집
         </Button>
       )}

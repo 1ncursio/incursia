@@ -10,14 +10,13 @@ import AppLayout from '@components/AppLayout';
 import TagForm from '@components/TagForm';
 import { fetcher } from '@utils/fetcher';
 import ExpiredValidation from '@components/ExpiredValidation';
-import { UploadFile } from 'antd/lib/upload/interface';
 import { UPLOAD_IMAGES_REQUEST, ADD_POST_REQUEST, REMOVE_IMAGE } from '../reducers/post';
 
 // const { Option } = Select;
 const { Paragraph } = Typography;
 const { TextArea } = Input;
 
-function getBase64(file: UploadFile<any>) {
+function getBase64(file: Blob) {
   return new Promise((resolve, reject) => {
     const reader = new FileReader();
     reader.readAsDataURL(file);
@@ -30,6 +29,7 @@ const upload = () => {
   const dispatch = useDispatch();
 
   const { data: userData } = useSWR('/api/user', fetcher);
+  // @ts-ignore
   const { imagePaths, addedPostId } = useSelector((state) => state.post);
 
   useEffect(() => {
@@ -46,7 +46,7 @@ const upload = () => {
 
   const [title, onChangeTitle] = useInput('');
   const [caption, onChangeCaption] = useInput('');
-  const [tags, setTags] = useState([]);
+  const [tags, setTags] = useState<string[]>([]);
   const [fileList, setFileList] = useState([]);
   const [fileSize, setFileSize] = useState(0);
   const [previewImage, setPreviewImage] = useState('');
@@ -71,8 +71,8 @@ const upload = () => {
   const onChangeFileList = useCallback(({ fileList: newFileList }) => {
     console.log(newFileList);
     setFileList(newFileList);
-    const fileSizes = newFileList.map((file) => file.size);
-    setFileSize(Math.round((fileSizes.reduce((p, c) => p + c, 0) / 1024 / 1024) * 100) / 100);
+    const fileSizes = newFileList.map((file: Blob) => file.size);
+    setFileSize(Math.round((fileSizes.reduce((p: number, c: number) => p + c, 0) / 1024 / 1024) * 100) / 100);
   }, []);
 
   const onRemoveFile = useCallback(

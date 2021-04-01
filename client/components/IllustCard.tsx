@@ -19,6 +19,7 @@ import { LIKE_POST_REQUEST, REMOVE_POST_REQUEST, DISLIKE_POST_REQUEST } from '..
 import { fetcher } from '@utils/fetcher';
 import styled from 'styled-components';
 import { IPost } from '@typings/IPost';
+import { IUser } from '@typings/IUser';
 
 dayjs.locale('ko');
 
@@ -36,12 +37,12 @@ const IllustCard = ({ postData }: Props) => {
   const dispatch = useDispatch();
   const [liked, setLiked] = useState(false);
 
-  const { data: userData, error: userError } = useSWR('/api/user', fetcher);
+  const { data: userData, error: userError } = useSWR<IUser>('/api/user', fetcher);
 
   const { removePostDone } = useSelector((state: any) => state.post);
 
   useEffect(() => {
-    if (userData) setLiked(postData.Likers.find((v) => v.id === userData?.id));
+    if (userData && postData.Likers) setLiked(postData.Likers.find((v) => v.id === userData.id) ? true : false);
   }, [userData]);
 
   const onLike = useCallback(() => {

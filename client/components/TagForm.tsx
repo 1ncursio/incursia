@@ -4,7 +4,7 @@ import { PlusOutlined } from '@ant-design/icons';
 import useInput from '@hooks/useInput';
 
 interface Props {
-  tags: Array<string>;
+  tags: string[];
   setTags: Dispatch<SetStateAction<string[]>>;
 }
 

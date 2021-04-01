@@ -10,3 +10,5 @@ export const MenuHeaderWrapper = styled.div`
 export const MenuHeader = styled(Text)`
   font-size: 1.1rem;
 `;
+
+export default MenuHeader;

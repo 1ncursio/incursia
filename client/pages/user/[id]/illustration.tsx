@@ -21,7 +21,7 @@ interface Props {
 const UserIllustration = ({ user: initialUser, posts: initialPosts }: Props) => {
   const router = useRouter();
 
-  const { id } = router.query;
+  const { id }: { id?: string } = router.query;
 
   const { data: userData } = useSWR(`/api/user/${id}?lastId=0`, fetcher, { initialData: initialUser });
 
@@ -36,7 +36,7 @@ const UserIllustration = ({ user: initialUser, posts: initialPosts }: Props) => 
       <Row justify="center" gutter={16}>
         <Col span={18}>
           <UserPageProfile userData={userData} />
-          <UserPageMenu current="illustration" userId={parseInt(id, 10)} />
+          {id && <UserPageMenu current="illustration" userId={parseInt(id, 10)} />}
           <MenuHeaderWrapper>
             <MenuHeader>{`${postsData.length}개의 일러스트`}</MenuHeader>
           </MenuHeaderWrapper>

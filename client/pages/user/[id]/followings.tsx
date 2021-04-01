@@ -23,7 +23,7 @@ interface Props {
 const UserFollowings = ({ user: initialUser, followings: initialFollowings }: Props) => {
   const router = useRouter();
 
-  const { id } = router.query;
+  const { id }: { id?: string } = router.query;
 
   const { data: userData } = useSWR(`/api/user/${id}`, fetcher, { initialData: initialUser });
   const { data: followingsData } = useSWR(`/api/user/${id}/followings`, fetcher, { initialData: initialFollowings });
@@ -41,7 +41,7 @@ const UserFollowings = ({ user: initialUser, followings: initialFollowings }: Pr
       <Row justify="center" gutter={16}>
         <Col span={18}>
           <UserPageProfile userData={userData} />
-          <UserPageMenu current="followings" userId={parseInt(id, 10)} />
+          {id && <UserPageMenu current="followings" userId={parseInt(id, 10)} />}
           <MenuHeaderWrapper>
             <MenuHeader>{`${followingsData.length}명 팔로우 중`}</MenuHeader>
           </MenuHeaderWrapper>

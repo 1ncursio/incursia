@@ -1,11 +1,19 @@
 import React from 'react';
 import { Avatar, Typography } from 'antd';
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 import { IUser } from '@typings/IUser';
 import { AvatarSize } from 'antd/lib/avatar/SizeContext';
+import { AvatarProps } from 'antd/lib/skeleton/Avatar';
+
+// interface AvatarWrapperProps {
+//   src: string;
+//   size: number;
+//   marginRight: number;
+//   theme?: Theme | undefined;
+// }
 
 const AvatarWrapper = styled(Avatar)`
-  margin-right: ${(props) => props.marginRight}px;
+  ${({ marginRight }: { marginRight: number }) => marginRight && `margin-right: ${marginRight}px;`}
 `;
 
 const { Text, Title } = Typography;
@@ -32,6 +40,7 @@ const UserAvatar = ({
       <AvatarWrapper
         src={userData.profile && `http://localhost:3100/${userData.profile}`}
         size={size}
+        // @ts-ignore
         marginRight={marginRight}
       >
         {!userData.profile && userData.nickname[0]}

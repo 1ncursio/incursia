@@ -13,6 +13,9 @@
   "license": "ISC",
   "dependencies": {
     "@ant-design/icons": "^4.3.0",
+    "@emotion/babel-plugin": "^11.2.0",
+    "@emotion/react": "^11.1.5",
+    "@emotion/styled": "^11.1.5",
     "antd": "^4.10.0",
     "antd-img-crop": "^3.13.2",
     "axios": "^0.21.1",
