@@ -9,6 +9,8 @@ const expressip = require('express-ip');
 const path = require('path');
 const passportConfig = require('./passport');
 const app = express();
+const hpp = require('hpp');
+const helmet = require('helmet');
 
 const userRouter = require('./routes/user');
 const postRouter = require('./routes/post');
@@ -26,11 +28,18 @@ db.sequelize
   })
   .catch(console.error);
 passportConfig();
-app.use(expressip().getIpInfoMiddleware);
-app.use(morgan('dev'));
+// app.use(expressip().getIpInfoMiddleware);
+
+if (process.env.NODE_ENV === 'production') {
+  app.use(morgan('combined'));
+  app.use(hpp());
+  app.use(helmet());
+} else {
+  app.use(morgan('dev'));
+}
 app.use(
   cors({
-    origin: 'http://localhost:3080',
+    origin: ['http://localhost:3080', 'incursia.net'],
     credentials: true,
   })
 );

@@ -1,11 +1,11 @@
 {
   "name": "utopia-server",
   "version": "1.0.0",
-  "description": "a gallery web writen in js",
+  "description": "a gallery web written in js",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index",
-    "start": "pm2 start index.js"
+    "start": "crossenv NODE_ENV=production pm2 start index.js"
   },
   "author": "Incursio",
   "license": "ISC",
@@ -13,10 +13,13 @@
     "bcrypt": "^5.0.0",
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-ip": "^1.0.4",
     "express-session": "^1.17.1",
+    "helmet": "^4.4.1",
+    "hpp": "^0.2.3",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
     "multer": "^1.4.2",
