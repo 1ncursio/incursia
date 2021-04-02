@@ -35,9 +35,9 @@ const NoticePage = () => {
           <meta name="og:description" content={noticeData.caption} />
           <meta
             name="og:image"
-            content={noticeData.Images[0] ? noticeData.Images[0].src : 'https://nodebird.com/favicon.ico'}
+            content={noticeData.Images[0] ? noticeData.Images[0].src : 'http://incursia.site/favicon.ico'}
           />
-          <meta name="og:url" content={`https://nodebird.com/post/${id}`} />
+          <meta name="og:url" content={`http://incursia.net/notices/${id}`} />
         </Head>
       )}
       <Row justify="center" gutter={16}>

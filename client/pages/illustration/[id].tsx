@@ -91,9 +91,9 @@ const Illustration = ({ post: initialPost }: Props) => {
           <meta name="og:description" content={postData.caption} />
           <meta
             name="og:image"
-            content={postData.Images[0] ? postData.Images[0].src : 'https://nodebird.com/favicon.ico'}
+            content={postData.Images[0] ? postData.Images[0].src : 'http://incursia.site/favicon.ico'}
           />
-          <meta name="og:url" content={`https://nodebird.com/post/${id}`} />
+          <meta name="og:url" content={`http://incursia.site/illustration/${id}`} />
         </Head>
       )}
       {postData && (
