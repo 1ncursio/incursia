@@ -6,6 +6,7 @@ import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import FollowButton from '@components/FollowButton';
 import { IPost } from '@typings/IPost';
+import { backUrl } from '@config/config';
 
 const CurrentPostCover = styled.div`
   background-color: rgba(255, 255, 255, 0.5);
@@ -36,7 +37,7 @@ const UserProfile = ({ postData }: Props) => {
         <a>
           <Avatar
             size={48}
-            src={postData.User.profile && `http://localhost:3100/${postData.User.profile}`}
+            src={postData.User.profile && `${backUrl}/${postData.User.profile}`}
             style={{ marginRight: 8 }}
           >
             {!postData.User.profile && postData.User.nickname[0]}
@@ -59,7 +60,7 @@ const UserProfile = ({ postData }: Props) => {
                 {post.id === postData.id ? <CurrentPostCover /> : null}
                 <div style={{ width: '100%', height: 100 }}>
                   <img
-                    src={`http://localhost:3100/${post.Images[0].src}`}
+                    src={`${backUrl}/${post.Images[0].src}`}
                     key={post.id}
                     alt={post.title}
                     style={{ width: '100%', height: '100%', objectFit: 'cover', borderRadius: 8 }}

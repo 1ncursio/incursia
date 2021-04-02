@@ -4,6 +4,7 @@ import Link from 'next/link';
 import styled from 'styled-components';
 import { IPost } from '@typings/IPost';
 import UserAvatar from '@components/UserAvatar';
+import { backUrl } from '@config/config';
 
 const TitleWrapper = styled.div`
   margin-bottom: 5px;
@@ -33,7 +34,7 @@ const PostCard = ({ post, avatarVisible = true }: Props) => {
     <>
       <Link href={`/illustration/${post.id}`}>
         <a>
-          <CoverImage alt={post.title} src={`http://localhost:3100/${post.Images[0].src}`} />
+          <CoverImage alt={post.title} src={`${backUrl}/${post.Images[0].src}`} />
         </a>
       </Link>
       <TitleWrapper>

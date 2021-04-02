@@ -13,6 +13,7 @@ import CommentContent from '@components/CommentContent';
 import { IPost } from '@typings/IPost';
 import CommentForm from '@components/CommentForm';
 import CommentWrapper from '@components/CommentSection/styles';
+import { backUrl } from '@config/config';
 import { REMOVE_COMMENT_REQUEST } from '../../reducers/post';
 
 dayjs.locale('ko');
@@ -90,7 +91,7 @@ const CommentSection = ({ postData, postMutate }: Props) => {
                 avatar={
                   <Link href={`/user/${item.User.id}/illustration`}>
                     <a>
-                      <Avatar src={item.User.profile && `http://localhost:3100/${item.User.profile}`}>
+                      <Avatar src={item.User.profile && `${backUrl}/${item.User.profile}`}>
                         {!item.User.profile && item.User.nickname[0]}
                       </Avatar>
                     </a>

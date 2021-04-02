@@ -4,6 +4,7 @@ import React, { useCallback, Dispatch, SetStateAction } from 'react';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import { IEmoticon } from '@typings/IEmoticon';
+import { backUrl } from '@config/config';
 
 interface Props {
   setCommentText: Dispatch<SetStateAction<string>>;
@@ -26,7 +27,7 @@ const PopoverEmoticon = ({ setCommentText, setVisiblePopover }: Props) => {
       {emoticonData?.map((emoticon) => (
         <Col span={6}>
           <a onClick={() => onClickEmoticon(emoticon)}>
-            <img alt={emoticon.name} src={`http://localhost:3100/${emoticon.src}`} style={{ width: '100%' }} />
+            <img alt={emoticon.name} src={`${backUrl}/${emoticon.src}`} style={{ width: '100%' }} />
           </a>
         </Col>
       ))}

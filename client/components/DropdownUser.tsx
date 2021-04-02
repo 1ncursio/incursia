@@ -5,9 +5,10 @@ import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import useSWR from 'swr';
+import { backUrl } from '@config/config';
 import { fetcher } from '@utils/fetcher';
+import UserAvatar from '@components/UserAvatar';
 import { logoutRequestAction } from '../reducers/user';
-import UserAvatar from './UserAvatar';
 
 const { Text } = Typography;
 
@@ -40,7 +41,7 @@ const DropdownUser = () => {
         <div>
           <Link href={`/user/${userData?.id}/illustration`}>
             <a>
-              <Avatar src={userData?.profile ? `http://localhost:3100/${userData?.profile}` : null} size={64}>
+              <Avatar src={userData?.profile ? `${backUrl}/${userData?.profile}` : null} size={64}>
                 {userData?.profile ? null : userData?.nickname[0]}
               </Avatar>
             </a>
@@ -93,9 +94,6 @@ const DropdownUser = () => {
     userData && (
       <Dropdown overlay={menu} placement="bottomCenter" overlayStyle={{ width: 180 }}>
         <a>
-          {/* <Avatar src={userData?.profile && `http://localhost:3100/${userData?.profile}`} size="large">
-          {!userData?.profile && userData?.nickname[0]}
-        </Avatar> */}
           <UserAvatar userData={userData} size="large" marginRight={4} visibleNickname={false} />
           <DownOutlined style={{ fontSize: 10, color: '#ff8634' }} />
         </a>

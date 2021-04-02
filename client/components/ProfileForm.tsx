@@ -7,6 +7,7 @@ import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import useInput from '@hooks/useInput';
 import { CHANGE_PROFILE_REQUEST, CHANGE_NICKNAME_REQUEST, CHANGE_INTRO_REQUEST } from '../reducers/user';
+import { backUrl } from '@config/config';
 
 const { TextArea } = Input;
 const { Text } = Typography;
@@ -125,7 +126,7 @@ const ProfileForm = () => {
           <ImgCrop rotate quality={0.8} modalTitle="이미지 조정" modalOk="저장" modalCancel="취소">
             <Upload showUploadList={false} accept=".jpg,.jpeg,.png" beforeUpload={beforeUpload} onChange={onUpload}>
               {userData && (
-                <Avatar src={userData.profile ? `http://localhost:3100/${userData.profile}` : null} size={256}>
+                <Avatar src={userData.profile ? `${backUrl}/${userData.profile}` : null} size={256}>
                   {userData.profile ? null : userData.nickname[0]}
                 </Avatar>
               )}
