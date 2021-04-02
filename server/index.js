@@ -39,7 +39,7 @@ if (process.env.NODE_ENV === 'production') {
 }
 app.use(
   cors({
-    origin: ['http://localhost:3080', 'incursia.net'],
+    origin: ['http://localhost:3080', 'incursia.net', 'http://3.15.224.155'],
     credentials: true,
   })
 );
