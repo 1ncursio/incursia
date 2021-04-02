@@ -3,7 +3,6 @@ import { Avatar, Typography } from 'antd';
 import styled from '@emotion/styled';
 import { IUser } from '@typings/IUser';
 import { AvatarSize } from 'antd/lib/avatar/SizeContext';
-import { backUrl } from '@config/config';
 
 // interface AvatarWrapperProps {
 //   src: string;
@@ -38,7 +37,7 @@ const UserAvatar = ({
   return (
     <>
       <AvatarWrapper
-        src={userData.profile && `${backUrl}/${userData.profile}`}
+        src={userData.profile && `${userData.profile}`}
         size={size}
         // @ts-ignore
         marginRight={marginRight}

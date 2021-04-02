@@ -5,7 +5,6 @@ import { DownOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useDispatch, useSelector } from 'react-redux';
 import Link from 'next/link';
 import useSWR from 'swr';
-import { backUrl } from '@config/config';
 import { fetcher } from '@utils/fetcher';
 import UserAvatar from '@components/UserAvatar';
 import { logoutRequestAction } from '../reducers/user';
@@ -41,7 +40,7 @@ const DropdownUser = () => {
         <div>
           <Link href={`/user/${userData?.id}/illustration`}>
             <a>
-              <Avatar src={userData?.profile ? `${backUrl}/${userData?.profile}` : null} size={64}>
+              <Avatar src={userData?.profile ? `${userData?.profile}` : null} size={64}>
                 {userData?.profile ? null : userData?.nickname[0]}
               </Avatar>
             </a>

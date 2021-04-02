@@ -5,24 +5,43 @@ const { isLoggedIn, isNotLoggedIn, testMiddleware } = require('./middlewares');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const AWS = require('aws-sdk');
 const path = require('path');
 const jwt = require('jsonwebtoken');
-const { nanoid } = require('nanoid');
+// const { nanoid } = require('nanoid');
 const { smtpTransport, emailTemplate } = require('../config/email');
 
+AWS.config.update({
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: 'ap-northeast-2',
+});
+
 const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, 'uploads');
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname);
-      const basename = path.basename(file.originalname, ext);
-      done(null, basename + '_' + new Date().getTime() + ext);
+  storage: multerS3({
+    s3: new AWS.S3(),
+    bucket: 'incursia-s3',
+    key(req, file, cb) {
+      cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
     },
   }),
   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
 });
+
+// const upload = multer({
+//   storage: multer.diskStorage({
+//     destination(req, file, done) {
+//       done(null, 'uploads');
+//     },
+//     filename(req, file, done) {
+//       const ext = path.extname(file.originalname);
+//       const basename = path.basename(file.originalname, ext);
+//       done(null, basename + '_' + new Date().getTime() + ext);
+//     },
+//   }),
+//   limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+// });
 
 // GET /api/user
 router.get('/', async (req, res, next) => {
@@ -58,14 +77,6 @@ router.get('/', async (req, res, next) => {
     console.error(error);
     next(error);
   }
-});
-
-// GET /user/ip
-router.get('/ip', async (req, res, next) => {
-  const ipInfo = req.ipInfo;
-  console.log(ipInfo);
-  var message = `Hey, you are browsing from ${ipInfo.city}, ${ipInfo.country}`;
-  res.send(message);
 });
 
 // GET /user/1
@@ -227,13 +238,13 @@ router.patch('/profile', isLoggedIn, upload.single('image'), async (req, res, ne
   try {
     await User.update(
       {
-        profile: req.file.filename,
+        profile: req.file.location,
       },
       {
         where: { id: req.user.id },
       }
     );
-    res.status(200).json({ success: true, profile: req.file.filename });
+    res.status(200).json({ success: true, profile: req.file.location });
   } catch (error) {
     console.error(error);
     next(error);

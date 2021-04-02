@@ -5,7 +5,6 @@ import { fetcher } from '@utils/fetcher';
 import ExpiredValidation from '@components/ExpiredValidation';
 import AppLayout from '@components/AppLayout';
 import { IUser } from '@typings/IUser';
-import { backUrl } from '@config/config';
 import wrapper from '../../store/configureStore';
 
 interface Props {
@@ -27,8 +26,8 @@ const UserPage = ({ user: initialUserData }: Props) => {
     <AppLayout>
       <Row justify="center" gutter={16}>
         <Col span={12}>
-          <Avatar src={userData?.profile ? `${backUrl}/${userData?.profile}` : null} size={64}>
-            {userData?.profile ? null : userData?.nickname[0]}
+          <Avatar src={userData?.profile && `${userData?.profile}`} size={64}>
+            {!userData?.profile && userData?.nickname[0]}
           </Avatar>
         </Col>
       </Row>

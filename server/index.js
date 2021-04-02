@@ -5,7 +5,6 @@ const passport = require('passport');
 const cors = require('cors');
 const morgan = require('morgan');
 const dotenv = require('dotenv');
-const expressip = require('express-ip');
 const path = require('path');
 const passportConfig = require('./passport');
 const app = express();
@@ -28,7 +27,6 @@ db.sequelize
   })
   .catch(console.error);
 passportConfig();
-// app.use(expressip().getIpInfoMiddleware);
 
 if (process.env.NODE_ENV === 'production') {
   app.use(morgan('combined'));

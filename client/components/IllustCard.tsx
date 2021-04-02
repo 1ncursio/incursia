@@ -20,7 +20,6 @@ import { fetcher } from '@utils/fetcher';
 import styled from 'styled-components';
 import { IPost } from '@typings/IPost';
 import { IUser } from '@typings/IUser';
-import { backUrl } from '@config/config';
 
 dayjs.locale('ko');
 
@@ -89,7 +88,7 @@ const IllustCard = ({ postData }: Props) => {
     <>
       <Image.PreviewGroup>
         {postData?.Images.map((v) => (
-          <Image width="100%" key={v.src} src={`${backUrl}/${v.src}`} />
+          <Image width="100%" key={v.src} src={`${v.src}`} />
         ))}
       </Image.PreviewGroup>
       <Space style={{ float: 'right' }}>
