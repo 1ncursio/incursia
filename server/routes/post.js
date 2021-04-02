@@ -1,23 +1,44 @@
 const express = require('express');
 const multer = require('multer');
+const multerS3 = require('multer-s3');
+const AWS = require('aws-sdk');
 const path = require('path');
 const { isLoggedIn, isNotLoggedIn, isAdmin } = require('./middlewares');
 const router = express.Router();
 const { Post, User, Tag, Image, Comment, sequelize } = require('../models');
 
-const upload = multer({
-  storage: multer.diskStorage({
-    destination(req, file, done) {
-      done(null, 'uploads');
-    },
-    filename(req, file, done) {
-      const ext = path.extname(file.originalname);
-      const basename = path.basename(file.originalname, ext);
-      done(null, basename + '_' + new Date().getTime() + ext);
-    },
-  }),
-  limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+AWS.config.update({
+  accessKeyId: process.env.S3_ACCESS_KEY_ID,
+  secretAccessKey: process.env.S3_SECRET_ACCESS_KEY,
+  region: 'ap-northeast-2',
 });
+
+if (process.env.NODE_ENV === production) {
+  const upload = multer({
+    storage: multerS3({
+      s3: new AWS.S3(),
+      bucket: 'incursia-s3',
+      key(req, file, cb) {
+        cb(null, `original/${Date.now()}_${path.basename(file.originalname)}`);
+      },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  });
+} else {
+  const upload = multer({
+    storage: multer.diskStorage({
+      destination(req, file, done) {
+        done(null, 'uploads');
+      },
+      filename(req, file, done) {
+        const ext = path.extname(file.originalname);
+        const basename = path.basename(file.originalname, ext);
+        done(null, basename + '_' + new Date().getTime() + ext);
+      },
+    }),
+    limits: { fileSize: 5 * 1024 * 1024 }, // 5MB
+  });
+}
 
 // POST /api/post
 router.post('/', isLoggedIn, async (req, res, next) => {
@@ -139,7 +160,11 @@ router.post('/notice', isLoggedIn, isAdmin, async (req, res, next) => {
 // POST /api/post/images
 router.post('/images', isLoggedIn, upload.array('image'), async (req, res, next) => {
   console.log(req.files);
-  res.json(req.files.map((v) => v.filename));
+  if (process.env.NODE_ENV === 'production') {
+    res.json(req.files.map((v) => v.location));
+  } else {
+    res.json(req.files.map((v) => v.filename));
+  }
 });
 
 // POST /post/1/comment
