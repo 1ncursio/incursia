@@ -8,7 +8,16 @@ import { fetcher } from '@utils/fetcher';
 import DropdownCommunity from '@components/DropdownCommunity';
 import DropdownUser from '@components/DropdownUser';
 import useInput from '@hooks/useInput';
-import { CenterMenu, CenterMenuItem, LeftMenu, MenuItem, Nav, RightMenu, SearchInput, UploadButton } from '@components/AppLayout/styles';
+import {
+  CenterMenu,
+  CenterMenuItem,
+  LeftMenu,
+  MenuItem,
+  Nav,
+  RightMenu,
+  SearchInput,
+  UploadButton,
+} from '@components/AppLayout/styles';
 
 const { Text } = Typography;
 
@@ -33,7 +42,7 @@ const AppLayout = ({ children }: Props) => {
             <Link href="/">
               <a>
                 <Text strong style={{ color: '#ff8634' }}>
-                  유토피아
+                  Incursia
                 </Text>
               </a>
             </Link>
@@ -48,7 +57,12 @@ const AppLayout = ({ children }: Props) => {
         </LeftMenu>
         <CenterMenu>
           <CenterMenuItem>
-            <SearchInput value={searchInput} onChange={onChangeSearchInput} onSearch={onSearch} placeholder="보고싶은 태그를 검색해보세요!" />
+            <SearchInput
+              value={searchInput}
+              onChange={onChangeSearchInput}
+              onSearch={onSearch}
+              placeholder="보고싶은 태그를 검색해보세요!"
+            />
           </CenterMenuItem>
         </CenterMenu>
         <RightMenu>

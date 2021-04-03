@@ -27,19 +27,17 @@ const NoticePage = () => {
 
   return (
     <AppLayout>
-      {noticeData && (
-        <Head>
-          <title>{noticeData.User.nickname}님의 일러스트 - 유토피아</title>
-          <meta name="description" content={noticeData.caption} />
-          <meta name="og:title" content={`${noticeData.User.nickname}님의 일러스트`} />
-          <meta name="og:description" content={noticeData.caption} />
-          <meta
-            name="og:image"
-            content={noticeData.Images[0] ? noticeData.Images[0].src : 'https://incursia.site/favicon.ico'}
-          />
-          <meta name="og:url" content={`https://incursia.net/notices/${id}`} />
-        </Head>
-      )}
+      <Head>
+        <title>{noticeData?.User.nickname}님의 일러스트 - Incursia</title>
+        <meta name="description" content={noticeData?.caption} />
+        <meta name="og:title" content={`${noticeData?.User.nickname}님의 일러스트`} />
+        <meta name="og:description" content={noticeData?.caption} />
+        <meta
+          name="og:image"
+          content={noticeData?.Images[0] ? noticeData?.Images[0].src : 'https://incursia.site/favicon.ico'}
+        />
+        <meta name="og:url" content={`https://incursia.net/notices/${id}`} />
+      </Head>
       <Row justify="center" gutter={16}>
         <Col span={12}>
           <NoticeSection />

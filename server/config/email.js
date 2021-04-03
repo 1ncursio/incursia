@@ -25,9 +25,9 @@ const emailTemplate = (token) => {
               <p style="color: rgba(0, 0, 0, 0.8);">가입해주셔서 감사합니다.</p>
               <p style="color: rgba(0, 0, 0, 0.8);">환영합니다. 아래의 링크를 클릭해 주시면 가입이 완료됩니다!</p>
               <a href="https://incursia.site/validation?token=${token}">링크를 통해 계정 메일을 인증해주세요.</a>
-              <p class="from" style="margin-left: 10px;color: rgba(0, 0, 0, 0.8);">- 유토피아</p>
+              <p class="from" style="margin-left: 10px;color: rgba(0, 0, 0, 0.8);">- Incursia</p>
             </div>
-            <p class="footer" style="margin: 5px 0;margin-right: 5px;float: right;color: rgba(0, 0, 0, 0.25);">ⓒ 2021 유토피아</p>
+            <p class="footer" style="margin: 5px 0;margin-right: 5px;float: right;color: rgba(0, 0, 0, 0.25);">ⓒ 2021 Incursia</p>
           </div>
         </body>`;
 };

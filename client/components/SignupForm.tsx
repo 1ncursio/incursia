@@ -67,7 +67,7 @@ const SignupForm = () => {
   return (
     <>
       <Head>
-        <title>회원가입 | 유토피아</title>
+        <title>회원가입 | 인크루시아</title>
       </Head>
 
       <Form onFinish={onFinish} layout="vertical">

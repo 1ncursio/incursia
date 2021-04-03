@@ -37,7 +37,7 @@ const TitleWrapper = styled(Title)`
 `;
 
 const signup = () => {
-  const { signUpLoading, signUpDone, signUpError } = useSelector((state: any) => state.user);
+  const { signUpDone, signUpError } = useSelector((state: any) => state.user);
 
   const { data: userData } = useSWR('/api/user', fetcher);
 
@@ -65,7 +65,7 @@ const signup = () => {
         <Col xs={24} md={6}>
           <CardWrapper>
             <Space direction="vertical" style={{ width: '90%' }}>
-              <TitleWrapper level={1}>유토피아</TitleWrapper>
+              <TitleWrapper level={1}>Incursia</TitleWrapper>
               <Text type="secondary">당신의 그림을 공유해보세요</Text>
               <br />
               {/* <SignupForm /> */}

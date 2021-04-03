@@ -38,22 +38,10 @@ const Illustration = ({ post: initialPost }: Props) => {
   }, [removePostDone]);
 
   useEffect(() => {
-    if (likePostDone) {
-      // postMutate(
-      //   {
-      //     ...postData,
-      //     Likers: [
-      //       ...postData.Likers,
-      //       {
-      //         id: userData?.id,
-      //       },
-      //     ],
-      //   },
-      //   false,
-      // );
+    if (likePostDone && userData) {
       postMutate(
-        produce((draft) => {
-          draft.Likers.push({ id: userData?.id });
+        produce(postData, (draft) => {
+          draft?.Likers.push({ id: userData.id });
         }),
         false,
       );
@@ -62,16 +50,9 @@ const Illustration = ({ post: initialPost }: Props) => {
 
   useEffect(() => {
     if (dislikePostDone) {
-      // postMutate(
-      //   {
-      //     ...postData,
-      //     Likers: postData.Likers.filter((v: IUser) => v.id !== userData?.id),
-      //   },
-      //   false,
-      // );
       postMutate(
-        produce((draft) => {
-          draft.Likers.filter((v: IUser) => v.id !== userData?.id);
+        produce(postData, (draft) => {
+          draft?.Likers.filter((v: any) => v.id !== userData?.id);
         }),
       );
     }
@@ -83,19 +64,14 @@ const Illustration = ({ post: initialPost }: Props) => {
 
   return (
     <AppLayout>
-      {postData && (
-        <Head>
-          <title>{postData.User.nickname}님의 일러스트 - 유토피아</title>
-          <meta name="description" content={postData.caption} />
-          <meta name="og:title" content={`${postData.User.nickname}님의 일러스트`} />
-          <meta name="og:description" content={postData.caption} />
-          <meta
-            name="og:image"
-            content={postData.Images[0] ? postData.Images[0].src : 'https://incursia.site/favicon.ico'}
-          />
-          <meta name="og:url" content={`https://incursia.site/illustration/${id}`} />
-        </Head>
-      )}
+      <Head>
+        <title>{postData?.User?.nickname}님의 일러스트 - Incursia</title>
+        <meta name="description" content={postData?.caption} />
+        <meta name="og:title" content={`${postData?.User?.nickname}님의 일러스트`} />
+        <meta name="og:description" content={postData?.caption} />
+        <meta name="og:image" content={postData?.Images[0]?.src || 'https://incursia.site/favicon.ico'} />
+        <meta name="og:url" content={`https://incursia.site/illustration/${id}`} />
+      </Head>
       {postData && (
         <Row justify="center" gutter={16}>
           <Col span={12}>

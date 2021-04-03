@@ -32,7 +32,7 @@ const Utopia = ({ Component, pageProps }: AppProps) => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <title>유토피아</title>
+        <title>Incursia</title>
         <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet" />
       </Head>
       <Global />

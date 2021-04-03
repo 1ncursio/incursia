@@ -18,6 +18,8 @@ const emoticonRouter = require('./routes/emoticon');
 
 const db = require('./models');
 
+const isProduction = process.env.NODE_ENV === 'production';
+
 dotenv.config();
 
 db.sequelize
@@ -28,7 +30,7 @@ db.sequelize
   .catch(console.error);
 passportConfig();
 
-if (process.env.NODE_ENV === 'production') {
+if (isProduction) {
   app.set('trust proxy', 1); // trust first proxy
   app.use(morgan('combined'));
   app.use(hpp());
@@ -59,8 +61,8 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: true,
-      domain: process.env.NODE_ENV === 'production' && '.incursia.site',
+      secure: isProduction,
+      domain: isProduction && '.incursia.site',
     },
   })
 );

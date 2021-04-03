@@ -44,7 +44,7 @@ const login = () => {
           <Card style={{ height: 500, textAlign: 'center', opacity: 0.9, borderRadius: 5 }}>
             <Space direction="vertical" style={{ width: '90%' }}>
               <Title level={1} style={{ margin: 0 }}>
-                유토피아
+                Incursia
               </Title>
               <Text type="secondary">당신의 그림을 공유해보세요</Text>
               <br />

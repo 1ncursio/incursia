@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { User, Post, Image, Tag, Comment } = require('../models');
+const { User, Post, Image, Tag } = require('../models');
 const { isLoggedIn, isNotLoggedIn, testMiddleware } = require('./middlewares');
 const bcrypt = require('bcrypt');
 const passport = require('passport');
@@ -162,7 +162,7 @@ router.post('/', isNotLoggedIn, async (req, res, next) => {
     await smtpTransport.sendMail({
       from: process.env.NODEMAILER_USER,
       to: user.email,
-      subject: '[유토피아] 링크를 클릭해 회원가입을 완료해주세요.',
+      subject: '[Incursia] 링크를 클릭해 회원가입을 완료해주세요.',
       html: emailTemplate(token),
     });
 
@@ -182,7 +182,7 @@ router.post('/mail', async (req, res, next) => {
   await smtpTransport.sendMail({
     from: process.env.NODEMAILER_USER,
     to: user.email,
-    subject: '[유토피아] 링크를 클릭해 회원가입을 완료해주세요.',
+    subject: '[Incursia] 링크를 클릭해 회원가입을 완료해주세요.',
     html: emailTemplate(user.token),
   });
 

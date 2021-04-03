@@ -24,7 +24,7 @@ const Profile = () => {
   return (
     <>
       <Head>
-        <title>내 프로필 | 유토피아</title>
+        <title>내 프로필 | Incursia</title>
       </Head>
       <AppLayout>
         <Row justify="center" gutter={16}>

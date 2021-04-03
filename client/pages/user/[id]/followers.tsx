@@ -56,7 +56,7 @@ const UserFollowers = ({ user: initialUser, followings: initialFollowers }: Prop
                         <UserAvatar userData={item} marginRight={8} size="large" />
                       </a>
                     </Link>
-                    {item.introduction.length >= 50 ? (
+                    {item.introduction?.length >= 50 ? (
                       <Text type="secondary">{`${item.introduction.slice(0, 50)}...`}</Text>
                     ) : (
                       <Text type="secondary">{item.introduction}</Text>

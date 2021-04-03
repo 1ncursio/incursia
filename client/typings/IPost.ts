@@ -12,6 +12,6 @@ export interface IPost {
   User: IUser;
   Images: IImage[];
   Comments: IComment[];
-  Likers: IUser[];
+  Likers: { id: number }[];
   Tags: ITag[];
 }
