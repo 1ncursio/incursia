@@ -4,6 +4,6 @@ node_modules
 .next.zip
 uploads
 style
-incursia.pem
-incursia-aws.pem
-rootkey.csv
+*.pem
+*.sh
+*.csv
