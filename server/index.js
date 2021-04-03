@@ -29,6 +29,7 @@ db.sequelize
 passportConfig();
 
 if (process.env.NODE_ENV === 'production') {
+  app.set('trust proxy', 1); // trust first proxy
   app.use(morgan('combined'));
   app.use(hpp());
   app.use(helmet());
@@ -53,7 +54,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser(process.env.COOKIE_SECRET));
 app.use(
   session({
-    saveUninitialized: false,
+    saveUninitialized: true,
     resave: false,
     secret: process.env.COOKIE_SECRET,
     cookie: {
