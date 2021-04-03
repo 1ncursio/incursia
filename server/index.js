@@ -34,7 +34,7 @@ if (process.env.NODE_ENV === 'production') {
   app.use(helmet());
   app.use(
     cors({
-      origin: 'http://incursia.site',
+      origin: 'https://incursia.site',
       credentials: true,
     })
   );
@@ -58,7 +58,7 @@ app.use(
     secret: process.env.COOKIE_SECRET,
     cookie: {
       httpOnly: true,
-      secure: false,
+      secure: true,
       domain: process.env.NODE_ENV === 'production' && '.incursia.site',
     },
   })
