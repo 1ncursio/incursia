@@ -42,6 +42,7 @@ const upload = multer({
 // POST /api/post
 router.post('/', isLoggedIn, async (req, res, next) => {
   try {
+    const isTitleEmpty = req.body.title.length === 0;
     const post = await Post.create({
       title: isTitleEmpty ? 'no title' : req.body.title,
       caption: req.body.caption,
@@ -58,7 +59,6 @@ router.post('/', isLoggedIn, async (req, res, next) => {
       const image = await Image.create({ src: req.body.imagePaths });
       await post.addImages(image);
     }
-    const isTitleEmpty = req.body.title.length === 0;
     const tags = req.body.tags;
     if (tags) {
       const result = await Promise.all(tags.map((tag) => Tag.findOrCreate({ where: { name: tag.toLowerCase() } })));
