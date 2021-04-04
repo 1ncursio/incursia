@@ -108,6 +108,13 @@ const upload = () => {
   }, []);
 
   const onFinish = useCallback(() => {
+    if (imagePaths.length === 0) {
+      return Modal.error({
+        content: '게시글에는 최소 1장의 이미지가 포함되어야 합니다.',
+        okText: '확인',
+      });
+    }
+
     console.log({ title, caption, tags, imagePaths });
 
     dispatch({

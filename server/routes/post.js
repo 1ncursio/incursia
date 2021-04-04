@@ -42,6 +42,16 @@ const upload = multer({
 // POST /api/post
 router.post('/', isLoggedIn, async (req, res, next) => {
   try {
+    if (req.body.imagePaths.length === 0) {
+      return res.status(403).send('게시글에는 최소 1장의 이미지가 포함되어야 합니다.');
+    }
+    if (Array.isArray(req.body.imagePaths)) {
+      const images = await Promise.all(req.body.imagePaths.map((image) => Image.create({ src: image })));
+      await post.addImages(images);
+    } else {
+      const image = await Image.create({ src: req.body.imagePaths });
+      await post.addImages(image);
+    }
     const isTitleEmpty = req.body.title.length === 0;
     const tags = req.body.tags;
     const post = await Post.create({
@@ -53,15 +63,6 @@ router.post('/', isLoggedIn, async (req, res, next) => {
     if (tags) {
       const result = await Promise.all(tags.map((tag) => Tag.findOrCreate({ where: { name: tag.toLowerCase() } })));
       await post.addTags(result.map((v) => v[0]));
-    }
-    if (req.body.imagePaths) {
-      if (Array.isArray(req.body.imagePaths)) {
-        const images = await Promise.all(req.body.imagePaths.map((image) => Image.create({ src: image })));
-        await post.addImages(images);
-      } else {
-        const image = await Image.create({ src: req.body.imagePaths });
-        await post.addImages(image);
-      }
     }
     const fullPost = await Post.findOne({
       where: {

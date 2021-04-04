@@ -42,7 +42,7 @@ const Home = () => {
         </Row>
       </DividerHeader>
       <Row justify="center" gutter={16}>
-        <Col span={18}>
+        <Col md={18} sm={24} xs={24}>
           <Row gutter={[8, 8]}>
             {postsData?.map((post) => (
               <Col span={4} key={post.id}>
