@@ -117,7 +117,7 @@ const upload = () => {
 
     console.log({ title, caption, tags, imagePaths });
 
-    dispatch({
+    return dispatch({
       type: ADD_POST_REQUEST,
       data: {
         title,
