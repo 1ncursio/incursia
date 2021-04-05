@@ -12,12 +12,12 @@ import PageNav from '@components/PageNav';
 const Home = () => {
   const { data: userData } = useSWR<IUser>('/api/user', fetcher);
   const { data: postsData, setSize } = useSWRInfinite<IPost[]>(
-    (index: number) => `/api/posts?perPage=12&page=${index + 1}`,
+    (index: number) => `/api/posts?perPage=16&page=${index + 1}`,
     fetcher,
   );
   const { data: followingsPostsData } = useSWR<IPost[]>(userData ? '/api/posts/followings/?lastId=0' : null, fetcher);
   const isEmpty = postsData?.[0]?.length === 0;
-  const isReachingEnd = isEmpty || (postsData && postsData[postsData.length - 1]?.length < 12);
+  const isReachingEnd = isEmpty || (postsData && postsData[postsData.length - 1]?.length < 16);
 
   useEffect(() => {
     if (postsData) console.log(postsData);
