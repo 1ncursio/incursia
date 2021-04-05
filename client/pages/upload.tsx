@@ -91,10 +91,10 @@ const upload = () => {
     if (
       file.type !== 'image/jpg' &&
       file.type !== 'image/jpeg' &&
-      file.type !== 'image/png' &&
-      file.type !== 'image/gif'
+      file.type !== 'image/png'
+      // && file.type !== 'image/gif'
     ) {
-      message.error('jpg jpeg png gif 사진만 가능해요!');
+      message.error('jpg jpeg png 사진만 가능해요!');
       return false;
     }
     if (file.size > 10 * 1024 * 1024) {
