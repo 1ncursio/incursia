@@ -12,15 +12,15 @@ router.get('/', async (req, res, next) => {
     const where = { board: 'illustration' };
     if (parseInt(req.query.lastId, 10)) {
       // 초기 로딩이 아닐 때
-      where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //보다 작은
+      // where.id = { [Op.lt]: parseInt(req.query.lastId, 10) }; //보다 작은
     }
     const posts = await Post.findAll({
-      where,
-      limit: 12,
+      limit: parseInt(req.query.perPage, 10),
       order: [
         ['createdAt', 'DESC'],
         [Comment, 'createdAt', 'DESC'],
       ],
+      offset: req.query.perPage * (req.query.page - 1),
       include: [
         {
           model: User, // 포스트 작성자
