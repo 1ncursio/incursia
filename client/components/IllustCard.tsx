@@ -88,7 +88,11 @@ const IllustCard = ({ postData }: Props) => {
     <>
       <Image.PreviewGroup>
         {postData?.Images.map((v) => (
-          <Image width="100%" key={v.src} src={`${v.src}`} />
+          <Image
+            width="100%"
+            key={v.src.replace(/\/thumbnail\//, '/original/')}
+            src={v.src.replace(/\/thumbnail\//, '/original/')}
+          />
         ))}
       </Image.PreviewGroup>
       <Space style={{ float: 'right' }}>
