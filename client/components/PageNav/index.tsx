@@ -16,9 +16,11 @@ const index = ({ currentPage }: Props) => {
           </Link>
         </li>
         <li>
-          <Link href="/">
-            <Anc isCurrentPage={currentPage === 'Following'}>팔로우하는 유저의 작품</Anc>
-          </Link>
+          {/* <Link href="/followings"> */}
+          <Anc isCurrentPage={currentPage === 'Followings'} onClick={() => alert('낼 만들거임')}>
+            팔로우하는 유저의 작품
+          </Anc>
+          {/* </Link> */}
         </li>
       </ul>
     </Nav>

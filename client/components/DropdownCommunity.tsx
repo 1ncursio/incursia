@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { Typography, Dropdown, Menu } from 'antd';
 import { DownOutlined } from '@ant-design/icons';
 import Link from 'next/link';
@@ -6,12 +6,13 @@ import Link from 'next/link';
 const { Text } = Typography;
 
 const DropdownCommunity = () => {
+  const onClickReady = useCallback(() => {
+    alert('준비 중ㅋ');
+  }, []);
   const menu = (
     <Menu>
       <Menu.Item>
-        <Link href="/community">
-          <a>커뮤니티</a>
-        </Link>
+        <a onClick={onClickReady}>커뮤니티</a>
       </Menu.Item>
       <Menu.Item>
         <Link href="/notices">
@@ -19,9 +20,9 @@ const DropdownCommunity = () => {
         </Link>
       </Menu.Item>
       <Menu.Item>
-        <Link href="/request">
-          <a>기능요청</a>
-        </Link>
+        {/* <Link href="/request"> */}
+        <a onClick={onClickReady}>기능요청</a>
+        {/* </Link> */}
       </Menu.Item>
     </Menu>
   );

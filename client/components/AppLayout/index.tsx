@@ -48,11 +48,11 @@ const AppLayout = ({ children }: Props) => {
             </Link>
           </MenuItem>
           <MenuItem>
-            <Link href="/community">
-              <a>
-                <DropdownCommunity />
-              </a>
-            </Link>
+            {/* <Link href="/community"> */}
+            <a>
+              <DropdownCommunity />
+            </a>
+            {/* </Link> */}
           </MenuItem>
         </LeftMenu>
         <CenterMenu>

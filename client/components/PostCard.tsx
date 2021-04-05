@@ -10,8 +10,8 @@ const TitleWrapper = styled.div`
 `;
 
 const CoverImage = styled.img`
-  width: 100%;
-  height: 140px;
+  width: 350px;
+  height: 200px;
   object-fit: cover;
   border-radius: 8px;
   transition: 0.2s;
@@ -31,20 +31,20 @@ interface Props {
 const PostCard = ({ post, avatarVisible = true }: Props) => {
   return (
     <>
-      <Link href={`/illustration/${post.id}`}>
+      <Link href={`/illustration/${post.id}`} prefetch={false}>
         <a>
           <CoverImage alt={post.title} src={`${post.Images[0].src}`} />
         </a>
       </Link>
       <TitleWrapper>
-        <Link href={`/illustration/${post.id}`}>
+        <Link href={`/illustration/${post.id}`} prefetch={false}>
           <a>
             <Text strong>{post.title}</Text>
           </a>
         </Link>
       </TitleWrapper>
       {avatarVisible && (
-        <Link href={`/user/${post.User.id}/illustration`}>
+        <Link href={`/user/${post.User.id}/illustration`} prefetch={false}>
           <a>
             <UserAvatar userData={post.User} marginRight={4} />
           </a>

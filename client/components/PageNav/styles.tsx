@@ -1,15 +1,14 @@
 import styled from '@emotion/styled';
 
 export const Nav = styled.nav`
-  height: 40px;
-  line-height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
   margin-bottom: 10px;
   background: #646464;
+  font-size: 1rem;
 
-  /* a {
-    font-size: 1rem;
-    color: #c4c4c4;
-  } */
   ul {
     list-style: none;
     padding: 0;
@@ -24,9 +23,8 @@ export const Nav = styled.nav`
 
 export const Anc = styled.a`
   ${({ isCurrentPage }: { isCurrentPage: boolean }) =>
-    isCurrentPage &&
-    `
-  font-weight: 600;
-  color: black; 
-  `}
+    isCurrentPage ? 'font-weight: 600;color: white;' : 'color: #979797'};
+  &:hover {
+    color: white;
+  }
 `;

@@ -160,7 +160,7 @@ router.post('/notice', isLoggedIn, isAdmin, async (req, res, next) => {
 // POST /api/post/images
 router.post('/images', isLoggedIn, upload.array('image'), async (req, res, next) => {
   console.log(req.files);
-  res.json(req.files.map((v) => v.location));
+  res.json(req.files.map((v) => v.location.replace(/\/original\//, '/thumbnail/')));
 });
 
 // POST /post/1/comment

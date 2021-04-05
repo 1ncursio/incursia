@@ -33,12 +33,6 @@ const Home = () => {
         window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300 &&
         !isReachingEnd
       ) {
-        // const lastId = mainPosts[mainPosts.length - 1]?.id;
-        // dispatch(
-        // loadPosts({
-        // lastId,
-        // }),
-        // );
         setSize((prevSize) => prevSize + 1).then(() => {
           // 스크롤 위치 유지
         });
@@ -68,15 +62,7 @@ const Home = () => {
           </Row>
         </Col>
       </Row>
-      {/* <DividerHeader>
-        {userData && (
-          <Row justify="center" gutter={16}>
-            <Col span={18}>
-              <h1>팔로우하는 유저의 작품</h1>
-            </Col>
-          </Row>
-        )}
-      </DividerHeader>
+      {/*
       <Row justify="center" gutter={16}>
         <Col span={18}>
           <Row gutter={[8, 8]}>
