@@ -1,4 +1,4 @@
-import { BellOutlined } from '@ant-design/icons';
+import { BellOutlined, UploadOutlined } from '@ant-design/icons';
 import { Typography } from 'antd';
 import Link from 'next/link';
 import Router from 'next/router';
@@ -70,7 +70,10 @@ const AppLayout = ({ children }: Props) => {
             <Link href="/upload">
               <a>
                 <UploadButton shape="round">
-                  <Text strong>작품 업로드</Text>
+                  <Text strong>
+                    <UploadOutlined />
+                    &nbsp; 작품 업로드
+                  </Text>
                 </UploadButton>
               </a>
             </Link>
