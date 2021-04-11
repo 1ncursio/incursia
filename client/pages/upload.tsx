@@ -69,8 +69,9 @@ const upload = () => {
   }, []);
 
   const onChangeFileList = useCallback(({ fileList: newFileList }) => {
-    console.log(newFileList);
-    setFileList(newFileList);
+    const filteredFileList = newFileList.filter((v: any) => v.type !== 'image/gif');
+    console.log(filteredFileList);
+    setFileList(filteredFileList);
     const fileSizes = newFileList.map((file: Blob) => file.size);
     setFileSize(Math.round((fileSizes.reduce((p: number, c: number) => p + c, 0) / 1024 / 1024) * 100) / 100);
   }, []);
@@ -156,7 +157,7 @@ const upload = () => {
               <Paragraph>{`${fileList.length}장 ${fileSize}MB`}</Paragraph>
               <Upload
                 name="image"
-                accept=".jpg,.jpeg,.png,.gif"
+                accept=".jpg,.jpeg,.png"
                 multiple
                 maxCount={20}
                 beforeUpload={beforeUpload}

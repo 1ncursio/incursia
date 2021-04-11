@@ -11,7 +11,7 @@ import PageNav from '@components/PageNav';
 
 const Home = () => {
   const { data: userData } = useSWR<IUser>('/api/user', fetcher);
-  const { data: postsData, setSize } = useSWRInfinite<IPost[]>(
+  const { data: postsData, setSize, isValidating } = useSWRInfinite<IPost[]>(
     (index: number) => `/api/posts?perPage=16&page=${index + 1}`,
     fetcher,
   );
@@ -31,7 +31,8 @@ const Home = () => {
 
       if (
         window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300 &&
-        !isReachingEnd
+        !isReachingEnd &&
+        !isValidating
       ) {
         setSize((prevSize) => prevSize + 1).then(() => {
           // 스크롤 위치 유지
@@ -42,7 +43,7 @@ const Home = () => {
     return () => {
       window.removeEventListener('scroll', onScroll);
     };
-  }, [isReachingEnd]);
+  }, [isReachingEnd, isValidating]);
 
   if (userData?.status === 'pending') {
     return <ExpiredValidation />;

@@ -1,10 +1,10 @@
 node_modules
 .env
 .next
-# .next.zip
 uploads
 style
 *.pem
 *.sh
 *.csv
 *.zip
+*.gz

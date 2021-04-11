@@ -45,7 +45,7 @@ if (isProduction) {
   app.use(morgan('dev'));
   app.use(
     cors({
-      origin: true,
+      origin: 'http://localhost:3080',
       credentials: true,
     })
   );
