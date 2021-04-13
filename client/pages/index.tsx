@@ -56,7 +56,7 @@ const Home = () => {
         <Col md={18} sm={24} xs={24}>
           <Row gutter={[8, 8]}>
             {postsData?.flat()?.map((post) => (
-              <Col md={6} key={post.id}>
+              <Col md={6} xl={12} key={post.id}>
                 <PostCard key={post.id} post={post} />
               </Col>
             ))}

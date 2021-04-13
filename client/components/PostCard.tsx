@@ -10,8 +10,8 @@ const TitleWrapper = styled.div`
 `;
 
 const CoverImage = styled.img`
-  width: 350px;
-  height: 200px;
+  width: 100%;
+  height: auto;
   object-fit: cover;
   border-radius: 8px;
   transition: 0.2s;

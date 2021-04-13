@@ -7,13 +7,13 @@ export const Nav = styled.nav`
   justify-content: space-between;
   align-items: center;
   border-bottom: 1px solid rgba(0, 0, 0, 0.2);
-  height: 60px;
-  padding: 0 30px;
+  height: 3.5rem;
+  padding: 0 2rem;
   font-size: 1rem;
 `;
 
 export const UploadButton = styled(Button)`
-  width: 120px;
+  width: 8rem;
 `;
 
 export const Menu = styled.div`
@@ -43,7 +43,7 @@ export const MenuItem = styled.div`
   align-items: center;
   justify-content: center;
   & + & {
-    margin-left: 30px;
+    margin-left: 2rem;
   }
 `;
 

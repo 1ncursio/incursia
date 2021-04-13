@@ -1,8 +1,9 @@
 import { BellOutlined, UploadOutlined } from '@ant-design/icons';
-import { Typography } from 'antd';
+import { Input, Typography } from 'antd';
 import Link from 'next/link';
 import Router from 'next/router';
 import React, { useCallback } from 'react';
+import { css } from '@emotion/react';
 import useSWR from 'swr';
 import { fetcher } from '@utils/fetcher';
 import DropdownCommunity from '@components/DropdownCommunity';
@@ -15,7 +16,6 @@ import {
   MenuItem,
   Nav,
   RightMenu,
-  SearchInput,
   UploadButton,
 } from '@components/AppLayout/styles';
 
@@ -41,23 +41,26 @@ const AppLayout = ({ children }: Props) => {
           <MenuItem>
             <Link href="/">
               <a>
-                <Text strong style={{ color: '#ff8634' }}>
+                <Text
+                  strong
+                  css={css`
+                    color: #ff8634;
+                  `}
+                >
                   Incursia
                 </Text>
               </a>
             </Link>
           </MenuItem>
           <MenuItem>
-            {/* <Link href="/community"> */}
             <a>
               <DropdownCommunity />
             </a>
-            {/* </Link> */}
           </MenuItem>
         </LeftMenu>
         <CenterMenu>
           <CenterMenuItem>
-            <SearchInput
+            <Input.Search
               value={searchInput}
               onChange={onChangeSearchInput}
               onSearch={onSearch}
