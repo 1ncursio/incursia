@@ -3,7 +3,7 @@ const sharp = require('sharp');
 
 const s3 = new AWS.S3();
 
-const RESIZED_WIDTH = 320;
+const RESIZED_WIDTH = 350;
 const RESIZED_HEIGHT = 200;
 
 exports.handler = async (event, context, callback) => {
@@ -18,7 +18,7 @@ exports.handler = async (event, context, callback) => {
   try {
     const s3Object = await s3.getObject({ Bucket, Key }).promise();
     console.log('original', s3Object.Body.length);
-    const resizedImage = await sharp(s3Object.Body).resize(RESIZED_WIDTH, RESIZED_HEIGHT, { fit: 'inside' }).toFormat(requiredFormat).toBuffer();
+    const resizedImage = await sharp(s3Object.Body).resize(RESIZED_WIDTH, RESIZED_HEIGHT, { fit: 'cover' }).toFormat(requiredFormat).toBuffer();
     await s3.putObject({ Bucket, Key: `thumbnail/${filename}`, Body: resizedImage }).promise();
     console.log('put', resizedImage.length);
     return callback(null, `thumbnail/${filename}`);
