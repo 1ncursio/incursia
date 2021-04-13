@@ -53,10 +53,10 @@ const Home = () => {
     <AppLayout>
       <PageNav currentPage="Home" />
       <Row justify="center" gutter={16}>
-        <Col md={18} sm={24} xs={24}>
+        <Col md={18} sm={24}>
           <Row gutter={[8, 8]}>
             {postsData?.flat()?.map((post) => (
-              <Col md={6} xl={12} key={post.id}>
+              <Col xxl={6} xl={8} key={post.id}>
                 <PostCard key={post.id} post={post} />
               </Col>
             ))}

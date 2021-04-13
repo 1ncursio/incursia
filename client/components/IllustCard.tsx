@@ -45,6 +45,12 @@ const IllustCard = ({ postData }: Props) => {
     if (userData && postData.Likers) setLiked(postData.Likers.find((v) => v.id === userData.id) ? true : false);
   }, [userData]);
 
+  useEffect(() => {
+    if (removePostDone) {
+      // revalidate()
+    }
+  }, [removePostDone]);
+
   const onLike = useCallback(() => {
     if (!userData) {
       return alert('로그인이 필요합니다.');

@@ -15,6 +15,15 @@ const CurrentPostCover = styled.div`
   z-index: 10;
 `;
 
+const UserProfileSpace = styled.div`
+  & > * {
+    margin-bottom: 0.5rem;
+  }
+  a:first-child > span {
+    /* margin-bottom: 0.5rem; */
+  }
+`;
+
 const { Text } = Typography;
 
 interface Props {
@@ -31,7 +40,7 @@ const UserProfile = ({ postData }: Props) => {
   const prevAndCurrentAndNextPost = postData.User.Posts.filter((v, i) => Math.abs(i - currentPostIndex) <= 1);
 
   return (
-    <Space direction="vertical">
+    <UserProfileSpace>
       <Link href={`/user/${postData.User.id}/illustration`}>
         <a>
           <Avatar size={48} src={postData.User.profile && `${postData.User.profile}`} style={{ marginRight: 8 }}>
@@ -76,7 +85,7 @@ const UserProfile = ({ postData }: Props) => {
           </Col>
         ))}
       </Row>
-    </Space>
+    </UserProfileSpace>
   );
 };
 

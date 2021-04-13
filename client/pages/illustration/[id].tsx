@@ -74,11 +74,11 @@ const Illustration = ({ post: initialPost }: Props) => {
       </Head>
       {postData && (
         <Row justify="center" gutter={16}>
-          <Col md={12} sm={12} xs={24}>
+          <Col md={24} xl={12}>
             <IllustCard postData={postData} />
             <CommentSection postData={postData} postMutate={postMutate} />
           </Col>
-          <Col span={4}>
+          <Col md={24} xl={4}>
             <UserProfile postData={postData} />
           </Col>
         </Row>
