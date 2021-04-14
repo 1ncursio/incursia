@@ -5,7 +5,7 @@ const AWS = require('aws-sdk');
 const path = require('path');
 const { isLoggedIn, isNotLoggedIn, isAdmin } = require('./middlewares');
 const router = express.Router();
-const { Post, User, Tag, Image, Comment, sequelize } = require('../models');
+const { Post, User, Tag, Image, Comment } = require('../models');
 
 AWS.config.update({
   accessKeyId: process.env.S3_ACCESS_KEY_ID,
