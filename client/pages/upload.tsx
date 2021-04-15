@@ -59,12 +59,16 @@ const upload = () => {
 
   const onPreview = useCallback(async (file) => {
     console.log(file.originFileObj);
-    if (!file.url && !file.preview) {
-      file.preview = await getBase64(file.originFileObj);
+    try {
+      if (!file.url && !file.preview) {
+        file.preview = await getBase64(file.originFileObj);
+      }
+      setPreviewImage(file.url || file.preview);
+      setPreviewVisible(true);
+      setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
+    } catch (error) {
+      console.error(error);
     }
-    setPreviewImage(file.url || file.preview);
-    setPreviewVisible(true);
-    setPreviewTitle(file.name || file.url.substring(file.url.lastIndexOf('/') + 1));
     console.log(file);
   }, []);
 
@@ -132,7 +136,6 @@ const upload = () => {
         imagePaths,
       },
     });
-    // Router.replace(`/illustration/${addedPostId}`)
   }, [title, caption, tags, imagePaths]);
 
   const uploadButton = (
