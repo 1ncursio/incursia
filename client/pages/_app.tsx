@@ -32,10 +32,6 @@ const Utopia = ({ Component, pageProps }: AppProps) => {
     <>
       <Head>
         <meta charSet="utf-8" />
-        <meta
-          httpEquiv="Content-Security-Policy"
-          content="default-src 'self' vitals.vercel-insights.com; script-src 'self'; style-src 'self';"
-        />
         <title>Incursia</title>
         <link
           href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
