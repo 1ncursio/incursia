@@ -37,7 +37,7 @@ if (isProduction) {
   app.use(helmet());
   app.use(
     cors({
-      origin: 'https://incursia.site',
+      origin: ['https://incursia.site', 'https://incursia.vercel.app'],
       credentials: true,
     })
   );
