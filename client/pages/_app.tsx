@@ -8,23 +8,23 @@ import { createGlobalStyle } from 'styled-components';
 import wrapper from '../store/configureStore';
 
 const Global = createGlobalStyle`
-    body {
-      font-family: 'Noto Sans KR';
-      background-color: #f8f9fa;
-    }
+  body {
+    font-family: 'Noto Sans KR';
+    background-color: #f8f9fa;
+  }
 
-    .ant-row {
-        margin-right: 0 !important;
-        margin-left: 0 !important;
-    }
+  .ant-row {
+    margin-right: 0 !important;
+    margin-left: 0 !important;
+  }
 
-    .ant-col:first-child {
-        padding-left: 0 !important;
-    }
+  .ant-col:first-child {
+    padding-left: 0 !important;
+  }
 
-    .ant-col:last-child {
-        padding-right: 0 !important;
-    }
+  .ant-col:last-child {
+    padding-right: 0 !important;
+  }
 `;
 
 const Utopia = ({ Component, pageProps }: AppProps) => {
@@ -32,8 +32,15 @@ const Utopia = ({ Component, pageProps }: AppProps) => {
     <>
       <Head>
         <meta charSet="utf-8" />
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="default-src 'self' vitals.vercel-insights.com"
+        />
         <title>Incursia</title>
-        <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap"
+          rel="stylesheet"
+        />
       </Head>
       <Global />
       <Component {...pageProps} />
