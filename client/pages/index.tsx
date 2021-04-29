@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react';
-import { Row, Col } from 'antd';
+import { Row, Col, Skeleton } from 'antd';
 import useSWR, { useSWRInfinite } from 'swr';
 import { IPost } from '@typings/IPost';
 import { IUser } from '@typings/IUser';
@@ -11,13 +11,22 @@ import PageNav from '@components/PageNav';
 
 const Home = () => {
   const { data: userData } = useSWR<IUser>('/api/user', fetcher);
-  const { data: postsData, setSize, isValidating } = useSWRInfinite<IPost[]>(
+  const {
+    data: postsData,
+    setSize,
+    isValidating,
+    error: postsError,
+  } = useSWRInfinite<IPost[]>(
     (index: number) => `/api/posts?perPage=16&page=${index + 1}`,
-    fetcher,
+    fetcher
   );
-  const { data: followingsPostsData } = useSWR<IPost[]>(userData ? '/api/posts/followings/?lastId=0' : null, fetcher);
+  const { data: followingsPostsData } = useSWR<IPost[]>(
+    userData ? '/api/posts/followings/?lastId=0' : null,
+    fetcher
+  );
   const isEmpty = postsData?.[0]?.length === 0;
-  const isReachingEnd = isEmpty || (postsData && postsData[postsData.length - 1]?.length < 16);
+  const isReachingEnd =
+    isEmpty || (postsData && postsData[postsData.length - 1]?.length < 16);
 
   useEffect(() => {
     if (postsData) console.log(postsData);
@@ -30,7 +39,8 @@ const Home = () => {
       // document.documentElement.scrollHeight : 총길이
 
       if (
-        window.scrollY + document.documentElement.clientHeight > document.documentElement.scrollHeight - 300 &&
+        window.scrollY + document.documentElement.clientHeight >
+          document.documentElement.scrollHeight - 300 &&
         !isReachingEnd &&
         !isValidating
       ) {
@@ -39,6 +49,7 @@ const Home = () => {
         });
       }
     }
+
     window.addEventListener('scroll', onScroll);
     return () => {
       window.removeEventListener('scroll', onScroll);
@@ -55,11 +66,20 @@ const Home = () => {
       <Row justify="center" gutter={16}>
         <Col md={18} sm={24}>
           <Row gutter={[8, 8]}>
-            {postsData?.flat()?.map((post) => (
-              <Col xxl={6} xl={8} key={post.id}>
-                <PostCard key={post.id} post={post} />
-              </Col>
-            ))}
+            {!isValidating
+              ? Array.from({ length: 16 }).map((_, i) => (
+                  <Col xxl={6} xl={8} key={i}>
+                    <Skeleton.Image
+                      style={{ width: '350px', height: '200px' }}
+                    />
+                    <Skeleton active avatar paragraph={{ rows: 0 }} />
+                  </Col>
+                ))
+              : postsData?.flat()?.map((post) => (
+                  <Col xxl={6} xl={8} key={post.id}>
+                    <PostCard key={post.id} post={post} />
+                  </Col>
+                ))}
           </Row>
         </Col>
       </Row>
