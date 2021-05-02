@@ -66,20 +66,11 @@ const Home = () => {
       <Row justify="center" gutter={16}>
         <Col md={18} sm={24}>
           <Row gutter={[8, 8]}>
-            {!isValidating
-              ? Array.from({ length: 16 }).map((_, i) => (
-                  <Col xxl={6} xl={8} key={i}>
-                    <Skeleton.Image
-                      style={{ width: '350px', height: '200px' }}
-                    />
-                    <Skeleton active avatar paragraph={{ rows: 0 }} />
-                  </Col>
-                ))
-              : postsData?.flat()?.map((post) => (
-                  <Col xxl={6} xl={8} key={post.id}>
-                    <PostCard key={post.id} post={post} />
-                  </Col>
-                ))}
+            {postsData?.flat()?.map((post) => (
+              <Col xxl={6} xl={8} key={post.id}>
+                <PostCard key={post.id} post={post} />
+              </Col>
+            ))}
           </Row>
         </Col>
       </Row>
