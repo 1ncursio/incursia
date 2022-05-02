@@ -36,8 +36,8 @@ Incursia는 일러스트 투고와 열람이 가능한 일러스트 커뮤니케
 │   ├── index.js            # Express 메인 파일
 │   └── ...
 ├── client                  # Next.js
-│   ├── public              # Static files
-│   ├── components          # React components
+│   ├── public              # 스태틱 파일
+│   ├── components          # 컴포넌트
 │   ├── pages               # 넥스트 페이지
 │   ├── store               # 리덕스 스토어
 │   ├── utils               # 유틸 함수
