@@ -1,6 +1,8 @@
 # Incursia
 
-<img src=""></img>
+<img src="screenshots/illust_upload.png"></img>
+
+<img src="screenshots/illust_and_comments.png"></img>
 
 Incursia는 일러스트 투고와 열람이 가능한 일러스트 커뮤니케이션 서비스입니다.
 픽시브를 참고하여 제작되었습니다.
